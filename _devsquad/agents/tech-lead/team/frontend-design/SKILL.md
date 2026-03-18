@@ -26,6 +26,18 @@ O usuário fornece requisitos: componente, página, aplicação ou interface. Po
 
 ---
 
+## Padrão DreamCut (pixel-perfect — projetos Hub / DevSquad)
+
+Quando o escopo for **Hub Médico**, **hubmedico-platform** ou outro app que adote o mesmo design system:
+
+1. Ler **[`DREAMCUT_PIXEL_SPEC.md`](./DREAMCUT_PIXEL_SPEC.md)** antes de propor UI.
+2. Tratar o spec como **contrato**: tokens (`tokens.css` / `tokens.ts`), checklist (labels uppercase, pill no primário, foco pink, 3 camadas de cinza no dark, raio perfeito, etc.).
+3. **Inter pesado (800/900) + DM Sans** e paleta DreamCut **não** são “genéricos no sentido anti-slop”: aqui a distinção é **precisão de implementação**, não substituir por gradiente roxo clichê.
+
+Para outros produtos sem spec DreamCut, manter flexibilidade total nas *Frontend Aesthetics Guidelines* abaixo.
+
+---
+
 ## Design Thinking
 
 Antes de codar, entender o contexto e comprometer uma direção estética **clara**:
