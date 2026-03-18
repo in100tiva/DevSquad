@@ -1,0 +1,22 @@
+# DevSquad — arquivos locais e sensíveis
+_devsquad/output/*/
+!_devsquad/output/.gitkeep
+_devsquad/_memory/preferences.md
+
+# Ambiente e dependências
+.env
+.env.local
+.env.*.local
+node_modules/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs e build (se alguém rodar algo na raiz do clone)
+*.log
+dist/
+__pycache__/
+*.pyc
