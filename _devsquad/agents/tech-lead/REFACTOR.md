@@ -39,7 +39,8 @@ Anunciar os pulos antes de começar.
 | B3    | Nadia    | Valida interface para o desenvolvedor                               |
 | B4    | Clara    | Valida experiência cognitiva para o usuário final                   |
 | B5    | Cora     | Valida affordances, signifiers e feedback para o usuário final      |
-| B6    | Casey    | Valida usabilidade: trunk test, copy, escaneabilidade, goodwill     |
+| B6    | Casey           | Valida usabilidade: trunk test, copy, escaneabilidade, goodwill      |
+| B7    | Frontend Design | Valida estética distintiva; preenche aesthetic_spec; anti–AI slop    |
 
 ### B3 — Nadia → `HANDOFF.dx_issues`
 
@@ -100,6 +101,24 @@ Casey destaca **quick_wins**: baixo esforço, alto impacto, implementáveis ante
 
 ---
 
+### B7 — Frontend Design → `HANDOFF.aesthetic_spec`
+
+**Input:** `merged_target` + `dx_issues`, `ux_issues`, `interaction_issues`, `usability_issues`, `trunk_test_result`
+
+**Output:** `HANDOFF.aesthetic_spec` (objeto completo)
+
+Só com interface. Backend puro → `skipped_members`.
+
+**Trunk test visual:** primeira tela-chave deve passar scan anti-slop (tipografia/cor/layout genéricos).
+
+**Conflitos:**
+
+- Composição que reduz legibilidade de copy (Casey) → `conflicts_with: "usability_issues"`
+- Remover label/signifier por “limpeza visual” (Cora) → `conflicts_with: "interaction_issues"`
+- Lucas decide trade-off.
+
+---
+
 ## Síntese consolidada (pós Etapa B, antes da execução dos passos)
 
 ```
@@ -118,6 +137,11 @@ AJUSTES DE INTERAÇÃO (Cora)
 AJUSTES DE USABILIDADE (Casey)
   [de HANDOFF.usability_issues — quick wins em destaque]
   [trunk test: passou / reprovou (quais perguntas)]
+  [apenas quando escopo tem interface]
+
+DIREÇÃO ESTÉTICA (Frontend Design)
+  [de HANDOFF.aesthetic_spec]
+  [anti-patterns evitados; coerência tipográfica e cor]
   [apenas quando escopo tem interface]
 ```
 

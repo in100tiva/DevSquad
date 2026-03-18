@@ -16,11 +16,11 @@ Dois checkpoints de severidade permitem encerrar cedo se a análise já for sufi
 ```
 scope.type = "function" → pular Rafael, Diana, Camila
 scope.type = "class"    → pular Rafael (verificar se Diana é necessária)
-scope.type = "feature"  → convocar até checkpoint (Casey/Cora/Clara só com interface)
-scope.type = "system"   → convocar todos (Casey/Cora/Clara condicionais à UI)
+scope.type = "feature"  → convocar até checkpoint (Frontend/Casey/Cora/Clara só com UI)
+scope.type = "system"   → convocar todos (condicionais à UI)
 ```
 
-**Ordem com UI:** Casey → Cora → Clara → Nadia. Backend puro → pular Casey, Cora e Clara.
+**Ordem com UI:** Frontend Design → Casey → Cora → Clara → Nadia. Backend puro → pular os quatro primeiros.
 
 Anunciar os pulos antes de começar.
 
@@ -58,23 +58,24 @@ Cada membro adiciona à lista `HANDOFF.findings` neste formato:
 ## Cadeia de execução — sintoma para causa raiz
 
 ```
-NÍVEL            MEMBRO    O QUE ANALISA
+NÍVEL            MEMBRO           O QUE ANALISA
 ──────────────────────────────────────────────────────────────────────────────
--2. Usabilidade Casey    Trunk test, copy excessiva, escaneabilidade, goodwill
--1. Interação   Cora     Affordances, signifiers, feedback ausente, slips previsíveis
- 0. Produto     Clara    Abandono, baixa conversão, carga cognitiva, decisão paralisada
- 1. Experiência Nadia    Atrito do desenvolvedor, feedback silencioso em APIs
- 2. Código      César    Smells, duplicação, funções grandes, nomes ruins
+-3. Estética     Frontend Design  Anti–AI slop, primeira impressão, tipografia/cor genéricas
+-2. Usabilidade Casey            Trunk test, copy, escaneabilidade, goodwill
+-1. Interação   Cora             Affordances, signifiers, feedback, slips
+ 0. Produto     Clara            Carga cognitiva, abandono, decisão
+ 1. Experiência Nadia            DX, APIs, feedback silencioso
+ 2. Código      César            Smells, duplicação, nomes
    ──── CHECKPOINT 1 ────────────────────────────────────────────────────────
- 3. Padrões     Giovana  Switch/if por tipo, criação espalhada, acoplamento
- 4. Arquitetura Camila   Dependency Rule, violações de camada, ports ausentes
+ 3. Padrões     Giovana          GoF, acoplamento
+ 4. Arquitetura Camila           Dependency Rule, ports
    ──── CHECKPOINT 2 ────────────────────────────────────────────────────────
- 5. Domínio     Diana    Vocabulário divergente, invariantes fora do modelo
- 6. Sistema     Rafael   Big Ball of Mud, padrão inadequado (se justificado)
+ 5. Domínio     Diana            Ubíqua, invariantes
+ 6. Sistema     Rafael           Padrão macro
 ──────────────────────────────────────────────────────────────────────────────
 ```
 
-Razão da ordem: Casey captura o mais superficial (*"não sabe onde está"*) antes de Cora (*affordance*) e Clara (*carga cognitiva*). Sintomas macro indicam onde aprofundar.
+Razão: impressão visual em segundos (Frontend) → wayfinding/uso (Casey) → interação → cognição.
 
 ---
 
@@ -95,53 +96,55 @@ Para cada membro **não pulado pelo Scope Gate**:
 
 ---
 
-## Fase -2 — Casey (diagnóstico de usabilidade macro)
+## Fase -3 — Frontend Design (estética superficial)
 
-Casey é executada **ANTES** de Cora quando o escopo inclui interface.
+**ANTES** de Casey quando há interface.
 
-**Input:** `HANDOFF.scope` (tela, fluxo ou produto completo)
+**Input:** `HANDOFF.scope`
 
-**Output:** findings com `level: "usabilidade"` + resultado do trunk test em `HANDOFF.trunk_test_result`
+**Output:** findings `level: "estética"`, `member: "frontend-design"`; opcionalmente rascunho em `HANDOFF.aesthetic_spec` se útil ao ciclo.
 
-Se escopo for backend puro → pular Casey, registrar em `skipped_members`.
+Backend puro → pular.
 
-Casey executa o **trunk test** primeiro: 5 perguntas, ~3 segundos cada. Se falhar → finding **🔴** automático antes de outras análises.
-
-Os findings de Casey alimentam Cora: *"não sabe onde está"* (Casey) pode ter raiz em *signifier de navegação ausente* (Cora).
+Findings de Frontend alimentam Casey (ex.: visual caótico pode mascarar problemas de hierarquia).
 
 ---
 
-## Fase -1 — Cora (diagnóstico de interação)
+## Fase -2 — Casey (usabilidade macro)
 
-Cora é executada **APÓS** Casey (se Casey rodou) e **ANTES** de Clara quando o escopo inclui interface.
+**APÓS** Frontend Design (se rodou).
 
-**Input:** `HANDOFF.scope` + findings de Casey (quando existirem)
+**Input:** `HANDOFF.scope` + findings de Frontend Design (se houver)
 
-**Output:** findings com `level: "interação"`
+**Output:** `level: "usabilidade"` + `HANDOFF.trunk_test_result`
 
-Se escopo for backend puro → pular Cora, registrar em `skipped_members`.
-
-Cora classifica **slip** / **mistake**. Os findings de Cora alimentam Clara.
+Trunk test primeiro; falha → **🔴**.
 
 ---
 
-## Fase 0 — Clara (pré-diagnóstico de produto)
+## Fase -1 — Cora (interação)
 
-Clara é executada **APÓS** Cora e **ANTES** de Nadia quando o escopo inclui interface.
+**APÓS** Casey.
 
-**Input:** `HANDOFF.scope` + findings de Casey e Cora (quando existirem)
+**Input:** `HANDOFF.scope` + findings de Casey (+ Frontend)
 
-**Output:** findings com `level: "produto"`
-
-Se escopo for backend puro → pular Clara, registrar em `skipped_members`.
-
-Os findings de Casey, Cora e Clara contextualizam Nadia.
+**Output:** `level: "interação"`
 
 ---
 
-## Checkpoint 1 — após Casey + Cora + Clara + Nadia + César
+## Fase 0 — Clara (produto/cognição)
 
-Lucas avalia `HANDOFF.findings` após Casey (se convocada), Cora (se convocada), Clara (se convocada), Nadia e César:
+**APÓS** Cora.
+
+**Input:** `HANDOFF.scope` + findings de Casey e Cora
+
+**Output:** `level: "produto"`
+
+---
+
+## Checkpoint 1 — após Frontend Design + Casey + Cora + Clara + Nadia + César
+
+Lucas avalia findings após os seis primeiros membros da fase (Frontend, Casey, Cora, Clara, Nadia, César):
 
 ```
 CASO A — todos os findings dessa fase são 🔵:
@@ -165,7 +168,7 @@ CASO B — há pelo menos um 🟡 ou 🔴:
 
 ## Fase 3 — Giovana
 
-**Input que Giovana lê:** findings de Casey + Cora + Clara (se houver) + Nadia + César
+**Input que Giovana lê:** findings de Frontend Design + Casey + Cora + Clara (se houver) + Nadia + César
 **Output que Giovana adiciona:** novos findings em `HANDOFF.findings`
 
 Giovana analisa os smells encontrados por César e identifica qual dos 8 problemas GoF os causa:
@@ -288,11 +291,12 @@ CAUSA RAIZ
   [em 2-3 frases: qual é o problema fundamental, não os sintomas]
 
 MAPA DE PROBLEMAS
-  Nível        | Membro   | Problema              | Sev  | Causa raiz?
+  Nível        | Membro           | Problema              | Sev  | Causa raiz?
   ────────────────────────────────────────────────────────────────────
-  Usabilidade | Casey    | [breve se UI]         | —    | —
-  Interação   | Cora     | [breve se UI]         | —    | —
-  Produto     | Clara    | [breve se UI]         | —    | —
+  Estética     | Frontend Design  | [breve se UI]         | —    | —
+  Usabilidade | Casey            | [breve se UI]         | —    | —
+  Interação   | Cora             | [breve se UI]         | —    | —
+  Produto     | Clara            | [breve se UI]         | —    | —
   Experiência | Nadia    | [breve]               | 🔴   | —
   Código      | César    | [breve]               | 🔴   | sintoma de →
   Padrões     | Giovana  | [breve]               | 🟡   | sintoma de →

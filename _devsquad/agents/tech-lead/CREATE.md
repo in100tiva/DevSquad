@@ -18,11 +18,11 @@ Lucas verifica `HANDOFF.scope.type` e registra os membros que serão pulados:
 ```
 scope.type = "function" → pular Rafael, Diana, Camila (registrar em HANDOFF.skipped_members)
 scope.type = "class"    → pular Rafael (registrar)
-scope.type = "feature"  → convocar todos (Giovana condicional; Clara/Cora/Casey só com UI)
-scope.type = "system"   → convocar todos (Clara/Cora/Casey condicionais à UI)
+scope.type = "feature"  → convocar todos (Giovana condicional; UX+Frontend só com UI)
+scope.type = "system"   → convocar todos (Clara/Cora/Casey/Frontend Design condicionais à UI)
 ```
 
-**Clara / Cora / Casey:** com interface. **Casey** exige interface navegável ou copy. Backend puro → pular e registrar em `skipped_members`.
+**Clara / Cora / Casey / Frontend Design:** com interface visual. Backend puro → pular e registrar em `skipped_members`.
 
 Anunciar os pulos antes de começar:
 *"Escopo identificado: [tipo]. Convocarei: [lista]. Pularei: [lista] porque [razão]."*
@@ -43,6 +43,7 @@ NÍVEL         MEMBRO    CAMPO DO HANDOFF        PERGUNTA QUE RESPONDE
 7. Produto    Clara     ux_issues               "O usuário final consegue completar seu objetivo?"
 8. Interação  Cora      interaction_issues      "A interação comunica o que fazer e o que aconteceu?"
 9. Usabilidade Casey    usability_issues        "O usuário precisa pensar para usar isso?"
+10. Estética Frontend Design aesthetic_spec     "A interface é distinta e memorável — ou genérica?"
 ──────────────────────────────────────────────────────────────────────────────
 ```
 
@@ -322,6 +323,33 @@ Casey **sempre** preenche `trunk_test_result`. Se o trunk test falhar em qualque
 
 ---
 
+### Frontend Design — aesthetic_spec
+
+**Input:** `scope`, `structural_target`, `dx_issues`, `ux_issues`, `interaction_issues`, `usability_issues`, `trunk_test_result`
+
+**Output:** `HANDOFF.aesthetic_spec`
+
+Executado **após** Casey. **Não** reescreve copy nem fluxo — apenas **direção visual** e tokens para implementação.
+
+**Formato (`aesthetic_spec`):**
+
+```json
+{
+  "purpose": "[alinhado ao produto]",
+  "tone": "[ex.: editorial-escuro, pastel-clínico]",
+  "typography": { "display": "[fonte]", "body": "[fonte]", "scale_notes": "..." },
+  "color_theme": { "dominant": "...", "accents": ["..."], "css_variables_outline": "..." },
+  "motion": "[estratégia: entrada stagger / mínimo / …]",
+  "spatial_notes": "[composição, grid, assimetria]",
+  "differentiation": "[o que será inesquecível]",
+  "anti_patterns_to_avoid": ["Inter+roxo", "..."]
+}
+```
+
+**Conflito:** mudança visual que quebra hierarquia acordada por Casey → `conflicts_with: "usability_issues"`; Lucas decide trade-off.
+
+---
+
 ## Síntese consolidada de Lucas
 
 ```
@@ -345,7 +373,7 @@ PADRÕES A APLICAR
   [de HANDOFF.variation_points — tabela: variação → padrão → localização]
 
 ESQUELETO DE CÓDIGO
-  [de HANDOFF.refactor_steps + dx_issues + ux_issues + interaction_issues + usability_issues (se houver)]
+  [de HANDOFF.refactor_steps + campos UX + HANDOFF.aesthetic_spec — tokens, stack visual]
 
 AJUSTES DE DX
   [de HANDOFF.dx_issues com severidade]
@@ -364,6 +392,11 @@ AJUSTES DE USABILIDADE (Casey)
   [de HANDOFF.usability_issues]
   [com lei de Krug aplicada e classificação quick_win]
   [trunk test: passou ou reprovou em quais perguntas — HANDOFF.trunk_test_result]
+  [apenas quando escopo tem interface]
+
+DIREÇÃO ESTÉTICA (Frontend Design)
+  [de HANDOFF.aesthetic_spec — tom, tipografia, cor, motion, diferenciação]
+  [anti-patterns a evitar na implementação]
   [apenas quando escopo tem interface]
 
 PRÓXIMO PASSO

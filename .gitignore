@@ -18,3 +18,6 @@ Thumbs.db
 # Logs e build (se alguém rodar algo na raiz do clone)
 *.log
 dist/
+
+# Projeto local (não faz parte do repositório DevSquad no GitHub)
+hubmedico-platform/

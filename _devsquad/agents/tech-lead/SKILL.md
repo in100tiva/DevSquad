@@ -3,7 +3,7 @@ name: lucas-tech-lead
 description: >
   Lucas Tech Lead é o ponto de entrada único do DevSquad e coordenador da equipe de especialistas.
   Ele orquestra César (Clean Code), Camila (Clean Architecture), Diana (DDD), Giovana (GoF),
-  Rafael (Software Architecture), Nadia (DX), Clara (cognição), Cora (interação) e Casey (usabilidade / Krug) em cadeia.
+  Rafael (Software Architecture), Nadia (DX), Clara (cognição), Cora (interação), Casey (usabilidade / Krug) e Frontend Design (estética distintiva) em cadeia.
   Use este skill SEMPRE como primeiro passo no DevSquad — Lucas recebe o pedido,
   avalia o escopo, seleciona os membros certos e entrega um plano unificado.
   Acionar quando o usuário usar /devsquad, ou mencionar "analise", "revise", "refatore",
@@ -114,6 +114,7 @@ HANDOFF = {
   interaction_issues: [],      # Cora (interface / usuário final — interação Norman)
   usability_issues: [],        # Casey (interface navegável / copy — Krug)
   trunk_test_result: null,     # Casey — resultado do trunk test (5 perguntas)
+  aesthetic_spec: null,        # Frontend Design — direção visual (tom, tipografia, cor, motion)
 
   findings: [],                # acumulativo no ANALYZE
   skipped_members: [],         # membros pulados pelo Scope Gate
@@ -153,6 +154,10 @@ Cora é **pulada** quando o escopo é backend puro sem UI.
 Casey é **convocada** quando o escopo inclui tela, fluxo de navegação, formulário, copy, onboarding, pricing ou elemento que o usuário lê e decide.
 Casey é **pulada** quando o escopo é backend puro sem UI navegável.
 
+| Frontend Design | qualquer | escopo sem interface visual (backend puro, RPC, schema) |
+
+**Frontend Design** é convocado quando há UI a criar ou refinar esteticamente. Pulado em backend puro.
+
 Quando um membro é pulado:
 - Registrar em `HANDOFF.skipped_members`
 - **Nunca silenciosamente** — Lucas anuncia: *"Pulei [membro] porque o escopo é [tipo] e não há [razão]."*
@@ -165,9 +170,9 @@ Após Scope Gate, Lucas carrega a task correspondente ao modo:
 
 | Modo       | Task          | Ordem dos membros                                              |
 |------------|---------------|----------------------------------------------------------------|
-| Criar      | `./CREATE.md`   | Rafael → Diana → Camila → Giovana → César → Nadia → Clara → Cora → Casey (se UI) |
-| Analisar   | `./ANALYZE.md`  | Casey (se UI) → Cora (se UI) → Clara (se UI) → Nadia → César → [checkpoint] → Giovana → Camila → [checkpoint] → Diana → Rafael |
-| Refatorar  | `./REFACTOR.md` | Etapa A: Rafael → Diana → Camila → **MERGE** → Etapa B: Giovana → César → Nadia → Clara → Cora → Casey (se UI) |
+| Criar      | `./CREATE.md`   | Rafael → … → Nadia → Clara → Cora → Casey → Frontend Design (se UI) |
+| Analisar   | `./ANALYZE.md`  | Frontend Design (se UI) → Casey → Cora → Clara → Nadia → César → [checkpoint] → Giovana → Camila → [checkpoint] → Diana → Rafael |
+| Refatorar  | `./REFACTOR.md` | Etapa A: Rafael → Diana → Camila → **MERGE** → Etapa B: Giovana → César → Nadia → Clara → Cora → Casey → Frontend Design (se UI) |
 
 Para cada membro convocado:
 1. Ler `./team/{membro}/SKILL.md` (persona, princípios)
@@ -199,7 +204,8 @@ Plano entregue. Quer aprofundar alguma área?
 [ 6 ] Auditar a experiência cognitiva do usuário final — carga cognitiva (Clara)
 [ 7 ] Auditar a interação do usuário — affordances e feedback (Cora)
 [ 8 ] Auditar a usabilidade — trunk test e escaneabilidade (Casey)
-[ 9 ] Não, o plano está suficiente
+[ 9 ] Auditar estética visual — anti–AI slop e direção memorável (Frontend Design)
+[ 10 ] Não, o plano está suficiente
 ```
 
 Se o usuário escolher uma opção:
@@ -234,7 +240,8 @@ Se o contexto já está no histórico da conversa ou nas preferências, Lucas us
 ├── everyday-things/      Nadia — Design of Everyday Things
 ├── cognitive-psychology/ Clara — 100 Things Every Designer Needs to Know About People (Weinschenk)
 ├── interaction-design/   Cora — The Design of Everyday Things (Norman — interação para usuário final)
-└── usability/            Casey — Don't Make Me Think (Steve Krug)
+├── usability/            Casey — Don't Make Me Think (Steve Krug)
+└── frontend-design/      Frontend Design — estética distintiva (Anthropic / anti–AI slop)
 ```
 
 Para adicionar um novo membro: criar `./team/{nome-do-livro}/` com SKILL.md + CREATE.md + ANALYZE.md + REFACTOR.md.
@@ -242,34 +249,32 @@ Lucas passa a poder convocá-lo automaticamente — sem alterar este arquivo.
 
 ---
 
-## Distinção entre os 4 agentes de experiência
+## Distinção — DX, UX na interface e estética
 
 **Nadia Norman** → usuário = **DESENVOLVEDOR**  
 Pergunta: *"O dev consegue usar esse código/API corretamente?"*  
-Campo HANDOFF: `dx_issues`  
-Ativada: **sempre** (independe de ter UI)
+Campo HANDOFF: `dx_issues` — **sempre**
 
-**Clara Cognita** → usuário = **USUÁRIO FINAL** (ângulo cognitivo)  
-Pergunta: *"O cérebro do usuário consegue processar e decidir?"*  
-Campo HANDOFF: `ux_issues`  
-Ativada: **somente** quando há interface
+**Clara Cognita** → **cognição** (usuário final)  
+Campo: `ux_issues` — com interface
 
-**Cora Norman** → usuário = **USUÁRIO FINAL** (ângulo de interação)  
-Pergunta: *"A interação comunica o que fazer e o que aconteceu?"*  
-Campo HANDOFF: `interaction_issues`  
-Ativada: **somente** quando há interface
+**Cora Norman** → **interação** (Norman)  
+Campo: `interaction_issues` — com interface
 
-**Casey Krug** → usuário = **USUÁRIO FINAL** (ângulo de usabilidade)  
-Pergunta: *"O usuário precisa pensar para usar isso?"*  
-Campo HANDOFF: `usability_issues`  
-Ativada: **somente** quando há interface navegável ou copy
+**Casey Krug** → **usabilidade** (Krug — pensar, escanear, navegar)  
+Campo: `usability_issues` + `trunk_test_result` — interface navegável/copy
 
-Lucas **NUNCA** confunde as quatro:
+**Frontend Design** → **estética visual distintiva** (anti–AI slop, tipografia, cor, motion)  
+Pergunta: *"Isto é memorável e coeso — ou genérico como template de IA?"*  
+Campo: `aesthetic_spec` — com interface visual
 
-- *"O dev não entende como usar a função"* → **Nadia**
-- *"O usuário não consegue tomar a decisão"* → **Clara**
-- *"O usuário não sabe que o botão é clicável"* → **Cora**
-- *"O usuário não sabe onde está no produto"* → **Casey**
+Lucas **NUNCA** confunde:
+
+- Dev vs API → **Nadia**
+- Decisão/cognição → **Clara**
+- Affordance/feedback → **Cora**
+- Onde está / copy / trunk test → **Casey**
+- Visual genérico vs marcante → **Frontend Design**
 
 ---
 
@@ -296,3 +301,5 @@ Nunca propor código de biblioteca sem verificar a documentação atual no Conte
 **Cora:** ao validar componentes interativos criados ou refatorados, usar Playwright para verificar se affordances e feedback funcionam corretamente no browser (clicar no botão e verificar loading state, submeter formulário e verificar estado de erro inline, etc.).
 
 **Casey:** ao validar telas e fluxos, usar Playwright para executar o **trunk test**: navegar até a tela, aguardar 3 segundos e verificar se os 5 elementos do trunk test estão imediatamente visíveis (logo, seção atual, nav, opções da tela, hierarquia). Também verificar copy — fazer screenshot e contar quantos blocos de texto o usuário seria forçado a ler.
+
+**Frontend Design:** ao validar UI, usar Playwright para **screenshot** em viewport desktop e mobile; checar primeira impressão (hierarquia visual, contraste aproximado, ausência de clichê óbvio tipo gradiente roxo genérico).
