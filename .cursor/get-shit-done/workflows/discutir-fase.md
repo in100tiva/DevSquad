@@ -374,7 +374,7 @@ Verificar se o modo consultor deve ativar:
 
 2. Se ADVISOR_MODE for true, resolver nível de calibração vendor_philosophy:
    - Prioridade 1: Ler config.json > preferences.vendor_philosophy (override no nível do projeto)
-   - Prioridade 2: Ler avaliação de Escolhas de fornecedor / Filosofia (Vendor Choices/Philosophy) do USER-PROFILE.md (global)
+   - Prioridade 2: Ler avaliação de Escolhas de fornecedor / Filosofia do USER-PROFILE.md (global)
    - Prioridade 3: Padrão para "standard" se nenhum tiver valor ou valor for UNSCORED
 
    Mapear para nível de calibração:
@@ -600,14 +600,14 @@ Quando desabilitado (padrão), pular a pesquisa e apresentar perguntas diretamen
 - Aceitar `--batch`, `--batch=N` ou `--batch N`
 
 **Suporte a modo análise:** Analisar `--analyze` opcional de `{{GSD_ARGS}}`.
-Quando `--analyze` estiver ativo, antes de apresentar cada pergunta (ou grupo de perguntas em modo lote), fornecer uma breve **análise de compensações (trade-offs)** para a decisão:
+Quando `--analyze` estiver ativo, antes de apresentar cada pergunta (ou grupo de perguntas em modo lote), fornecer uma breve **análise de compensações** para a decisão:
 - 2-3 opções com prós/contras baseados no contexto do codebase e padrões comuns
 - Uma abordagem recomendada com raciocínio
 - Armadilhas conhecidas ou restrições de fases anteriores
 
 Exemplo com `--analyze`:
 ```
-**Análise de compensações (trade-offs): Estratégia de autenticação**
+**Análise de compensações: estratégia de autenticação**
 
 | Abordagem | Prós | Contras |
 |-----------|------|---------|
@@ -730,7 +730,7 @@ Estes dados são usados para gerar DISCUSSION-LOG.md no passo `write_context`.
 <step name="write_context">
 Criar CONTEXT.md capturando decisões tomadas.
 
-**Também gerar DISCUSSION-LOG.md** — um rastro de auditoria completo das perguntas e respostas (Q&A) do discutir-fase. (Modelo de referência: template `log-discussao.md`.)
+**Também gerar DISCUSSION-LOG.md** — um rastro de auditoria completo das perguntas e respostas do discutir-fase. (Modelo de referência: template `log-discussao.md`.)
 Este arquivo é apenas para referência humana (auditorias de software, revisões de conformidade). NÃO é
 consumido por agentes posteriores (pesquisador, planejador, executor).
 
@@ -935,10 +935,10 @@ Escrever arquivo.
 Commitar contexto da fase e log de discussão:
 
 ```bash
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs(${padded_phase}): capture phase context" --files "${phase_dir}/${padded_phase}-CONTEXT.md" "${phase_dir}/${padded_phase}-DISCUSSION-LOG.md"
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs(${padded_phase}): capturar contexto da fase" --files "${phase_dir}/${padded_phase}-CONTEXT.md" "${phase_dir}/${padded_phase}-DISCUSSION-LOG.md"
 ```
 
-Confirmar: "Commitado: docs(${padded_phase}): capture phase context"
+Confirmar: "Commitado: docs(${padded_phase}): capturar contexto da fase"
 </step>
 
 <step name="update_state">
@@ -946,14 +946,14 @@ Atualizar STATE.md com informações da sessão:
 
 ```bash
 node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" state record-session \
-  --stopped-at "Phase ${PHASE} context gathered" \
+  --stopped-at "Fase ${PHASE}: contexto coletado" \
   --resume-file "${phase_dir}/${padded_phase}-CONTEXT.md"
 ```
 
 Commitar STATE.md:
 
 ```bash
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs(state): record phase ${PHASE} context session" --files .planning/STATE.md
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs(state): registrar sessão de contexto da fase ${PHASE}" --files .planning/STATE.md
 ```
 </step>
 

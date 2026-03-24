@@ -26,7 +26,7 @@ Verifique se a flag `--auto` está presente em {{GSD_ARGS}}.
 **Requisito de documento:**
 Modo auto requer um documento de ideia — seja:
 
-- Referência de arquivo: `/gsd-new-project --auto @prd.md`
+- Referência de arquivo: `/gsd-novo-projeto --auto @prd.md`
 - Texto colado/escrito no prompt
 
 Se nenhum conteúdo de documento fornecido, erro:
@@ -35,8 +35,8 @@ Se nenhum conteúdo de documento fornecido, erro:
 Erro: --auto requer um documento de ideia.
 
 Uso:
-  /gsd-new-project --auto @sua-ideia.md
-  /gsd-new-project --auto [cole ou escreva sua ideia aqui]
+  /gsd-novo-projeto --auto @sua-ideia.md
+  /gsd-novo-projeto --auto [cole ou escreva sua ideia aqui]
 
 O documento deve descrever o que você quer construir.
 ```
@@ -56,7 +56,7 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 
 Analise o JSON para: `researcher_model`, `synthesizer_model`, `roadmapper_model`, `commit_docs`, `project_exists`, `has_codebase_map`, `planning_exists`, `has_existing_code`, `has_package_file`, `is_brownfield`, `needs_codebase_map`, `has_git`, `project_path`.
 
-**Se `project_exists` for true:** Erro — projeto já inicializado. Use `/gsd-progress`.
+**Se `project_exists` for true:** Erro — projeto já inicializado. Use `/gsd-progresso`.
 
 **Se `has_git` for false:** Inicializar git:
 
@@ -68,20 +68,20 @@ git init
 
 **Se modo auto:** Pular para o Passo 4 (assumir greenfield, sintetizar PROJECT.md a partir do documento fornecido).
 
-**Se `needs_codebase_map` for true** (do init — código existente detectado mas sem mapa de codebase):
+**Se `needs_codebase_map` for true** (do init — código existente detectado, mas sem mapa da base de código):
 
-Use conversational prompting:
+Use um prompt conversacional:
 
-- header: "Codebase"
-- question: "Detectei código existente neste diretório. Gostaria de mapear o codebase primeiro?"
+- header: "Base de código"
+- question: "Detectei código existente neste diretório. Quer mapear a base de código primeiro?"
 - options:
-  - "Mapear codebase primeiro" — Executar /gsd-map-codebase para entender a arquitetura existente (Recomendado)
+  - "Mapear a base de código primeiro" — Executar /gsd-mapear-codigo para entender a arquitetura existente (Recomendado)
   - "Pular mapeamento" — Prosseguir com a inicialização do projeto
 
-**Se "Mapear codebase primeiro":**
+**Se "Mapear a base de código primeiro":**
 
 ```
-Execute `/gsd-map-codebase` primeiro, depois retorne a `/gsd-new-project`
+Execute `/gsd-mapear-codigo` primeiro, depois retorne a `/gsd-novo-projeto`
 ```
 
 Sair do comando.
@@ -97,7 +97,7 @@ Modo YOLO é implícito (auto = YOLO). Perguntar as configurações restantes:
 **Rodada 1 — Configurações principais (3 perguntas, sem pergunta de Modo):**
 
 ```
-conversational prompting([
+prompt conversacional([
   {
     header: "Granularidade",
     question: "Quão finamente o escopo deve ser dividido em fases?",
@@ -129,10 +129,10 @@ conversational prompting([
 ])
 ```
 
-**Rodada 2 — Agentes de workflow (igual ao Passo 5):**
+**Rodada 2 — Agentes do fluxo de trabalho (igual ao Passo 5):**
 
 ```
-conversational prompting([
+prompt conversacional([
   {
     header: "Pesquisa",
     question: "Pesquisar antes de planejar cada fase? (adiciona tokens/tempo)",
@@ -187,7 +187,7 @@ node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" confi
 
 ```bash
 mkdir -p .planning
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "chore: add project config" --files .planning/config.json
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "chore: adicionar config do projeto" --files .planning/config.json
 ```
 
 **Persistir flag de cadeia auto-advance no config (sobrevive à compactação de contexto):**
@@ -212,7 +212,7 @@ Prosseguir para o Passo 4 (pular Passos 3 e 5).
 
 **Abrir a conversa:**
 
-Pergunte inline (texto livre, NÃO conversational prompting):
+Pergunte inline (texto livre, sem prompt conversacional):
 
 "O que você quer construir?"
 
@@ -228,7 +228,7 @@ Quando desabilitado (padrão), faça perguntas diretamente como antes.
 
 **Siga o fio:**
 
-Com base no que disseram, faça perguntas de acompanhamento que aprofundem a resposta. Use conversational prompting com opções que investiguem o que mencionaram — interpretações, esclarecimentos, exemplos concretos.
+Com base no que disseram, faça perguntas de acompanhamento que aprofundem a resposta. Use um prompt conversacional com opções que investiguem o que mencionaram — interpretações, esclarecimentos, exemplos concretos.
 
 Continue seguindo os fios. Cada resposta abre novos fios para explorar. Pergunte sobre:
 
@@ -252,7 +252,7 @@ Conforme avança, verifique mentalmente o checklist de contexto de `questionamen
 
 **Portal de decisão:**
 
-Quando puder escrever um PROJECT.md claro, use conversational prompting:
+Quando puder escrever um PROJECT.md claro, use um prompt conversacional:
 
 - header: "Pronto?"
 - question: "Acho que entendi o que você busca. Pronto para criar o PROJECT.md?"
@@ -295,12 +295,12 @@ Inicializar requisitos como hipóteses:
 
 Todos os requisitos Ativos são hipóteses até serem lançados e validados.
 
-**Para projetos brownfield (mapa de codebase existe):**
+**Para projetos brownfield (mapa da base de código presente):**
 
 Inferir requisitos Validados a partir do código existente:
 
 1. Ler `.planning/codigo/ARCHITECTURE.md` e `STACK.md`
-2. Identificar o que o codebase já faz
+2. Identificar o que a base de código já faz
 3. Estes se tornam o conjunto Validado inicial
 
 ```markdown
@@ -348,14 +348,14 @@ Inicializar com quaisquer decisões tomadas durante o questionamento:
 
 Este documento evolui nas transições de fase e limites de marco.
 
-**Após cada transição de fase** (via `/gsd-transition`):
+**Após cada transição de fase** (via `/gsd-transicao`):
 1. Requisitos invalidados? → Mover para Fora do Escopo com motivo
 2. Requisitos validados? → Mover para Validados com referência da fase
 3. Novos requisitos emergiram? → Adicionar a Ativos
 4. Decisões a registrar? → Adicionar a Decisões Chave
 5. "O Que É Isso" ainda preciso? → Atualizar se divergiu
 
-**Após cada marco** (via `/gsd-complete-milestone`):
+**Após cada marco** (via `/gsd-completar-marco`):
 1. Revisão completa de todas as seções
 2. Verificação do Valor Central — ainda a prioridade certa?
 3. Auditar Fora do Escopo — razões ainda válidas?
@@ -368,17 +368,17 @@ Não comprimir. Capturar tudo que foi coletado.
 
 ```bash
 mkdir -p .planning
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: initialize project" --files .planning/PROJECT.md
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: inicializar projeto" --files .planning/PROJECT.md
 ```
 
-## 5. Preferências de Workflow
+## 5. Preferências de fluxo de trabalho
 
-**Se modo auto:** Pular — config foi coletado no Passo 2a. Prosseguir para o Passo 5.5.
+**Se modo auto:** Pular — a config foi coletada no Passo 2a. Prosseguir para o Passo 5.1.5.
 
 **Verificar padrões globais** em `~/.gsd/defaults.json`. Se o arquivo existir, oferecer usar padrões salvos:
 
 ```
-conversational prompting([
+prompt conversacional([
   {
     question: "Usar suas configurações padrão salvas? (de ~/.gsd/defaults.json)",
     header: "Padrões",
@@ -395,10 +395,10 @@ Se "Sim": ler `~/.gsd/defaults.json`, usar esses valores para config.json, e pul
 
 Se "Não" ou `~/.gsd/defaults.json` não existe: prosseguir com as perguntas abaixo.
 
-**Rodada 1 — Configurações principais do workflow (4 perguntas):**
+**Rodada 1 — Configurações principais do fluxo de trabalho (4 perguntas):**
 
 ```
-questions: [
+perguntas: [
   {
     header: "Modo",
     question: "Como você quer trabalhar?",
@@ -439,7 +439,7 @@ questions: [
 ]
 ```
 
-**Rodada 2 — Agentes de workflow:**
+**Rodada 2 — Agentes do fluxo de trabalho:**
 
 Estes geram agentes adicionais durante planejamento/execução. Adicionam tokens e tempo mas melhoram a qualidade.
 
@@ -452,7 +452,7 @@ Estes geram agentes adicionais durante planejamento/execução. Adicionam tokens
 Todos recomendados para projetos importantes. Pular para experimentos rápidos.
 
 ```
-questions: [
+perguntas: [
   {
     header: "Pesquisa",
     question: "Pesquisar antes de planejar cada fase? (adiciona tokens/tempo)",
@@ -498,10 +498,10 @@ Criar `.planning/config.json` com todas as configurações (CLI preenche os padr
 
 ```bash
 mkdir -p .planning
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" config-new-project '{"mode":"[yolo|interactive]","granularity":"[selected]","parallelization":true|false,"commit_docs":true|false,"model_profile":"quality|balanced|budget|inherit","workflow":{"research":true|false,"plan_check":true|false,"verifier":true|false,"nyquist_validation":[false if granularity=coarse, true otherwise]}}'
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" config-new-project '{"mode":"[yolo|interactive]","granularity":"[selected]","parallelization":true|false,"commit_docs":true|false,"model_profile":"quality|balanced|budget|inherit","workflow":{"research":true|false,"plan_check":true|false,"verifier":true|false,"nyquist_validation":[false se granularidade=grossa, true caso contrário]}}'
 ```
 
-**Nota:** Execute `/gsd-settings` a qualquer momento para atualizar perfil de modelo, agentes de workflow, estratégia de branching e outras preferências.
+**Nota:** Execute `/gsd-configuracoes` a qualquer momento para atualizar perfil de modelo, agentes do fluxo de trabalho, estratégia de branches e outras preferências.
 
 **Se commit_docs = Não:**
 
@@ -515,7 +515,7 @@ node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" confi
 **Commit do config.json:**
 
 ```bash
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "chore: add project config" --files .planning/config.json
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "chore: adicionar config do projeto" --files .planning/config.json
 ```
 
 ## 5.1. Detecção de Sub-Repositórios
@@ -532,9 +532,9 @@ find . -maxdepth 1 -type d -not -name ".*" -not -name "node_modules" -exec test 
 
 Remover o prefixo `./` para obter nomes de diretórios (ex: `./backend` → `backend`).
 
-Use conversational prompting:
+Use um prompt conversacional:
 
-- header: "Workspace Multi-Repo"
+- header: "Workspace multi-repositório"
 - question: "Detectei repositórios git separados neste workspace. Quais diretórios contêm código que o GSD deve commitar?"
 - multiSelect: true
 - options: uma opção por diretório detectado
@@ -558,7 +558,7 @@ Usar modelos do init: `researcher_model`, `synthesizer_model`, `roadmapper_model
 
 **Se modo auto:** Padrão para "Pesquisar primeiro" sem perguntar.
 
-Use conversational prompting:
+Use um prompt conversacional:
 
 - header: "Pesquisa"
 - question: "Pesquisar o ecossistema do domínio antes de definir requisitos?"
@@ -823,7 +823,7 @@ Ler PROJECT.md e extrair:
 - Auto-incluir todas as funcionalidades essenciais (usuários esperam estas)
 - Incluir funcionalidades explicitamente mencionadas no documento fornecido
 - Auto-adiar diferenciadores não mencionados no documento
-- Pular loops de conversational prompting por categoria
+- Pular loops de prompt conversacional por categoria
 - Pular pergunta "Alguma adição?"
 - Pular portal de aprovação de requisitos
 - Gerar REQUIREMENTS.md e commitar diretamente
@@ -865,7 +865,7 @@ Para cada capacidade mencionada:
 
 **Definir escopo de cada categoria:**
 
-Para cada categoria, use conversational prompting:
+Para cada categoria, use um prompt conversacional:
 
 - header: "[Categoria]" (máx 12 caracteres)
 - question: "Quais funcionalidades de [categoria] estão na v1?"
@@ -884,7 +884,7 @@ Rastrear respostas:
 
 **Identificar lacunas:**
 
-Use conversational prompting:
+Use um prompt conversacional:
 
 - header: "Adições"
 - question: "Algum requisito que a pesquisa não cobriu? (Funcionalidades específicas da sua visão)"
@@ -949,7 +949,7 @@ Se "ajustar": Retornar ao escopo.
 **Commit dos requisitos:**
 
 ```bash
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: define v1 requirements" --files .planning/REQUIREMENTS.md
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: definir requisitos v1" --files .planning/REQUIREMENTS.md
 ```
 
 ## 8. Criar Roteiro
@@ -1045,7 +1045,7 @@ Critérios de sucesso:
 
 **CRÍTICO: Pedir aprovação antes de commitar (somente modo interativo):**
 
-Use conversational prompting:
+Use um prompt conversacional:
 
 - header: "Roteiro"
 - question: "Essa estrutura de roteiro funciona para você?"
@@ -1088,12 +1088,12 @@ Use conversational prompting:
 node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" generate-claude-md
 ```
 
-Isso garante que novos projetos recebam a orientação padrão de workflow GSD e o contexto atual do projeto em `.cursor/rules/`.
+Isso garante que novos projetos recebam a orientação padrão do fluxo de trabalho GSD e o contexto atual do projeto em `.cursor/rules/`.
 
 **Commit do roteiro (após aprovação ou modo auto):**
 
 ```bash
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: create roadmap ([N] phases)" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md .cursor/rules/
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: criar roteiro ([N] fases)" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md .cursor/rules/
 ```
 
 ## 9. Concluído
@@ -1110,11 +1110,11 @@ Apresentar resumo de conclusão:
 | Artefato       | Localização                  |
 |----------------|------------------------------|
 | Projeto        | `.planning/PROJECT.md`       |
-| Config         | `.planning/config.json`      |
+| Configuração   | `.planning/config.json`      |
 | Pesquisa       | `.planning/research/`        |
 | Requisitos     | `.planning/REQUIREMENTS.md`  |
 | Roteiro        | `.planning/ROADMAP.md`       |
-| Guia do projeto| `.cursor/rules/`             |
+| Guia do projeto | `.cursor/rules/`             |
 
 **[N] fases** | **[X] requisitos** | Pronto para construir ✓
 ```
@@ -1127,7 +1127,7 @@ Apresentar resumo de conclusão:
 ╚══════════════════════════════════════════╝
 ```
 
-Sair da skill e invocar SlashCommand("/gsd-discuss-phase 1 --auto")
+Sair da skill e invocar SlashCommand("/gsd-discutir-fase 1 --auto")
 
 **Se modo interativo:**
 
@@ -1147,15 +1147,15 @@ PHASE1_HAS_UI=$(echo "$PHASE1_SECTION" | grep -qi "UI hint.*yes" && echo "true" 
 
 **Fase 1: [Nome da Fase]** — [Objetivo do ROADMAP.md]
 
-/gsd-discuss-phase 1 — coletar contexto e esclarecer abordagem
+/gsd-discutir-fase 1 — coletar contexto e esclarecer abordagem
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- /gsd-ui-phase 1 — gerar contrato de design UI (recomendado para fases frontend)
-- /gsd-plan-phase 1 — pular discussão, planejar diretamente
+- /gsd-fase-ui 1 — gerar contrato de design UI (recomendado para fases frontend)
+- /gsd-planejar-fase 1 — pular discussão, planejar diretamente
 
 ───────────────────────────────────────────────────────────────
 ```
@@ -1169,14 +1169,14 @@ PHASE1_HAS_UI=$(echo "$PHASE1_SECTION" | grep -qi "UI hint.*yes" && echo "true" 
 
 **Fase 1: [Nome da Fase]** — [Objetivo do ROADMAP.md]
 
-/gsd-discuss-phase 1 — coletar contexto e esclarecer abordagem
+/gsd-discutir-fase 1 — coletar contexto e esclarecer abordagem
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- /gsd-plan-phase 1 — pular discussão, planejar diretamente
+- /gsd-planejar-fase 1 — pular discussão, planejar diretamente
 
 ───────────────────────────────────────────────────────────────
 ```
@@ -1198,8 +1198,6 @@ PHASE1_HAS_UI=$(echo "$PHASE1_SECTION" | grep -qi "UI hint.*yes" && echo "true" 
 - `.planning/STATE.md`
 - `.cursor/rules/`
 
-</output>
-
 <success_criteria>
 
 - [ ] Diretório .planning/ criado
@@ -1207,7 +1205,7 @@ PHASE1_HAS_UI=$(echo "$PHASE1_SECTION" | grep -qi "UI hint.*yes" && echo "true" 
 - [ ] Detecção brownfield completada
 - [ ] Questionamento profundo completado (fios seguidos, não apressado)
 - [ ] PROJECT.md captura contexto completo → **commitado**
-- [ ] config.json tem modo de workflow, granularidade, paralelização → **commitado**
+- [ ] config.json tem modo de fluxo de trabalho, granularidade, paralelização → **commitado**
 - [ ] Pesquisa completada (se selecionada) — 4 agentes paralelos iniciados → **commitado**
 - [ ] Requisitos coletados (da pesquisa ou conversa)
 - [ ] Usuário definiu escopo de cada categoria (v1/v2/fora do escopo)
@@ -1218,8 +1216,8 @@ PHASE1_HAS_UI=$(echo "$PHASE1_SECTION" | grep -qi "UI hint.*yes" && echo "true" 
 - [ ] ROADMAP.md criado com fases, mapeamentos de requisitos, critérios de sucesso
 - [ ] STATE.md inicializado
 - [ ] Rastreabilidade do REQUIREMENTS.md atualizada
-- [ ] .cursor/rules/ gerado com orientação de workflow GSD
-- [ ] Usuário sabe que o próximo passo é `/gsd-discuss-phase 1`
+- [ ] .cursor/rules/ gerado com orientação do fluxo de trabalho GSD
+- [ ] Usuário sabe que o próximo passo é `/gsd-discutir-fase 1`
 
 **Commits atômicos:** Cada fase commita seus artefatos imediatamente. Se o contexto for perdido, artefatos persistem.
 

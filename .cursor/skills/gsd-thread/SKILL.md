@@ -1,146 +1,147 @@
 ---
 name: gsd-thread
-description: "Manage persistent context threads for cross-session work"
+description: "Gerenciar threads de contexto persistente para trabalho entre sessões"
 ---
 
 <cursor_skill_adapter>
-## A. Skill Invocation
-- This skill is invoked when the user mentions `gsd-thread` or describes a task matching this skill.
-- Treat all user text after the skill mention as `{{GSD_ARGS}}`.
-- If no arguments are present, treat `{{GSD_ARGS}}` as empty.
+## A. Invocação da Skill
+- Esta skill é invocada quando o usuário menciona `gsd-thread` ou descreve uma tarefa correspondente a esta skill.
+- Trate todo texto do usuário após a menção da skill como `{{GSD_ARGS}}`.
+- Se não houver argumentos, trate `{{GSD_ARGS}}` como vazio.
 
-## B. User Prompting
-When the workflow needs user input, prompt the user conversationally:
-- Present options as a numbered list in your response text
-- Ask the user to reply with their choice
-- For multi-select, ask for comma-separated numbers
+## B. Interação com o Usuário
+Quando o workflow precisar de input do usuário, pergunte conversacionalmente:
+- Apresente opções como lista numerada no texto da resposta
+- Peça ao usuário para responder com sua escolha
+- Para seleção múltipla, peça números separados por vírgula
 
-## C. Tool Usage
-Use these Cursor tools when executing GSD workflows:
-- `Shell` for running commands (terminal operations)
-- `StrReplace` for editing existing files
-- `Read`, `Write`, `Glob`, `Grep`, `Task`, `WebSearch`, `WebFetch`, `TodoWrite` as needed
+## C. Uso de Ferramentas
+Use estas ferramentas do Cursor ao executar workflows GSD:
+- `Shell` para executar comandos (operações de terminal)
+- `StrReplace` para editar arquivos existentes
+- `Read`, `Write`, `Glob`, `Grep`, `Task`, `WebSearch`, `WebFetch`, `TodoWrite` conforme necessário
 
-## D. Subagent Spawning
-When the workflow needs to spawn a subagent:
+## D. Criação de Subagentes
+Quando o workflow precisar criar um subagente:
 - Use `Task(subagent_type="generalPurpose", ...)`
-- The `model` parameter maps to Cursor's model options (e.g., "fast")
+- O parâmetro `model` mapeia para as opções de modelo do Cursor (ex: "fast")
 </cursor_skill_adapter>
 
 <objective>
-Create, list, or resume persistent context threads. Threads are lightweight
-cross-session knowledge stores for work that spans multiple sessions but
-doesn't belong to any specific phase.
+Criar, listar ou retomar threads de contexto persistente. Threads são armazenamentos
+de conhecimento leves entre sessões para trabalho que abrange múltiplas sessões mas
+não pertence a nenhuma fase específica.
 </objective>
 
 <process>
 
-**Parse {{GSD_ARGS}} to determine mode:**
+**Analise {{GSD_ARGS}} para determinar o modo:**
 
 <mode_list>
-**If no arguments or {{GSD_ARGS}} is empty:**
+**Se sem argumentos ou {{GSD_ARGS}} está vazio:**
 
-List all threads:
+Listar todas as threads:
 ```bash
 ls .planning/threads/*.md 2>/dev/null
 ```
 
-For each thread, read the first few lines to show title and status:
+Para cada thread, leia as primeiras linhas para mostrar título e status:
 ```
-## Active Threads
+## Threads Ativas
 
-| Thread | Status | Last Updated |
-|--------|--------|-------------|
-| fix-deploy-key-auth | OPEN | 2026-03-15 |
-| pasta-tcp-timeout | RESOLVED | 2026-03-12 |
-| perf-investigation | IN PROGRESS | 2026-03-17 |
+| Thread | Status | Última Atualização |
+|--------|--------|--------------------|
+| fix-deploy-key-auth | ABERTA | 2026-03-15 |
+| pasta-tcp-timeout | RESOLVIDA | 2026-03-12 |
+| perf-investigation | EM PROGRESSO | 2026-03-17 |
 ```
 
-If no threads exist, show:
+Se nenhuma thread existir, mostrar:
 ```
-No threads found. Create one with: /gsd-thread <description>
+Nenhuma thread encontrada. Crie uma com: /gsd-thread <descrição>
 ```
 </mode_list>
 
 <mode_resume>
-**If {{GSD_ARGS}} matches an existing thread name (file exists):**
+**Se {{GSD_ARGS}} corresponde a um nome de thread existente (arquivo existe):**
 
-Resume the thread — load its context into the current session:
+Retomar a thread — carregar seu contexto na sessão atual:
 ```bash
 cat ".planning/threads/${THREAD_NAME}.md"
 ```
 
-Display the thread content and ask what the user wants to work on next.
-Update the thread's status to `IN PROGRESS` if it was `OPEN`.
+Exiba o conteúdo da thread e pergunte no que o usuário quer trabalhar em seguida.
+Atualize o status da thread para `EM PROGRESSO` se estava `ABERTA`.
 </mode_resume>
 
 <mode_create>
-**If {{GSD_ARGS}} is a new description (no matching thread file):**
+**Se {{GSD_ARGS}} é uma nova descrição (nenhum arquivo de thread correspondente):**
 
-Create a new thread:
+Criar uma nova thread:
 
-1. Generate slug from description:
+1. Gerar slug a partir da descrição:
    ```bash
    SLUG=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" generate-slug "{{GSD_ARGS}}")
    ```
 
-2. Create the threads directory if needed:
+2. Criar o diretório de threads se necessário:
    ```bash
    mkdir -p .planning/threads
    ```
 
-3. Write the thread file:
+3. Escrever o arquivo da thread:
    ```bash
    cat > ".planning/threads/${SLUG}.md" << 'EOF'
-   # Thread: {description}
+   # Thread: {descrição}
 
-   ## Status: OPEN
+   ## Status: ABERTA
 
-   ## Goal
+   ## Objetivo
 
-   {description}
+   {descrição}
 
-   ## Context
+   ## Contexto
 
-   *Created from conversation on {today's date}.*
+   *Criada a partir da conversa em {data de hoje}.*
 
-   ## References
+   ## Referências
 
-   - *(add links, file paths, or issue numbers)*
+   - *(adicione links, caminhos de arquivos ou números de issues)*
 
-   ## Next Steps
+   ## Próximos Passos
 
-   - *(what the next session should do first)*
+   - *(o que a próxima sessão deve fazer primeiro)*
    EOF
    ```
 
-4. If there's relevant context in the current conversation (code snippets,
-   error messages, investigation results), extract and add it to the Context
-   section.
+4. Se houver contexto relevante na conversa atual (trechos de código,
+   mensagens de erro, resultados de investigação), extraia e adicione à
+   seção Contexto.
 
 5. Commit:
    ```bash
-   node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: create thread — ${ARGUMENTS}" --files ".planning/threads/${SLUG}.md"
+   node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs: criar thread — ${ARGUMENTS}" --files ".planning/threads/${SLUG}.md"
    ```
 
-6. Report:
+6. Relatório:
    ```
-   ## 🧵 Thread Created
+   ## 🧵 Thread Criada
 
    Thread: {slug}
-   File: .planning/threads/{slug}.md
+   Arquivo: .planning/threads/{slug}.md
 
-   Resume anytime with: /gsd-thread {slug}
+   Retome a qualquer momento com: /gsd-thread {slug}
    ```
 </mode_create>
 
 </process>
 
 <notes>
-- Threads are NOT phase-scoped — they exist independently of the roadmap
-- Lighter weight than /gsd-pause-work — no phase state, no plan context
-- The value is in Context and Next Steps — a cold-start session can pick up immediately
-- Threads can be promoted to phases or backlog items when they mature:
-  /gsd-add-phase or /gsd-add-backlog with context from the thread
-- Thread files live in .planning/threads/ — no collision with phases or other GSD structures
+- Threads NÃO são vinculadas a fases — existem independentemente do roteiro
+- Mais leve que /gsd-pausar-trabalho — sem estado de fase, sem contexto de plano
+- O valor está em Contexto e Próximos Passos — uma sessão cold-start pode retomar imediatamente
+- Threads podem ser promovidas a fases ou itens de backlog quando amadurecerem:
+  /gsd-adicionar-fase ou /gsd-adicionar-backlog com contexto da thread
+- Arquivos de thread ficam em .planning/threads/ — sem colisão com fases ou outras estruturas GSD
 </notes>
+</output>

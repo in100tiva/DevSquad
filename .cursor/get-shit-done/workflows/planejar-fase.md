@@ -30,15 +30,15 @@ Analise o JSON para: `researcher_model`, `planner_model`, `checker_model`, `rese
 
 **Caminhos de arquivo (para blocos <files_to_read>):** `state_path`, `roadmap_path`, `requirements_path`, `context_path`, `research_path`, `verification_path`, `uat_path`, `reviews_path`. Estes são null se os arquivos não existirem.
 
-**Se `planning_exists` for false:** Erro — execute `/gsd-new-project` primeiro.
+**Se `planning_exists` for false:** Erro — execute `/gsd-novo-projeto` primeiro.
 
 ## 2. Analisar e Normalizar Argumentos
 
-Extrair de {{GSD_ARGS}}: número da fase (inteiro ou decimal como `2.1`), flags (`--research`, `--skip-research`, `--gaps`, `--skip-verify`, `--prd <filepath>`, `--reviews`, `--text`).
+Extrair de {{GSD_ARGS}}: número da fase (inteiro ou decimal como `2.1`), flags (`--research`, `--skip-research`, `--gaps`, `--skip-verify`, `--prd <caminho-arquivo>`, `--reviews`, `--text`).
 
-Definir `TEXT_MODE=true` se `--text` estiver presente em {{GSD_ARGS}} OU `text_mode` do JSON de init for `true`. Quando `TEXT_MODE` estiver ativo, substituir toda chamada `conversational prompting` por uma lista numerada em texto simples e pedir ao usuário para digitar o número da escolha. Isto é necessário para sessões remotas do Cursor (modo `/rc`) onde menus TUI não funcionam através do Claude App.
+Definir `TEXT_MODE=true` se `--text` estiver presente em {{GSD_ARGS}} OU `text_mode` do JSON de init for `true`. Quando `TEXT_MODE` estiver ativo, substituir toda chamada de prompt conversacional (`conversational prompting`) por uma lista numerada em texto simples e pedir ao usuário para digitar o número da escolha. Isto é necessário para sessões remotas do Cursor (modo `/rc`) onde menus TUI não funcionam através do Claude App.
 
-Extrair `--prd <filepath>` de {{GSD_ARGS}}. Se presente, definir PRD_FILE para o filepath.
+Extrair `--prd <caminho-arquivo>` de {{GSD_ARGS}}. Se presente, definir PRD_FILE para o caminho do arquivo.
 
 **Se sem número de fase:** Detectar próxima fase não planejada do roteiro.
 
@@ -59,11 +59,11 @@ mkdir -p ".planning/phases/${padded_phase}-${phase_slug}"
 
 Erro:
 ```
-Nenhum REVIEWS.md encontrado para Fase {N}. Execute reviews primeiro:
+Nenhum REVIEWS.md encontrado para Fase {N}. Execute `/gsd-revisar` primeiro:
 
-/gsd-review --phase {N}
+/gsd-revisar --phase {N}
 
-Depois re-execute /gsd-plan-phase {N} --reviews
+Depois execute novamente /gsd-planejar-fase {N} --reviews
 ```
 Sair do workflow.
 
@@ -79,7 +79,7 @@ PHASE_INFO=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-too
 
 **Pular se:** Sem flag `--prd` nos argumentos.
 
-**Se `--prd <filepath>` fornecido:**
+**Se `--prd <caminho-arquivo>` fornecido:**
 
 1. Ler o arquivo PRD:
 ```bash
@@ -103,7 +103,7 @@ Gerando CONTEXT.md a partir dos requisitos...
 3. Analisar o conteúdo do PRD e gerar CONTEXT.md. O orquestrador deve:
    - Extrair todos os requisitos, histórias de usuário, critérios de aceitação e restrições do PRD
    - Mapear cada um para uma decisão travada (tudo no PRD é tratado como decisão travada)
-   - Identificar áreas que o PRD não cobre e marcar como "Discrição do Claude"
+   - Identificar áreas que o PRD não cobre e marcar como "À critério do Claude"
    - **Extrair refs canônicas** do ROADMAP.md para esta fase, mais quaisquer specs/ADRs referenciados no PRD — expandir para caminhos completos (OBRIGATÓRIO)
    - Criar CONTEXT.md no diretório da fase
 
@@ -129,7 +129,7 @@ Gerando CONTEXT.md a partir dos requisitos...
 ### [Categoria derivada do conteúdo]
 - [Requisito como decisão travada]
 
-### Discrição do Claude
+### À critério do Claude
 [Áreas não cobertas pelo PRD — detalhes de implementação, escolhas técnicas]
 
 </decisions>
@@ -137,7 +137,7 @@ Gerando CONTEXT.md a partir dos requisitos...
 <canonical_refs>
 ## Referências Canônicas
 
-**Agentes downstream DEVEM ler estes antes de planejar ou implementar.**
+**Agentes posteriores DEVEM ler estes antes de planejar ou implementar.**
 
 [OBRIGATÓRIO. Extrair do ROADMAP.md e quaisquer docs referenciados no PRD.
 Usar caminhos relativos completos. Agrupar por área temática.]
@@ -172,7 +172,7 @@ Usar caminhos relativos completos. Agrupar por área temática.]
 
 5. Commit:
 ```bash
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs(${padded_phase}): generate context from PRD" --files "${phase_dir}/${padded_phase}-CONTEXT.md"
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs(${padded_phase}): gerar contexto a partir do PRD" --files "${phase_dir}/${padded_phase}-CONTEXT.md"
 ```
 
 6. Definir `context_content` com o conteúdo do CONTEXT.md gerado e continuar para o passo 5 (Tratar Pesquisa).
@@ -202,12 +202,12 @@ Nenhum CONTEXT.md encontrado para Fase {X}. Os planos usarão apenas pesquisa e 
 [Se DISCUSS_MODE for "assumptions":]
 2. Coletar contexto (modo suposições) — Analisar codebase e apresentar suposições antes de planejar
 [Se DISCUSS_MODE for "discuss" ou não definido:]
-2. Executar discuss-phase primeiro — Capturar decisões de design antes de planejar
+2. Executar discutir-fase primeiro — Capturar decisões de design antes de planejar
 
 Digite o número:
 ```
 
-Caso contrário use conversational prompting:
+Caso contrário use prompt conversacional:
 - header: "Sem contexto"
 - question: "Nenhum CONTEXT.md encontrado para Fase {X}. Os planos usarão apenas pesquisa e requisitos — suas preferências de design não serão incluídas. Continuar ou capturar contexto primeiro?"
 - options:
@@ -215,19 +215,19 @@ Caso contrário use conversational prompting:
   Se `DISCUSS_MODE` for `"assumptions"`:
   - "Coletar contexto (modo suposições)" — Analisar codebase e apresentar suposições antes de planejar
   Se `DISCUSS_MODE` for `"discuss"` (ou não definido):
-  - "Executar discuss-phase primeiro" — Capturar decisões de design antes de planejar
+  - "Executar discutir-fase primeiro" — Capturar decisões de design antes de planejar
 
 Se "Continuar sem contexto": Prosseguir para o passo 5.
-Se "Executar discuss-phase primeiro":
-  **IMPORTANTE:** NÃO invocar discuss-phase como chamada Skill/Task aninhada — conversational prompting
+Se "Executar discutir-fase primeiro":
+  **IMPORTANTE:** NÃO invocar discutir-fase como chamada Skill/Task aninhada — o prompt conversacional (`conversational prompting`)
   não funciona corretamente em subcontextos aninhados (#1009). Em vez disso, exibir o comando
   e sair para o usuário executá-lo como comando de nível superior:
   ```
-  Execute este comando primeiro, depois re-execute /gsd-plan-phase {X} ${GSD_WS}:
+  Execute este comando primeiro, depois execute novamente /gsd-planejar-fase {X} ${GSD_WS}:
 
-  /gsd-discuss-phase {X} ${GSD_WS}
+  /gsd-discutir-fase {X} ${GSD_WS}
   ```
-  **Sair do workflow plan-phase. Não continuar.**
+  **Sair do workflow planejar-fase. Não continuar.**
 
 ## 5. Tratar Pesquisa
 
@@ -250,7 +250,7 @@ Pesquisar antes de planejar Fase {X}: {phase_name}?
 Digite o número:
 ```
 
-Caso contrário use conversational prompting:
+Caso contrário use prompt conversacional:
 ```
 conversational prompting([
   {
@@ -293,7 +293,7 @@ Responder: "O que preciso saber para PLANEJAR bem esta fase?"
 </objective>
 
 <files_to_read>
-- {context_path} (DECISÕES DO USUÁRIO de /gsd-discuss-phase)
+- {context_path} (DECISÕES DO USUÁRIO de /gsd-discutir-fase)
 - {requirements_path} (Requisitos do projeto)
 - {state_path} (Decisões e histórico do projeto)
 </files_to_read>
@@ -389,18 +389,18 @@ Se `TEXT_MODE` for true, apresentar como lista numerada em texto simples:
 ```
 Fase {N} tem indicadores de frontend mas sem ESPECIFICACAO-UI.md. Gerar um contrato de design antes de planejar?
 
-1. Gerar ESPECIFICACAO-UI primeiro — Executar /gsd-ui-phase {N} depois re-executar /gsd-plan-phase {N}
+1. Gerar ESPECIFICACAO-UI primeiro — Execute /gsd-fase-ui {N}; em seguida, execute novamente /gsd-planejar-fase {N}
 2. Continuar sem ESPECIFICACAO-UI
 3. Não é uma fase de frontend
 
 Digite o número:
 ```
 
-Caso contrário use conversational prompting:
+Caso contrário use prompt conversacional:
 - header: "Contrato de Design UI"
 - question: "Fase {N} tem indicadores de frontend mas sem ESPECIFICACAO-UI.md. Gerar um contrato de design antes de planejar?"
 - options:
-  - "Gerar ESPECIFICACAO-UI primeiro" → Exibir: "Execute `/gsd-ui-phase {N} ${GSD_WS}` depois re-execute `/gsd-plan-phase {N} ${GSD_WS}`". Sair do workflow.
+  - "Gerar ESPECIFICACAO-UI primeiro" → Exibir: Execute `/gsd-fase-ui {N} ${GSD_WS}` e, em seguida, execute novamente `/gsd-planejar-fase {N} ${GSD_WS}`. Sair do workflow.
   - "Continuar sem ESPECIFICACAO-UI" → Continuar para o passo 6.
   - "Não é uma fase de frontend" → Continuar para o passo 6.
 
@@ -412,7 +412,7 @@ Caso contrário use conversational prompting:
 ls "${PHASE_DIR}"/*-PLAN.md 2>/dev/null
 ```
 
-**Se existe E flag `--reviews`:** Pular prompt — ir direto para replanejar (o propósito de `--reviews` é replanejar com feedback de review).
+**Se existe E flag `--reviews`:** Pular prompt — ir direto para replanejar (o propósito de `--reviews` é replanejar com feedback de revisão).
 
 **Se existe E sem flag `--reviews`:** Oferecer: 1) Adicionar mais planos, 2) Ver existentes, 3) Replanejar do zero.
 
@@ -448,7 +448,7 @@ VALIDATION_EXISTS=$(ls "${PHASE_DIR}"/*-VALIDACAO.md 2>/dev/null | head -1)
 ```
 
 Se ausente e Nyquist ainda habilitado/aplicável — perguntar ao usuário:
-1. Re-executar: `/gsd-plan-phase {PHASE} --research ${GSD_WS}`
+1. Executar novamente: `/gsd-planejar-fase {PHASE} --research ${GSD_WS}`
 2. Desabilitar Nyquist com o comando exato:
    `node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" config-set workflow.nyquist_validation false`
 3. Continuar mesmo assim (planos falham na Dimensão 8)
@@ -477,11 +477,11 @@ Prompt do planejador:
 - {state_path} (Estado do Projeto)
 - {roadmap_path} (Roteiro)
 - {requirements_path} (Requisitos)
-- {context_path} (DECISÕES DO USUÁRIO de /gsd-discuss-phase)
+- {context_path} (DECISÕES DO USUÁRIO de /gsd-discutir-fase)
 - {research_path} (Pesquisa Técnica)
 - {verification_path} (Lacunas de Verificação - se --gaps)
 - {uat_path} (Lacunas de TAU - se --gaps)
-- {reviews_path} (Feedback de Review Cross-AI - se --reviews)
+- {reviews_path} (Feedback de revisão entre IAs — se --reviews)
 - {UI_SPEC_PATH} (Contrato de Design UI — especificações visuais/interação, se existir)
 </files_to_read>
 
@@ -492,7 +492,7 @@ Prompt do planejador:
 </planning_context>
 
 <downstream_consumer>
-Saída consumida por /gsd-execute-phase. Os planos precisam:
+Saída consumida por /gsd-executar-fase. Os planos precisam:
 - Frontmatter (wave, depends_on, files_modified, autonomous)
 - Tarefas em formato XML com campos read_first e acceptance_criteria (OBRIGATÓRIO em toda tarefa)
 - Critérios de verificação
@@ -578,7 +578,7 @@ Prompt do verificador:
 - {PHASE_DIR}/*-PLAN.md (Planos para verificar)
 - {roadmap_path} (Roteiro)
 - {requirements_path} (Requisitos)
-- {context_path} (DECISÕES DO USUÁRIO de /gsd-discuss-phase)
+- {context_path} (DECISÕES DO USUÁRIO de /gsd-discutir-fase)
 - {research_path} (Pesquisa Técnica — inclui Arquitetura de Validação)
 </files_to_read>
 
@@ -625,7 +625,7 @@ Prompt de revisão:
 
 <files_to_read>
 - {PHASE_DIR}/*-PLAN.md (Planos existentes)
-- {context_path} (DECISÕES DO USUÁRIO de /gsd-discuss-phase)
+- {context_path} (DECISÕES DO USUÁRIO de /gsd-discutir-fase)
 </files_to_read>
 
 **Problemas do verificador:** {structured_issues_from_checker}
@@ -704,7 +704,7 @@ Opções:
 3. Prosseguir mesmo assim — aceitar lacunas de cobertura
 ```
 
-Se `TEXT_MODE` for true, apresentar como lista numerada em texto simples (opções já mostradas no bloco acima). Caso contrário use conversational prompting para apresentar as opções.
+Se `TEXT_MODE` for true, apresentar como lista numerada em texto simples (opções já mostradas no bloco acima). Caso contrário use prompt conversacional para apresentar as opções.
 
 ## 14. Apresentar Status Final
 
@@ -735,17 +735,17 @@ Exibir banner:
  GSD ► AUTO-AVANÇANDO PARA EXECUÇÃO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Planos prontos. Iniciando execute-phase...
+Planos prontos. Iniciando executar-fase...
 ```
 
-Iniciar execute-phase usando a ferramenta Skill para evitar sessões Task aninhadas (que causam congelamentos de runtime devido a aninhamento profundo de agentes):
+Iniciar executar-fase usando a ferramenta Skill para evitar sessões Task aninhadas (que causam congelamentos de runtime devido a aninhamento profundo de agentes):
 ```
-Skill(skill="gsd-execute-phase", args="${PHASE} --auto --no-transition ${GSD_WS}")
+Skill(skill="gsd-executar-fase", args="${PHASE} --auto --no-transition ${GSD_WS}")
 ```
 
-A flag `--no-transition` diz ao execute-phase para retornar status após verificação ao invés de encadear adiante. Isso mantém a cadeia de auto-avanço plana — cada fase executa no mesmo nível de aninhamento ao invés de gerar agentes Task mais profundos.
+A flag `--no-transition` instrui o workflow executar-fase a retornar status após verificação ao invés de encadear adiante. Isso mantém a cadeia de auto-avanço plana — cada fase executa no mesmo nível de aninhamento ao invés de gerar agentes Task mais profundos.
 
-**Tratar retorno do execute-phase:**
+**Tratar retorno do executar-fase:**
 - **PHASE COMPLETE** → Exibir resumo final:
   ```
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -754,14 +754,14 @@ A flag `--no-transition` diz ao execute-phase para retornar status após verific
 
   Pipeline de auto-avanço finalizado.
 
-  Próximo: /gsd-discuss-phase ${NEXT_PHASE} --auto ${GSD_WS}
+  Próximo: /gsd-discutir-fase ${NEXT_PHASE} --auto ${GSD_WS}
   ```
 - **GAPS FOUND / VERIFICATION FAILED** → Exibir resultado, parar cadeia:
   ```
   Auto-avanço parado: Execução precisa de revisão.
 
   Revise a saída acima e continue manualmente:
-  /gsd-execute-phase ${PHASE} ${GSD_WS}
+  /gsd-executar-fase ${PHASE} ${GSD_WS}
   ```
 
 **Se nem `--auto` nem config habilitado:**
@@ -792,7 +792,7 @@ Verificação: {Aprovada | Aprovada com override | Pulada}
 
 **Executar Fase {X}** — executar todos os {N} planos
 
-/gsd-execute-phase {X} ${GSD_WS}
+/gsd-executar-fase {X} ${GSD_WS}
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 
@@ -800,18 +800,18 @@ Verificação: {Aprovada | Aprovada com override | Pulada}
 
 **Também disponível:**
 - cat .planning/phases/{phase-dir}/*-PLAN.md — revisar planos
-- /gsd-plan-phase {X} --research — re-pesquisar primeiro
-- /gsd-review --phase {X} --all — revisar planos com IAs externas
-- /gsd-plan-phase {X} --reviews — replanejar incorporando feedback de review
+- /gsd-planejar-fase {X} --research — re-pesquisar primeiro
+- /gsd-revisar --phase {X} --all — revisar planos com IAs externas
+- /gsd-planejar-fase {X} --reviews — replanejar incorporando feedback de revisão
 
 ───────────────────────────────────────────────────────────────
 </offer_next>
 
 <windows_troubleshooting>
-**Usuários Windows:** Se plan-phase congelar durante o spawn de agentes (comum no Windows devido a
+**Usuários Windows:** Se planejar-fase congelar durante o spawn de agentes (comum no Windows devido a
 deadlocks de stdio com servidores MCP — veja Cursor issue anthropics/claude-code#28126):
 
-1. **Force-kill:** Fechar o terminal (Ctrl+C pode não funcionar)
+1. **Encerramento forçado:** Fechar o terminal (Ctrl+C pode não funcionar)
 2. **Limpar processos órfãos:**
    ```powershell
    # Matar processos node órfãos de servidores MCP obsoletos
@@ -823,11 +823,11 @@ deadlocks de stdio com servidores MCP — veja Cursor issue anthropics/claude-co
    Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\tasks\*" -ErrorAction SilentlyContinue
    ```
 4. **Reduzir contagem de servidores MCP:** Desabilitar temporariamente servidores MCP não essenciais em settings.json
-5. **Tentar novamente:** Reiniciar Cursor e executar `/gsd-plan-phase` novamente
+5. **Tentar novamente:** Reiniciar Cursor e executar `/gsd-planejar-fase` novamente
 
 Se congelamentos persistirem, tente `--skip-research` para reduzir a cadeia de agentes de 3 para 2:
 ```
-/gsd-plan-phase N --skip-research
+/gsd-planejar-fase N --skip-research
 ```
 </windows_troubleshooting>
 
@@ -846,4 +846,3 @@ Se congelamentos persistirem, tente `--skip-research` para reduzir a cadeia de a
 - [ ] Usuário vê status entre spawns de agentes
 - [ ] Usuário sabe os próximos passos
 </success_criteria>
-</output>

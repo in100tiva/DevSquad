@@ -82,7 +82,7 @@ inline de `check_interactive_mode` para cada plano.
 
 **OBRIGATÓRIO — Sincronizar flag de cadeia com intenção.** Se o usuário invocou manualmente (sem `--auto`), limpar a flag efêmera de cadeia de qualquer cadeia `--auto` interrompida anteriormente. Isso previne que `_auto_chain_active: true` obsoleto cause auto-avanço indesejado. Isto NÃO toca em `workflow.auto_advance` (a preferência persistente do usuário nas configurações). Você DEVE executar este bloco bash antes de qualquer leitura de config:
 ```bash
-# OBRIGATÓRIO: previne auto-chain obsoleto de execuções --auto anteriores
+# OBRIGATÓRIO: evita cadeia automática obsoleta de execuções --auto anteriores
 if [[ ! "{{GSD_ARGS}}" =~ --auto ]]; then
   node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" config-set workflow._auto_chain_active false 2>/dev/null
 fi
@@ -153,7 +153,7 @@ Todos os commits subsequentes vão para esta branch. Usuário gerencia o merge.
 <step name="validate_phase">
 Do JSON de init: `phase_dir`, `plan_count`, `incomplete_count`.
 
-Reportar: "Encontrados {plan_count} planos em {phase_dir} ({incomplete_count} incompletos)"
+Relatar: "Encontrados {plan_count} planos em {phase_dir} ({incomplete_count} incompletos)"
 
 **Atualizar STATE.md para início da fase:**
 ```bash
@@ -367,7 +367,7 @@ Executar cada onda selecionada em sequência. Dentro de uma onda: paralelo se `P
 <step name="checkpoint_handling">
 Planos com `autonomous: false` requerem interação do usuário.
 
-**Tratamento de checkpoint em modo auto:**
+**Tratamento de ponto de verificação em modo automático:**
 
 Ler config de auto-avanço (flag de cadeia + preferência do usuário):
 ```bash
@@ -375,38 +375,38 @@ AUTO_CHAIN=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-too
 AUTO_CFG=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" config-get workflow.auto_advance 2>/dev/null || echo "false")
 ```
 
-Quando executor retorna um checkpoint E (`AUTO_CHAIN` for `"true"` OU `AUTO_CFG` for `"true"`):
-- **human-verify** → Auto-iniciar agente de continuação com `{user_response}` = `"approved"`. Registrar `⚡ Checkpoint auto-aprovado`.
-- **decision** → Auto-iniciar agente de continuação com `{user_response}` = primeira opção dos detalhes do checkpoint. Registrar `⚡ Auto-selecionado: [opção]`.
+Quando o executor retorna um ponto de verificação E (`AUTO_CHAIN` for `"true"` OU `AUTO_CFG` for `"true"`):
+- **human-verify** → Disparar automaticamente agente de continuação com `{user_response}` = `"approved"`. Registrar `⚡ Ponto de verificação aprovado automaticamente`.
+- **decision** → Disparar automaticamente agente de continuação com `{user_response}` = primeira opção dos detalhes do ponto de verificação. Registrar `⚡ Selecionado automaticamente: [opção]`.
 - **human-action** → Apresentar ao usuário (comportamento existente abaixo). Portais de auth não podem ser automatizados.
 
-**Fluxo padrão (não auto-mode, ou tipo human-action):**
+**Fluxo padrão (não modo automático, ou tipo human-action):**
 
-1. Iniciar agente para plano de checkpoint
-2. Agente executa até tarefa de checkpoint ou portal de auth → retorna estado estruturado
-3. Retorno do agente inclui: tabela de tarefas completadas, tarefa atual + bloqueador, tipo/detalhes do checkpoint, o que é aguardado
+1. Disparar agente para o plano de ponto de verificação
+2. O agente executa até a tarefa de ponto de verificação ou portal de auth → retorna estado estruturado
+3. O retorno do agente inclui: tabela de tarefas concluídas, tarefa atual + bloqueio, tipo/detalhes do ponto de verificação, o que está aguardando
 4. **Apresentar ao usuário:**
    ```
-   ## Checkpoint: [Tipo]
+   ## Ponto de verificação: [Tipo]
 
    **Plano:** 03-03 Layout do Dashboard
-   **Progresso:** 2/3 tarefas completas
+   **Progresso:** 2/3 tarefas concluídas
 
-   [Detalhes do Checkpoint do retorno do agente]
-   [Seção de Aguardando do retorno do agente]
+   [Detalhes do ponto de verificação no retorno do agente]
+   [Seção Aguardando do retorno do agente]
    ```
-5. Usuário responde: "aprovado"/"concluído" | descrição do problema | seleção de decisão
-6. **Iniciar agente de continuação (NÃO retomar)** usando template continuation-prompt.md:
-   - `{completed_tasks_table}`: Do retorno do checkpoint
+5. O usuário responde: "approved"/"done" | descrição do problema | seleção de decisão
+6. **Disparar agente de continuação (NÃO retomar)** usando o template continuation-prompt.md:
+   - `{completed_tasks_table}`: Do retorno do ponto de verificação
    - `{resume_task_number}` + `{resume_task_name}`: Tarefa atual
    - `{user_response}`: O que o usuário forneceu
-   - `{resume_instructions}`: Baseado no tipo de checkpoint
+   - `{resume_instructions}`: Com base no tipo de ponto de verificação
 7. Agente de continuação verifica commits anteriores, continua do ponto de retomada
 8. Repetir até plano completar ou usuário parar
 
 **Por que agente novo, não retomar:** Retomar depende de serialização interna que quebra com chamadas de ferramenta paralelas. Agentes novos com estado explícito são mais confiáveis.
 
-**Checkpoints em waves paralelas:** Agente pausa e retorna enquanto outros agentes paralelos podem completar. Apresentar checkpoint, iniciar continuação, esperar todos antes da próxima wave.
+**Pontos de verificação em ondas paralelas:** O agente pausa e retorna enquanto outros agentes paralelos podem concluir. Apresente o ponto de verificação, dispare a continuação, espere todos antes da próxima onda.
 </step>
 
 <step name="aggregate_results">
@@ -464,7 +464,7 @@ A onda selecionada terminou com sucesso. Esta fase ainda tem planos incompletos,
 </step>
 
 <step name="close_parent_artifacts">
-**Somente para fases decimais/polish (padrão X.Y):** Fechar o loop de feedback resolvendo artefatos de TAU e debug do pai.
+**Somente para fases decimais/de polimento (padrão X.Y):** Fechar o loop de feedback resolvendo artefatos TAU e de depuração do pai.
 
 **Pular se** número da fase não tem decimal (ex: `3`, `04`) — aplica-se apenas a fases de fechamento de lacunas como `4.1`, `03.1`.
 
@@ -506,7 +506,7 @@ mkdir -p .planning/debug/resolved
 mv .planning/debug/{slug}.md .planning/debug/resolved/
 ```
 
-**6. Commitar artefatos atualizados:**
+**6. Fazer commit dos artefatos atualizados:**
 ```bash
 node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs(phase-${PARENT_PHASE}): resolver lacunas TAU e sessões de depuração após fechamento de lacuna ${PHASE_NUMBER}" --files .planning/phases/*${PARENT_PHASE}*/*-UAT.md .planning/debug/resolved/*.md
 ```
@@ -570,7 +570,7 @@ Opções:
 3. Abortar fase — reverter e re-planejar
 ```
 
-Use conversational prompting para apresentar as opções.
+Use diálogo conversacional para apresentar as opções.
 </step>
 
 <step name="verify_phase_goal">
@@ -578,12 +578,12 @@ Verificar se a fase alcançou seu OBJETIVO, não apenas completou tarefas.
 
 ```
 Task(
-  prompt="Verificar alcance do objetivo da fase {phase_number}.
+  prompt="Verificar se a fase {phase_number} alcançou seu objetivo.
 Diretório da fase: {phase_dir}
-Objetivo da fase: {goal do ROADMAP.md}
+Objetivo da fase: {objetivo no ROADMAP.md}
 IDs de requisitos da fase: {phase_req_ids}
-Verificar must_haves contra codebase real.
-Cruzar IDs de requisitos do frontmatter dos PLANs contra REQUIREMENTS.md — cada ID DEVE ser contabilizado.
+Conferir must_haves contra o código real.
+Cruzar IDs de requisito do frontmatter dos PLAN.md com REQUIREMENTS.md — todo ID deve estar contabilizado.
 Criar VERIFICATION.md.",
   subagent_type="gsd-verificador",
   model="{verifier_model}"
@@ -640,7 +640,7 @@ blocked: 0
 ## Lacunas
 ```
 
-Commitar o arquivo:
+Fazer commit do arquivo:
 ```bash
 node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "test({phase_num}): persistir itens de verificação humana como TAU" --files "{phase_dir}/{phase_num}-HUMAN-UAT.md"
 ```
@@ -656,12 +656,12 @@ Todas as verificações automatizadas passaram. {N} itens precisam de teste huma
 
 Itens salvos em `{phase_num}-HUMAN-UAT.md` — aparecerão em `/gsd-progresso` e `/gsd-auditar-tau`.
 
-"aprovado" → continuar | Reportar problemas → fechamento de lacunas
+"approved" → continuar | Relatar problemas → fechamento de lacunas
 ```
 
 **Se o usuário disser "approved":** Prosseguir para `update_roadmap`. O arquivo HUMAN-UAT.md permanece com `status: partial` e surgirá em checagens de progresso futuras até o usuário executar `/gsd-verificar-trabalho` nele.
 
-**Se usuário reportar problemas:** Prosseguir para fechamento de lacunas como implementado atualmente.
+**Se o usuário relatar problemas:** Prosseguir para o fechamento de lacunas como já implementado.
 
 **Se gaps_found:**
 ```
@@ -670,7 +670,7 @@ Itens salvos em `{phase_num}-HUMAN-UAT.md` — aparecerão em `/gsd-progresso` e
 **Pontuação:** {N}/{M} obrigatórios verificados
 **Relatório:** {phase_dir}/{phase_num}-VERIFICATION.md
 
-### O Que Falta
+### O que falta
 {Resumos de lacunas do VERIFICATION.md}
 
 ---
@@ -719,7 +719,7 @@ node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commi
 </step>
 
 <step name="update_project_md">
-**Evoluir PROJECT.md para refletir conclusão da fase (previne drift de documento de planejamento — #956):**
+**Evoluir PROJECT.md para refletir a conclusão da fase (evita deriva silenciosa do documento de planejamento — #956):**
 
 PROJECT.md rastreia requisitos validados, decisões e estado atual. Sem este passo,
 PROJECT.md fica defasado silenciosamente ao longo de múltiplas fases.
@@ -811,16 +811,16 @@ Sugerir apenas os comandos listados acima. Não inventar ou alucinar nomes de co
 
 <context_efficiency>
 Orquestrador: ~10-15% de contexto para janelas de 200k, pode usar mais para janelas de 1M+.
-Subagentes: contexto limpo cada um (200k-1M dependendo do modelo). Sem polling (Task bloqueia). Sem contaminação de contexto.
+Subagentes: contexto novo a cada execução (200k-1M conforme o modelo). Sem sondagem periódica (Task bloqueia). Sem vazamento de contexto entre agentes.
 
-Para modelos de contexto 1M+, considerar:
-- Passar contexto mais rico (trechos de código, saídas de dependências) diretamente aos executores ao invés de apenas caminhos de arquivo
-- Executar fases pequenas (≤3 planos, sem dependências) inline sem overhead de spawn de subagente
-- Relaxar recomendações de /clear — onset de degradação de contexto é muito mais distante com janela 5x
+Para modelos de contexto 1M+, considere:
+- Passar contexto mais rico (trechos de código, saídas de dependências) diretamente aos executores em vez de apenas caminhos de arquivo
+- Executar fases pequenas (≤3 planos, sem dependências) inline sem custo extra de disparo de subagente
+- Relaxar recomendações de /clear — o início da degradação de contexto fica muito mais distante com janela 5x
 </context_efficiency>
 
 <failure_handling>
-- **Agente falha no meio do plano:** SUMMARY.md ausente → reportar, perguntar ao usuário como prosseguir
+- **Agente falha no meio do plano:** SUMMARY.md ausente → relatar, perguntar ao usuário como prosseguir
 - **Cadeia de dependências quebra:** Onda 1 falha → dependentes da Onda 2 provavelmente falham → usuário escolhe tentar ou pular
 - **Todos os agentes na onda falham:** Problema sistêmico → parar, relatar para investigação
 - **Ponto de verificação irresolvível:** "Pular este plano?" ou "Abortar execução da fase?" → registrar progresso parcial em STATE.md
