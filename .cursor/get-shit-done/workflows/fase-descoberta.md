@@ -2,9 +2,9 @@
 Executar descoberta no nível de profundidade apropriado.
 Produz DISCOVERY.md (para Nível 2-3) que informa a criação do PLAN.md.
 
-Chamado pelo passo mandatory_discovery do plan-phase.md com um parâmetro de profundidade.
+Chamado pelo passo mandatory_discovery do planejar-fase.md com um parâmetro de profundidade.
 
-NOTA: Para pesquisa abrangente de ecossistema ("como especialistas constroem isso"), use /gsd-research-phase em vez disso, que produz RESEARCH.md.
+NOTA: Para pesquisa abrangente de ecossistema ("como especialistas constroem isso"), use /gsd-pesquisar-fase em vez disso, que produz RESEARCH.md.
 </purpose>
 
 <depth_levels>
@@ -16,7 +16,7 @@ NOTA: Para pesquisa abrangente de ecossistema ("como especialistas constroem iss
 | 2     | Padrão            | 15-30 min | DISCOVERY.md                                 | Escolhendo entre opções, nova integração      |
 | 3     | Investigação Profunda | 1+ hora | DISCOVERY.md detalhado com gates de validação | Decisões arquiteturais, problemas inéditos    |
 
-**A profundidade é determinada pelo plan-phase.md antes de rotear para cá.**
+**A profundidade é determinada pelo planejar-fase.md antes de rotear para cá.**
 </depth_levels>
 
 <source_hierarchy>
@@ -34,7 +34,7 @@ Ver D:/projetos/Estudo/devsquad/.cursor/get-shit-done/templates/discovery.md `<d
 <process>
 
 <step name="determine_depth">
-Verificar o parâmetro de profundidade passado pelo plan-phase.md:
+Verificar o parâmetro de profundidade passado pelo planejar-fase.md:
 - `depth=verify` → Nível 1 (Verificação Rápida)
 - `depth=standard` → Nível 2 (Descoberta Padrão)
 - `depth=deep` → Nível 3 (Investigação Profunda)
@@ -69,7 +69,7 @@ Para: Biblioteca única conhecida, confirmando que sintaxe/versão ainda está c
    - Sintaxe da API inalterada
    - Sem mudanças breaking em versões recentes
 
-4. **Se verificado:** Retornar ao plan-phase.md com confirmação. Sem necessidade de DISCOVERY.md.
+4. **Se verificado:** Retornar ao planejar-fase.md com confirmação. Sem necessidade de DISCOVERY.md.
 
 5. **Se preocupações encontradas:** Escalar para Nível 2.
 
@@ -114,7 +114,7 @@ Para: Escolhendo entre opções, nova integração externa.
    - Exemplos de código do Context7
    - Nível de confiança (deve ser MÉDIO-ALTO para Nível 2)
 
-7. Retornar ao plan-phase.md.
+7. Retornar ao planejar-fase.md.
 
 **Saída:** `.planning/phases/XX-name/DISCOVERY.md`
 </step>
@@ -167,7 +167,7 @@ Para: Decisões arquiteturais, problemas inéditos, escolhas de alto risco.
 
 7. **Gate de confiança:** Se confiança geral for BAIXA, apresentar opções antes de prosseguir.
 
-8. Retornar ao plan-phase.md.
+8. Retornar ao planejar-fase.md.
 
 **Saída:** `.planning/phases/XX-name/DISCOVERY.md` (abrangente)
 </step>
@@ -252,8 +252,8 @@ Confiança: [nível]
 
 Qual o próximo passo?
 
-1. Discutir contexto da fase (/gsd-discuss-phase [fase-atual])
-2. Criar plano da fase (/gsd-plan-phase [fase-atual])
+1. Discutir contexto da fase (/gsd-discutir-fase [fase-atual])
+2. Criar plano da fase (/gsd-planejar-fase [fase-atual])
 3. Refinar descoberta (investigar mais)
 4. Revisar descoberta
 

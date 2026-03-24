@@ -150,7 +150,7 @@ Classificar por fase:
 
 Adicionar ao YAML da auditoria: `nyquist: { compliant_phases, partial_phases, missing_phases, overall }`
 
-Apenas descoberta — nunca auto-chama `/gsd-validate-phase`.
+Apenas descoberta — nunca auto-chama `/gsd-validar-fase`.
 
 ## 6. Agregar em v{version}-MILESTONE-AUDIT.md
 
@@ -221,7 +221,7 @@ Todos os requisitos cobertos. Integração entre fases verificada. Fluxos E2E co
 
 **Completar marco** — arquivar e etiquetar
 
-/gsd-complete-milestone {version}
+/gsd-completar-marco {version}
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 
@@ -256,9 +256,9 @@ Todos os requisitos cobertos. Integração entre fases verificada. Fluxos E2E co
 
 || Fase | VALIDATION.md | Conforme | Ação |
 ||------|---------------|----------|------|
-|| {fase} | existe/ausente | true/false/parcial | `/gsd-validate-phase {N}` |
+|| {fase} | existe/ausente | true/false/parcial | `/gsd-validar-fase {N}` |
 
-Fases que precisam de validação: executar `/gsd-validate-phase {N}` para cada fase sinalizada.
+Fases que precisam de validação: executar `/gsd-validar-fase {N}` para cada fase sinalizada.
 
 ───────────────────────────────────────────────────────────────
 
@@ -266,7 +266,7 @@ Fases que precisam de validação: executar `/gsd-validate-phase {N}` para cada 
 
 **Planejar fechamento de lacunas** — criar fases para completar o marco
 
-/gsd-plan-milestone-gaps
+/gsd-planejar-lacunas-marco
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 
@@ -274,7 +274,7 @@ Fases que precisam de validação: executar `/gsd-validate-phase {N}` para cada 
 
 **Também disponível:**
 - cat .planning/v{version}-MILESTONE-AUDIT.md — ver relatório completo
-- /gsd-complete-milestone {version} — prosseguir mesmo assim (aceitar dívida técnica)
+- /gsd-completar-marco {version} — prosseguir mesmo assim (aceitar dívida técnica)
 
 ───────────────────────────────────────────────────────────────
 
@@ -304,11 +304,11 @@ Todos os requisitos atendidos. Sem bloqueadores críticos. Dívida técnica acum
 
 **A. Completar marco** — aceitar dívida, rastrear no backlog
 
-/gsd-complete-milestone {version}
+/gsd-completar-marco {version}
 
 **B. Planejar fase de limpeza** — tratar dívida antes de completar
 
-/gsd-plan-milestone-gaps
+/gsd-planejar-lacunas-marco
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 

@@ -1,5 +1,5 @@
 <purpose>
-Criar arquivos estruturados de handoff `.planning/HANDOFF.json` e `.continue-here.md` para preservar o estado completo do trabalho entre sessões. O JSON fornece estado legível por máquina para `/gsd-resume-work`; o markdown fornece contexto legível por humanos.
+Criar arquivos estruturados de handoff `.planning/HANDOFF.json` e `.continue-here.md` para preservar o estado completo do trabalho entre sessões. O JSON fornece estado legível por máquina para `/gsd-retomar-trabalho`; o markdown fornece contexto legível por humanos.
 </purpose>
 
 <required_reading>
@@ -161,7 +161,7 @@ Estado atual:
 - Bloqueios: [contagem] ({contagem de human_actions_pending} precisam de ação humana)
 - Commitado como WIP
 
-Para retomar: /gsd-resume-work
+Para retomar: /gsd-retomar-trabalho
 
 ```
 </step>

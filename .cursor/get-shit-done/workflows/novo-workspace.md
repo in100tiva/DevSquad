@@ -71,7 +71,7 @@ Erro:
 Nenhum repo git encontrado no diretório atual e este não é um repo git.
 
 Execute este comando a partir de um diretório contendo repos git, ou especifique repos explicitamente:
-  /gsd-new-workspace --name meu-workspace --repos /caminho/para/repo1,/caminho/para/repo2
+  /gsd-novo-workspace --name meu-workspace --repos /caminho/para/repo1,/caminho/para/repo2
 ```
 Sair.
 
@@ -82,7 +82,7 @@ Erro:
 Erro: --auto requer --repos para especificar quais repos incluir.
 
 Uso:
-  /gsd-new-workspace --name meu-workspace --repos repo1,repo2 --auto
+  /gsd-novo-workspace --name meu-workspace --repos repo1,repo2 --auto
 ```
 Sair.
 
@@ -201,7 +201,7 @@ Workspace criado: $TARGET_PATH
 
 Próximos passos:
   cd $TARGET_PATH
-  /gsd-new-project    # Inicializar GSD no workspace
+  /gsd-novo-projeto    # Inicializar GSD no workspace
 ```
 
 **Se alguns repos falharam:**
@@ -214,7 +214,7 @@ Workspace criado com $SUCCESS_COUNT de $TOTAL_COUNT repos: $TARGET_PATH
 
 Próximos passos:
   cd $TARGET_PATH
-  /gsd-new-project    # Inicializar GSD no workspace
+  /gsd-novo-projeto    # Inicializar GSD no workspace
 ```
 
 **Oferecer inicialização do GSD (se não for `--auto`):**
@@ -223,7 +223,7 @@ Use conversational prompting:
 - header: "Inicializar GSD"
 - question: "Deseja inicializar um projeto GSD no novo workspace?"
 - options:
-  - "Sim — executar /gsd-new-project" → informar usuário para `cd $TARGET_PATH` primeiro, depois executar `/gsd-new-project`
+  - "Sim — executar /gsd-novo-projeto" → informar usuário para `cd $TARGET_PATH` primeiro, depois executar `/gsd-novo-projeto`
   - "Não — vou configurar depois" → concluído
 
 </process>

@@ -9,9 +9,9 @@ Exibir a referência completa de comandos GSD. Mostrar APENAS o conteúdo de ref
 
 ## Início Rápido
 
-1. `/gsd-new-project` - Inicializar projeto (inclui pesquisa, requisitos, roteiro)
-2. `/gsd-plan-phase 1` - Criar plano detalhado para a primeira fase
-3. `/gsd-execute-phase 1` - Executar a fase
+1. `/gsd-novo-projeto` - Inicializar projeto (inclui pesquisa, requisitos, roteiro)
+2. `/gsd-planejar-fase 1` - Criar plano detalhado para a primeira fase
+3. `/gsd-executar-fase 1` - Executar a fase
 
 ## Mantendo Atualizado
 
@@ -24,12 +24,12 @@ npx get-shit-done-cc@latest
 ## Fluxo Principal
 
 ```
-/gsd-new-project → /gsd-plan-phase → /gsd-execute-phase → repetir
+/gsd-novo-projeto → /gsd-planejar-fase → /gsd-executar-fase → repetir
 ```
 
 ### Inicialização do Projeto
 
-**`/gsd-new-project`**
+**`/gsd-novo-projeto`**
 Inicializar novo projeto através de fluxo unificado.
 
 Um comando te leva da ideia até pronto-para-planejar:
@@ -46,21 +46,21 @@ Cria todos os artefatos em `.planning/`:
 - `ROADMAP.md` — fases mapeadas para requisitos
 - `STATE.md` — memória do projeto
 
-Uso: `/gsd-new-project`
+Uso: `/gsd-novo-projeto`
 
-**`/gsd-map-codebase`**
+**`/gsd-mapear-codigo`**
 Mapear uma base de código existente para projetos brownfield.
 
 - Analisa a base de código com agentes Explore em paralelo
 - Cria `.planning/codebase/` com 7 documentos focados
 - Cobre stack, arquitetura, estrutura, convenções, testes, integrações, preocupações
-- Use antes de `/gsd-new-project` em bases de código existentes
+- Use antes de `/gsd-novo-projeto` em bases de código existentes
 
-Uso: `/gsd-map-codebase`
+Uso: `/gsd-mapear-codigo`
 
 ### Planejamento de Fase
 
-**`/gsd-discuss-phase <número>`**
+**`/gsd-discutir-fase <número>`**
 Ajudar a articular sua visão para uma fase antes do planejamento.
 
 - Captura como você imagina esta fase funcionando
@@ -68,11 +68,11 @@ Ajudar a articular sua visão para uma fase antes do planejamento.
 - Use quando tiver ideias sobre como algo deveria parecer/funcionar
 - Opcional `--batch` faz 2-5 perguntas relacionadas por vez ao invés de uma por uma
 
-Uso: `/gsd-discuss-phase 2`
-Uso: `/gsd-discuss-phase 2 --batch`
-Uso: `/gsd-discuss-phase 2 --batch=3`
+Uso: `/gsd-discutir-fase 2`
+Uso: `/gsd-discutir-fase 2 --batch`
+Uso: `/gsd-discutir-fase 2 --batch=3`
 
-**`/gsd-research-phase <número>`**
+**`/gsd-pesquisar-fase <número>`**
 Pesquisa abrangente do ecossistema para domínios de nicho/complexos.
 
 - Descobre stack padrão, padrões de arquitetura, armadilhas
@@ -80,18 +80,18 @@ Pesquisa abrangente do ecossistema para domínios de nicho/complexos.
 - Use para 3D, jogos, áudio, shaders, ML e outros domínios especializados
 - Vai além de "qual biblioteca" para conhecimento do ecossistema
 
-Uso: `/gsd-research-phase 3`
+Uso: `/gsd-pesquisar-fase 3`
 
-**`/gsd-list-phase-assumptions <número>`**
+**`/gsd-listar-premissas-fase <número>`**
 Veja o que o Claude está planejando fazer antes de começar.
 
 - Mostra a abordagem pretendida do Claude para uma fase
 - Permite correção de rumo se o Claude entendeu errado sua visão
 - Nenhum arquivo criado - apenas saída conversacional
 
-Uso: `/gsd-list-phase-assumptions 3`
+Uso: `/gsd-listar-premissas-fase 3`
 
-**`/gsd-plan-phase <número>`**
+**`/gsd-planejar-fase <número>`**
 Criar plano de execução detalhado para uma fase específica.
 
 - Gera `.planning/phases/XX-nome-fase/XX-YY-PLAN.md`
@@ -99,14 +99,14 @@ Criar plano de execução detalhado para uma fase específica.
 - Inclui critérios de verificação e medidas de sucesso
 - Múltiplos planos por fase suportados (XX-01, XX-02, etc.)
 
-Uso: `/gsd-plan-phase 1`
+Uso: `/gsd-planejar-fase 1`
 Resultado: Cria `.planning/phases/01-foundation/01-01-PLAN.md`
 
 **Caminho Expresso PRD:** Passe `--prd caminho/para/requisitos.md` para pular discuss-phase inteiramente. Seu PRD se torna decisões travadas no CONTEXT.md. Útil quando você já tem critérios de aceite claros.
 
 ### Execução
 
-**`/gsd-execute-phase <número-fase>`**
+**`/gsd-executar-fase <número-fase>`**
 Executar todos os planos em uma fase, ou executar uma onda específica.
 
 - Agrupa planos por onda (do frontmatter), executa ondas sequencialmente
@@ -115,12 +115,12 @@ Executar todos os planos em uma fase, ou executar uma onda específica.
 - Verifica objetivo da fase após todos os planos completarem
 - Atualiza REQUIREMENTS.md, ROADMAP.md, STATE.md
 
-Uso: `/gsd-execute-phase 5`
-Uso: `/gsd-execute-phase 5 --wave 2`
+Uso: `/gsd-executar-fase 5`
+Uso: `/gsd-executar-fase 5 --wave 2`
 
 ### Roteador Inteligente
 
-**`/gsd-do <descrição>`**
+**`/gsd-fazer <descrição>`**
 Rotear texto livre para o comando GSD correto automaticamente.
 
 - Analisa entrada em linguagem natural para encontrar o melhor comando GSD correspondente
@@ -128,13 +128,13 @@ Rotear texto livre para o comando GSD correto automaticamente.
 - Resolve ambiguidade pedindo que você escolha entre as melhores opções
 - Use quando sabe o que quer mas não sabe qual comando `/gsd-*` executar
 
-Uso: `/gsd-do corrigir o botão de login`
-Uso: `/gsd-do refatorar o sistema de autenticação`
-Uso: `/gsd-do quero iniciar um novo marco`
+Uso: `/gsd-fazer corrigir o botão de login`
+Uso: `/gsd-fazer refatorar o sistema de autenticação`
+Uso: `/gsd-fazer quero iniciar um novo marco`
 
 ### Modo Rápido
 
-**`/gsd-quick [--full] [--discuss] [--research]`**
+**`/gsd-rapido-garantido [--full] [--discuss] [--research]`**
 Executar tarefas pequenas e pontuais com garantias GSD mas pulando agentes opcionais.
 
 Modo rápido usa o mesmo sistema com um caminho mais curto:
@@ -149,47 +149,47 @@ Flags habilitam etapas adicionais de qualidade:
 
 Flags são combináveis: `--discuss --research --full` dá o pipeline completo de qualidade para uma única tarefa.
 
-Uso: `/gsd-quick`
-Uso: `/gsd-quick --research --full`
+Uso: `/gsd-rapido-garantido`
+Uso: `/gsd-rapido-garantido --research --full`
 Resultado: Cria `.planning/quick/NNN-slug/PLAN.md`, `.planning/quick/NNN-slug/SUMMARY.md`
 
 ---
 
-**`/gsd-fast [descrição]`**
+**`/gsd-rapido [descrição]`**
 Executar uma tarefa trivial inline — sem subagentes, sem arquivos de planejamento, sem overhead.
 
 Para tarefas pequenas demais para justificar planejamento: correção de typo, mudanças de config, commits esquecidos, adições simples. Roda no contexto atual, faz a mudança, commita e registra no STATE.md.
 
 - Nenhum PLAN.md ou SUMMARY.md criado
 - Nenhum subagente disparado (roda inline)
-- ≤ 3 edições de arquivo — redireciona para `/gsd-quick` se a tarefa não for trivial
+- ≤ 3 edições de arquivo — redireciona para `/gsd-rapido-garantido` se a tarefa não for trivial
 - Commit atômico com mensagem convencional
 
-Uso: `/gsd-fast "corrigir o typo no README"`
-Uso: `/gsd-fast "adicionar .env ao gitignore"`
+Uso: `/gsd-rapido "corrigir o typo no README"`
+Uso: `/gsd-rapido "adicionar .env ao gitignore"`
 
 ### Gestão do Roteiro
 
-**`/gsd-add-phase <descrição>`**
+**`/gsd-adicionar-fase <descrição>`**
 Adicionar nova fase ao final do marco atual.
 
 - Anexa ao ROADMAP.md
 - Usa próximo número sequencial
 - Atualiza estrutura de diretórios das fases
 
-Uso: `/gsd-add-phase "Adicionar painel administrativo"`
+Uso: `/gsd-adicionar-fase "Adicionar painel administrativo"`
 
-**`/gsd-insert-phase <após> <descrição>`**
+**`/gsd-inserir-fase <após> <descrição>`**
 Inserir trabalho urgente como fase decimal entre fases existentes.
 
 - Cria fase intermediária (ex: 7.1 entre 7 e 8)
 - Útil para trabalho descoberto que precisa acontecer no meio do marco
 - Mantém ordenação das fases
 
-Uso: `/gsd-insert-phase 7 "Corrigir bug crítico de autenticação"`
+Uso: `/gsd-inserir-fase 7 "Corrigir bug crítico de autenticação"`
 Resultado: Cria Fase 7.1
 
-**`/gsd-remove-phase <número>`**
+**`/gsd-remover-fase <número>`**
 Remover uma fase futura e renumerar fases subsequentes.
 
 - Deleta diretório da fase e todas as referências
@@ -197,12 +197,12 @@ Remover uma fase futura e renumerar fases subsequentes.
 - Funciona apenas em fases futuras (não iniciadas)
 - Commit git preserva registro histórico
 
-Uso: `/gsd-remove-phase 17`
+Uso: `/gsd-remover-fase 17`
 Resultado: Fase 17 deletada, fases 18-20 tornam-se 17-19
 
 ### Gestão de Marcos
 
-**`/gsd-new-milestone <nome>`**
+**`/gsd-novo-marco <nome>`**
 Iniciar um novo marco através de fluxo unificado.
 
 - Questionamento profundo para entender o que você está construindo a seguir
@@ -211,12 +211,12 @@ Iniciar um novo marco através de fluxo unificado.
 - Criação de roteiro com divisão em fases
 - Flag opcional `--reset-phase-numbers` reinicia numeração na Fase 1 e arquiva diretórios de fases antigas primeiro por segurança
 
-Espelha o fluxo `/gsd-new-project` para projetos brownfield (PROJECT.md existente).
+Espelha o fluxo `/gsd-novo-projeto` para projetos brownfield (PROJECT.md existente).
 
-Uso: `/gsd-new-milestone "Funcionalidades v2.0"`
-Uso: `/gsd-new-milestone --reset-phase-numbers "Funcionalidades v2.0"`
+Uso: `/gsd-novo-marco "Funcionalidades v2.0"`
+Uso: `/gsd-novo-marco --reset-phase-numbers "Funcionalidades v2.0"`
 
-**`/gsd-complete-milestone <versão>`**
+**`/gsd-completar-marco <versão>`**
 Arquivar marco concluído e preparar para próxima versão.
 
 - Cria entrada no MILESTONES.md com estatísticas
@@ -224,11 +224,11 @@ Arquivar marco concluído e preparar para próxima versão.
 - Cria tag git para o release
 - Prepara workspace para próxima versão
 
-Uso: `/gsd-complete-milestone 1.0.0`
+Uso: `/gsd-completar-marco 1.0.0`
 
 ### Acompanhamento de Progresso
 
-**`/gsd-progress`**
+**`/gsd-progresso`**
 Verificar status do projeto e rotear inteligentemente para a próxima ação.
 
 - Mostra barra de progresso visual e porcentagem de conclusão
@@ -238,45 +238,45 @@ Verificar status do projeto e rotear inteligentemente para a próxima ação.
 - Oferece executar próximo plano ou criá-lo se ausente
 - Detecta 100% de conclusão do marco
 
-Uso: `/gsd-progress`
+Uso: `/gsd-progresso`
 
 ### Gestão de Sessão
 
-**`/gsd-resume-work`**
+**`/gsd-retomar-trabalho`**
 Retomar trabalho da sessão anterior com restauração completa de contexto.
 
 - Lê STATE.md para contexto do projeto
 - Mostra posição atual e progresso recente
 - Oferece próximas ações baseadas no estado do projeto
 
-Uso: `/gsd-resume-work`
+Uso: `/gsd-retomar-trabalho`
 
-**`/gsd-pause-work`**
+**`/gsd-pausar-trabalho`**
 Criar handoff de contexto ao pausar trabalho no meio de uma fase.
 
 - Cria arquivo .continue-here com estado atual
 - Atualiza seção de continuidade de sessão do STATE.md
 - Captura contexto do trabalho em andamento
 
-Uso: `/gsd-pause-work`
+Uso: `/gsd-pausar-trabalho`
 
 ### Depuração
 
-**`/gsd-debug [descrição do problema]`**
+**`/gsd-depurar [descrição do problema]`**
 Depuração sistemática com estado persistente entre resets de contexto.
 
 - Coleta sintomas através de questionamento adaptativo
 - Cria `.planning/debug/[slug].md` para rastrear investigação
 - Investiga usando método científico (evidência → hipótese → teste)
-- Sobrevive a `/clear` — execute `/gsd-debug` sem argumentos para retomar
+- Sobrevive a `/clear` — execute `/gsd-depurar` sem argumentos para retomar
 - Arquiva problemas resolvidos em `.planning/debug/resolved/`
 
-Uso: `/gsd-debug "botão de login não funciona"`
-Uso: `/gsd-debug` (retomar sessão ativa)
+Uso: `/gsd-depurar "botão de login não funciona"`
+Uso: `/gsd-depurar` (retomar sessão ativa)
 
 ### Notas Rápidas
 
-**`/gsd-note <texto>`**
+**`/gsd-nota <texto>`**
 Captura de ideias sem fricção — um comando, salva instantâneo, sem perguntas.
 
 - Salva nota com timestamp em `.planning/notes/` (ou `D:/projetos/Estudo/devsquad/.cursor/notes/` globalmente)
@@ -284,14 +284,14 @@ Captura de ideias sem fricção — um comando, salva instantâneo, sem pergunta
 - Promote converte uma nota em todo estruturado
 - Funciona sem um projeto (usa escopo global como fallback)
 
-Uso: `/gsd-note refatorar o sistema de hooks`
-Uso: `/gsd-note list`
-Uso: `/gsd-note promote 3`
-Uso: `/gsd-note --global ideia entre projetos`
+Uso: `/gsd-nota refatorar o sistema de hooks`
+Uso: `/gsd-nota list`
+Uso: `/gsd-nota promote 3`
+Uso: `/gsd-nota --global ideia entre projetos`
 
 ### Gestão de Todos
 
-**`/gsd-add-todo [descrição]`**
+**`/gsd-adicionar-todo [descrição]`**
 Capturar ideia ou tarefa como todo da conversa atual.
 
 - Extrai contexto da conversa (ou usa descrição fornecida)
@@ -300,24 +300,24 @@ Capturar ideia ou tarefa como todo da conversa atual.
 - Verifica duplicatas antes de criar
 - Atualiza contagem de todos no STATE.md
 
-Uso: `/gsd-add-todo` (infere da conversa)
-Uso: `/gsd-add-todo Adicionar refresh de token de autenticação`
+Uso: `/gsd-adicionar-todo` (infere da conversa)
+Uso: `/gsd-adicionar-todo Adicionar refresh de token de autenticação`
 
-**`/gsd-check-todos [área]`**
+**`/gsd-verificar-todos [área]`**
 Listar todos pendentes e selecionar um para trabalhar.
 
 - Lista todos os todos pendentes com título, área, idade
-- Filtro opcional por área (ex: `/gsd-check-todos api`)
+- Filtro opcional por área (ex: `/gsd-verificar-todos api`)
 - Carrega contexto completo para todo selecionado
 - Roteia para ação apropriada (trabalhar agora, adicionar à fase, brainstorm)
 - Move todo para done/ quando o trabalho começa
 
-Uso: `/gsd-check-todos`
-Uso: `/gsd-check-todos api`
+Uso: `/gsd-verificar-todos`
+Uso: `/gsd-verificar-todos api`
 
 ### Teste de Aceite do Usuário
 
-**`/gsd-verify-work [fase]`**
+**`/gsd-verificar-trabalho [fase]`**
 Validar funcionalidades construídas através de UAT conversacional.
 
 - Extrai entregáveis testáveis dos arquivos SUMMARY.md
@@ -325,11 +325,11 @@ Validar funcionalidades construídas através de UAT conversacional.
 - Diagnostica falhas automaticamente e cria planos de correção
 - Pronto para re-execução se problemas encontrados
 
-Uso: `/gsd-verify-work 3`
+Uso: `/gsd-verificar-trabalho 3`
 
 ### Enviar Trabalho
 
-**`/gsd-ship [fase]`**
+**`/gsd-enviar [fase]`**
 Criar um PR do trabalho de fase concluído com corpo auto-gerado.
 
 - Envia branch para remote
@@ -339,56 +339,56 @@ Criar um PR do trabalho de fase concluído com corpo auto-gerado.
 
 Pré-requisitos: Fase verificada, CLI `gh` instalado e autenticado.
 
-Uso: `/gsd-ship 4` ou `/gsd-ship 4 --draft`
+Uso: `/gsd-enviar 4` ou `/gsd-enviar 4 --draft`
 
 ---
 
-**`/gsd-review --phase N [--gemini] [--claude] [--codex] [--all]`**
+**`/gsd-revisar --phase N [--gemini] [--claude] [--codex] [--all]`**
 Revisão por pares entre IAs — invocar CLIs externos de IA para revisar planos de fase independentemente.
 
 - Detecta CLIs disponíveis (gemini, claude, codex)
 - Cada CLI revisa planos independentemente com o mesmo prompt estruturado
 - Produz REVIEWS.md com feedback por revisor e resumo de consenso
-- Alimente revisões de volta no planejamento: `/gsd-plan-phase N --reviews`
+- Alimente revisões de volta no planejamento: `/gsd-planejar-fase N --reviews`
 
-Uso: `/gsd-review --phase 3 --all`
+Uso: `/gsd-revisar --phase 3 --all`
 
 ---
 
-**`/gsd-pr-branch [destino]`**
+**`/gsd-branch-pr [destino]`**
 Criar branch limpa para pull requests filtrando commits de .planning/.
 
 - Classifica commits: apenas-código (incluir), apenas-planejamento (excluir), misto (incluir sem .planning/)
 - Cherry-pick de commits de código para branch limpa
 - Revisores veem apenas mudanças de código, sem artefatos GSD
 
-Uso: `/gsd-pr-branch` ou `/gsd-pr-branch main`
+Uso: `/gsd-branch-pr` ou `/gsd-branch-pr main`
 
 ---
 
-**`/gsd-plant-seed [ideia]`**
+**`/gsd-plantar-semente [ideia]`**
 Capturar uma ideia prospectiva com condições de gatilho para surfacing automático.
 
 - Seeds preservam POR QUÊ, QUANDO surgir, e migalhas para código relacionado
-- Surge automaticamente durante `/gsd-new-milestone` quando condições de gatilho são atendidas
+- Surge automaticamente durante `/gsd-novo-marco` quando condições de gatilho são atendidas
 - Melhor que itens adiados — gatilhos são verificados, não esquecidos
 
-Uso: `/gsd-plant-seed "adicionar notificações em tempo real quando construirmos o sistema de eventos"`
+Uso: `/gsd-plantar-semente "adicionar notificações em tempo real quando construirmos o sistema de eventos"`
 
 ---
 
-**`/gsd-audit-uat`**
+**`/gsd-auditar-tau`**
 Auditoria entre fases de todos os itens pendentes de UAT e verificação.
 - Verifica cada fase para itens pendentes, pulados, bloqueados e que precisam de humano
 - Referência cruzada contra base de código para detectar documentação desatualizada
 - Produz plano de teste humano priorizado agrupado por testabilidade
 - Use antes de iniciar um novo marco para limpar débito de verificação
 
-Uso: `/gsd-audit-uat`
+Uso: `/gsd-auditar-tau`
 
 ### Auditoria de Marco
 
-**`/gsd-audit-milestone [versão]`**
+**`/gsd-auditar-marco [versão]`**
 Auditar conclusão do marco contra intenção original.
 
 - Lê todos os arquivos VERIFICATION.md das fases
@@ -396,30 +396,30 @@ Auditar conclusão do marco contra intenção original.
 - Dispara verificador de integração para conectividade entre fases
 - Cria MILESTONE-AUDIT.md com lacunas e débito técnico
 
-Uso: `/gsd-audit-milestone`
+Uso: `/gsd-auditar-marco`
 
-**`/gsd-plan-milestone-gaps`**
+**`/gsd-planejar-lacunas-marco`**
 Criar fases para fechar lacunas identificadas pela auditoria.
 
 - Lê MILESTONE-AUDIT.md e agrupa lacunas em fases
 - Prioriza por prioridade de requisito (must/should/nice)
 - Adiciona fases de fechamento de lacunas ao ROADMAP.md
-- Pronto para `/gsd-plan-phase` nas novas fases
+- Pronto para `/gsd-planejar-fase` nas novas fases
 
-Uso: `/gsd-plan-milestone-gaps`
+Uso: `/gsd-planejar-lacunas-marco`
 
 ### Configuração
 
-**`/gsd-settings`**
+**`/gsd-configuracoes`**
 Configurar toggles de fluxo e perfil de modelo interativamente.
 
 - Alterna agentes de pesquisador, verificador de plano, verificador
 - Seleciona perfil de modelo (quality/balanced/budget/inherit)
 - Atualiza `.planning/config.json`
 
-Uso: `/gsd-settings`
+Uso: `/gsd-configuracoes`
 
-**`/gsd-set-profile <perfil>`**
+**`/gsd-definir-perfil <perfil>`**
 Troca rápida de perfil de modelo para agentes GSD.
 
 - `quality` — Opus em todo lugar exceto verificação
@@ -427,11 +427,11 @@ Troca rápida de perfil de modelo para agentes GSD.
 - `budget` — Sonnet para escrita, Haiku para pesquisa/verificação
 - `inherit` — Usar modelo da sessão atual para todos os agentes (OpenCode `/model`)
 
-Uso: `/gsd-set-profile budget`
+Uso: `/gsd-definir-perfil budget`
 
 ### Comandos Utilitários
 
-**`/gsd-cleanup`**
+**`/gsd-limpeza`**
 Arquivar diretórios de fases acumulados de marcos concluídos.
 
 - Identifica fases de marcos concluídos ainda em `.planning/phases/`
@@ -439,12 +439,12 @@ Arquivar diretórios de fases acumulados de marcos concluídos.
 - Move diretórios de fases para `.planning/milestones/v{X.Y}-phases/`
 - Use após múltiplos marcos para reduzir desordem em `.planning/phases/`
 
-Uso: `/gsd-cleanup`
+Uso: `/gsd-limpeza`
 
-**`/gsd-help`**
+**`/gsd-ajuda`**
 Mostrar esta referência de comandos.
 
-**`/gsd-update`**
+**`/gsd-atualizar`**
 Atualizar GSD para versão mais recente com prévia do changelog.
 
 - Mostra comparação entre versão instalada e mais recente
@@ -453,15 +453,15 @@ Atualizar GSD para versão mais recente com prévia do changelog.
 - Confirma antes de executar instalação
 - Melhor que `npx get-shit-done-cc` direto
 
-Uso: `/gsd-update`
+Uso: `/gsd-atualizar`
 
-**`/gsd-join-discord`**
+**`/gsd-entrar-discord`**
 Entrar na comunidade Discord do GSD.
 
 - Obtenha ajuda, compartilhe o que está construindo, fique atualizado
 - Conecte-se com outros usuários GSD
 
-Uso: `/gsd-join-discord`
+Uso: `/gsd-entrar-discord`
 
 ## Arquivos e Estrutura
 
@@ -480,7 +480,7 @@ Uso: `/gsd-join-discord`
 ├── milestones/
 │   ├── v1.0-ROADMAP.md       # Snapshot de roteiro arquivado
 │   ├── v1.0-REQUIREMENTS.md  # Requisitos arquivados
-│   └── v1.0-phases/          # Dirs de fase arquivados (via /gsd-cleanup ou --archive-phases)
+│   └── v1.0-phases/          # Dirs de fase arquivados (via /gsd-limpeza ou --archive-phases)
 │       ├── 01-foundation/
 │       └── 02-core-features/
 ├── codebase/             # Mapa da base de código (projetos brownfield)
@@ -502,7 +502,7 @@ Uso: `/gsd-join-discord`
 
 ## Modos de Fluxo
 
-Definido durante `/gsd-new-project`:
+Definido durante `/gsd-novo-projeto`:
 
 **Modo Interativo**
 
@@ -550,51 +550,51 @@ Exemplo de config:
 **Iniciando um novo projeto:**
 
 ```
-/gsd-new-project        # Fluxo unificado: questionamento → pesquisa → requisitos → roteiro
+/gsd-novo-projeto        # Fluxo unificado: questionamento → pesquisa → requisitos → roteiro
 /clear
-/gsd-plan-phase 1       # Criar planos para a primeira fase
+/gsd-planejar-fase 1       # Criar planos para a primeira fase
 /clear
-/gsd-execute-phase 1    # Executar todos os planos da fase
+/gsd-executar-fase 1    # Executar todos os planos da fase
 ```
 
 **Retomando trabalho após uma pausa:**
 
 ```
-/gsd-progress  # Veja onde parou e continue
+/gsd-progresso  # Veja onde parou e continue
 ```
 
 **Adicionando trabalho urgente no meio do marco:**
 
 ```
-/gsd-insert-phase 5 "Correção crítica de segurança"
-/gsd-plan-phase 5.1
-/gsd-execute-phase 5.1
+/gsd-inserir-fase 5 "Correção crítica de segurança"
+/gsd-planejar-fase 5.1
+/gsd-executar-fase 5.1
 ```
 
 **Concluindo um marco:**
 
 ```
-/gsd-complete-milestone 1.0.0
+/gsd-completar-marco 1.0.0
 /clear
-/gsd-new-milestone  # Iniciar próximo marco (questionamento → pesquisa → requisitos → roteiro)
+/gsd-novo-marco  # Iniciar próximo marco (questionamento → pesquisa → requisitos → roteiro)
 ```
 
 **Capturando ideias durante o trabalho:**
 
 ```
-/gsd-add-todo                    # Capturar do contexto da conversa
-/gsd-add-todo Corrigir z-index do modal  # Capturar com descrição explícita
-/gsd-check-todos                 # Revisar e trabalhar nos todos
-/gsd-check-todos api             # Filtrar por área
+/gsd-adicionar-todo                    # Capturar do contexto da conversa
+/gsd-adicionar-todo Corrigir z-index do modal  # Capturar com descrição explícita
+/gsd-verificar-todos                 # Revisar e trabalhar nos todos
+/gsd-verificar-todos api             # Filtrar por área
 ```
 
 **Depurando um problema:**
 
 ```
-/gsd-debug "envio de formulário falha silenciosamente"  # Iniciar sessão de depuração
+/gsd-depurar "envio de formulário falha silenciosamente"  # Iniciar sessão de depuração
 # ... investigação acontece, contexto enche ...
 /clear
-/gsd-debug                                    # Retomar de onde parou
+/gsd-depurar                                    # Retomar de onde parou
 ```
 
 ## Obtendo Ajuda
@@ -602,5 +602,5 @@ Exemplo de config:
 - Leia `.planning/PROJECT.md` para visão do projeto
 - Leia `.planning/STATE.md` para contexto atual
 - Verifique `.planning/ROADMAP.md` para status das fases
-- Execute `/gsd-progress` para verificar onde você está
+- Execute `/gsd-progresso` para verificar onde você está
 </reference>

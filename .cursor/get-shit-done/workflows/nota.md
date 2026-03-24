@@ -43,7 +43,7 @@ promoted: false
 | Argumentos estão vazios (sem texto algum) | **list** |
 | Qualquer outra coisa | **append** (o texto É a nota) |
 
-**Crítico**: `list` só é um subcomando quando é o argumento INTEIRO. `/gsd-note list of groceries` salva uma nota com texto "list of groceries". O mesmo para `promote` — só é subcomando quando seguido por exatamente um número.
+**Crítico**: `list` só é um subcomando quando é o argumento INTEIRO. `/gsd-nota list of groceries` salva uma nota com texto "list of groceries". O mesmo para `promote` — só é subcomando quando seguido por exatamente um número.
 </step>
 
 <step name="append">
@@ -87,7 +87,7 @@ Projeto (.planning/notes/):
 Global (D:/projetos/Estudo/devsquad/.cursor/notes/):
   4. [2026-02-08 10:00] ideia cross-projeto sobre configuração compartilhada
 
-{contagem} nota(s) ativa(s). Use `/gsd-note promote <N>` para converter em todo.
+{contagem} nota(s) ativa(s). Use `/gsd-nota promote <N>` para converter em todo.
 ```
 
 Se um escopo não tem diretório ou entradas, mostre: `(sem notas)`
@@ -99,7 +99,7 @@ Se um escopo não tem diretório ou entradas, mostre: `(sem notas)`
 1. Execute a lógica de **list** para construir o índice numerado (ambos os escopos)
 2. Encontre a entrada N da lista numerada
 3. Se N for inválido ou referir a uma nota já promovida, informe o usuário e pare
-4. **Requer diretório `.planning/`** — se não existir, avise: "Todos requerem um projeto GSD. Execute `/gsd-new-project` para inicializar um."
+4. **Requer diretório `.planning/`** — se não existir, avise: "Todos requerem um projeto GSD. Execute `/gsd-novo-projeto` para inicializar um."
 5. Garanta que o diretório `.planning/todos/pending/` existe
 6. Gere ID do todo: `{NNN}-{slug}` onde NNN é o próximo número sequencial (escaneie ambos `.planning/todos/pending/` e `.planning/todos/done/` para o número mais alto existente, incremente em 1, preencha com zeros até 3 dígitos) e slug são as primeiras ~4 palavras significativas do texto da nota
 7. Extraia o texto da nota do arquivo fonte (corpo após frontmatter)
@@ -110,7 +110,7 @@ Se um escopo não tem diretório ou entradas, mostre: `(sem notas)`
 title: "{texto da nota}"
 status: pending
 priority: P2
-source: "promovida de /gsd-note"
+source: "promovida de /gsd-nota"
 created: {YYYY-MM-DD}
 theme: general
 ---
@@ -135,9 +135,9 @@ Promovida de nota rápida capturada em {data original}.
 </process>
 
 <edge_cases>
-1. **"list" como texto de nota**: `/gsd-note list of things` salva nota "list of things" (subcomando apenas quando `list` é o argumento inteiro)
+1. **"list" como texto de nota**: `/gsd-nota list of things` salva nota "list of things" (subcomando apenas quando `list` é o argumento inteiro)
 2. **Sem `.planning/`**: Usa `D:/projetos/Estudo/devsquad/.cursor/notes/` global — funciona em qualquer diretório
-3. **Promover sem projeto**: Avisa que todos requerem `.planning/`, sugere `/gsd-new-project`
+3. **Promover sem projeto**: Avisa que todos requerem `.planning/`, sugere `/gsd-novo-projeto`
 4. **Arquivos grandes**: `list` mostra últimos 10 quando >20 entradas ativas
 5. **Slugs duplicados**: Adicione `-2`, `-3` etc. ao nome do arquivo se o slug já foi usado na mesma data
 6. **Posição de `--global`**: Removida de qualquer lugar — `--global minha ideia` e `minha ideia --global` ambos salvam "minha ideia" globalmente

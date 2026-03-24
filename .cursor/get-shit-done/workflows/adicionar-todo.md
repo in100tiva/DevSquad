@@ -28,7 +28,7 @@ Anotar áreas existentes do array de todos para consistência no passo infer_are
 
 <step name="extract_content">
 **Com argumentos:** Usar como o título/foco.
-- `/gsd-add-todo Adicionar refresh de token de auth` → título = "Adicionar refresh de token de auth"
+- `/gsd-adicionar-todo Adicionar refresh de token de auth` → título = "Adicionar refresh de token de auth"
 
 **Sem argumentos:** Analisar conversa recente para extrair:
 - O problema, ideia ou tarefa específica discutida
@@ -141,7 +141,7 @@ Deseja:
 
 1. Continuar com o trabalho atual
 2. Adicionar outro todo
-3. Ver todos os todos (/gsd-check-todos)
+3. Ver todos os todos (/gsd-verificar-todos)
 ```
 </step>
 

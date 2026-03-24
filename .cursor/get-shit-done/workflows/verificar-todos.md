@@ -22,14 +22,14 @@ Se `todo_count` for 0:
 ```
 Nenhum todo pendente.
 
-Todos são capturados durante sessões de trabalho com /gsd-add-todo.
+Todos são capturados durante sessões de trabalho com /gsd-adicionar-todo.
 
 ---
 
 Deseja:
 
-1. Continuar com a fase atual (/gsd-progress)
-2. Adicionar um todo agora (/gsd-add-todo)
+1. Continuar com a fase atual (/gsd-progresso)
+2. Adicionar um todo agora (/gsd-adicionar-todo)
 ```
 
 Encerrar.
@@ -37,8 +37,8 @@ Encerrar.
 
 <step name="parse_filter">
 Verificar filtro de área nos argumentos:
-- `/gsd-check-todos` → mostrar todos
-- `/gsd-check-todos api` → filtrar apenas para area:api
+- `/gsd-verificar-todos` → mostrar todos
+- `/gsd-verificar-todos api` → filtrar apenas para area:api
 </step>
 
 <step name="list_todos">
@@ -56,7 +56,7 @@ Todos Pendentes:
 ---
 
 Responda com um número para ver detalhes, ou:
-- `/gsd-check-todos [área]` para filtrar por área
+- `/gsd-verificar-todos [área]` para filtrar por área
 - `q` para sair
 ```
 
@@ -118,7 +118,7 @@ Usar conversational prompting:
 - question: "O que deseja fazer com este todo?"
 - options:
   - "Trabalhar nele agora" — mover para done, começar a trabalhar
-  - "Criar uma fase" — /gsd-add-phase com este escopo
+  - "Criar uma fase" — /gsd-adicionar-fase com este escopo
   - "Pensar na abordagem" — refletir antes de decidir
   - "Devolver" — retornar à lista
 </step>
@@ -134,7 +134,7 @@ Atualizar contagem de todos no STATE.md. Apresentar contexto problema/solução.
 Anotar referência do todo nas notas de planejamento da fase. Manter em pending. Retornar à lista ou sair.
 
 **Criar uma fase:**
-Exibir: `/gsd-add-phase [descrição do todo]`
+Exibir: `/gsd-adicionar-fase [descrição do todo]`
 Manter em pending. Usuário executa o comando em contexto limpo.
 
 **Pensar na abordagem:**

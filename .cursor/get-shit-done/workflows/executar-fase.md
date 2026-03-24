@@ -19,7 +19,7 @@ O orquestrador coordena, não executa. Cada subagente carrega o contexto complet
 **Regra de fallback:** Se um agente iniciado completou seu trabalho (commits visíveis, SUMMARY.md existe) mas
 o orquestrador nunca recebeu o sinal de conclusão, tratá-lo como bem-sucedido baseado em verificações por amostragem
 e continuar para a próxima onda/plano. Nunca bloquear indefinidamente esperando um sinal — sempre verificar
-via filesystem e estado do git.
+via sistema de arquivos e estado do git.
 </runtime_compatibility>
 
 <required_reading>
@@ -31,7 +31,7 @@ Estes são os tipos válidos de subagente GSD registrados em .claude/agents/ (ou
 Sempre usar o nome exato desta lista — não recorrer a 'general-purpose' ou outros tipos embutidos:
 
 - gsd-executor — Executa tarefas do plano, commita, cria SUMMARY.md
-- gsd-verificador — Verifica conclusão da fase, checa quality gates
+- gsd-verificador — Verifica conclusão da fase, checa portões de qualidade
 - gsd-planejador — Cria planos detalhados a partir do escopo da fase
 - gsd-pesquisador-fase — Pesquisa abordagens técnicas para uma fase
 - gsd-verificador-plano — Revisa qualidade do plano antes da execução
@@ -140,14 +140,14 @@ pontos de verificação do usuário entre tarefas. O usuário pode revisar, modi
 <step name="handle_branching">
 Verificar `branching_strategy` do init:
 
-**"none":** Pular, continuar na branch atual.
+**"none":** Pular, continuar no ramo (branch) atual.
 
 **"phase" ou "milestone":** Usar `branch_name` pré-computado do init:
 ```bash
 git checkout -b "$BRANCH_NAME" 2>/dev/null || git checkout "$BRANCH_NAME"
 ```
 
-Todos os commits subsequentes vão para esta branch. Usuário gerencia o merge.
+Todos os commits subsequentes vão para este ramo (branch). O usuário gerencia o merge.
 </step>
 
 <step name="validate_phase">
@@ -301,7 +301,7 @@ Executar cada onda selecionada em sequência. Dentro de uma onda: paralelo se `P
 
 4. **Validação de hooks pós-onda (somente modo paralelo):**
 
-   Quando agentes commitaram com `--no-verify`, execute os hooks pre-commit uma vez após a onda:
+   Quando agentes commitaram com `--no-verify`, rode os hooks pre-commit uma vez após a onda:
    ```bash
    # Executa os hooks pre-commit do projeto no estado atual
    git diff --cached --quiet || git stash
@@ -349,9 +349,9 @@ Executar cada onda selecionada em sequência. Dentro de uma onda: paralelo se `P
 
     ## Lacuna de Conexão Entre Planos
 
-    | Plano | Link | De | Padrão Esperado | Status |
-    |-------|------|----|-----------------|--------|
-    | {plan} | {via} | {from} | {pattern} | NÃO ENCONTRADO |
+    | Plano | Ligação | Origem | Padrão esperado | Status |
+    |-------|---------|--------|-----------------|--------|
+    | {plan} | {via} | {origem} | {pattern} | NÃO ENCONTRADO |
 
     Artefatos da Onda {N} podem não estar devidamente integrados. Opções:
     1. Investigar e corrigir antes de continuar
@@ -459,8 +459,8 @@ A onda selecionada terminou com sucesso. Esta fase ainda tem planos incompletos,
 ```
 
 **Se nenhum plano incompleto restar após a onda selecionada terminar:**
-- continue com o fluxo normal de verificação e conclusão em nível de fase abaixo
-- isso significa que a onda selecionada era, por acaso, o último trabalho restante na fase
+- prossiga com o fluxo normal de verificação e conclusão em nível de fase abaixo
+- isto significa que a onda selecionada era, por acaso, o último trabalho restante na fase
 </step>
 
 <step name="close_parent_artifacts">
@@ -494,10 +494,10 @@ Se todas as lacunas agora têm `status: resolved`:
 - Atualizar frontmatter `status: diagnosed` → `status: resolved`
 - Atualizar timestamp `updated:` do frontmatter
 
-**5. Resolver sessões de debug referenciadas:**
+**5. Resolver sessões de depuração referenciadas:**
 
 Para cada lacuna que tem campo `debug_session:`:
-- Ler o arquivo de sessão de debug
+- Ler o arquivo de sessão de depuração
 - Atualizar frontmatter `status:` → `resolved`
 - Atualizar timestamp `updated:` do frontmatter
 - Mover para diretório resolvido:
@@ -527,7 +527,7 @@ PRIOR_VERIFICATIONS=$(find .planning/phases/ -name "*-VERIFICATION.md" ! -path "
 
 Para cada VERIFICATION.md encontrado, procurar referências de arquivos de teste:
 - Linhas contendo caminhos `test`, `spec` ou `__tests__`
-- A seção "Test Suite" ou "Automated Checks"
+- Seções com títulos em inglês comuns como "Test Suite" (suíte de testes) ou "Automated Checks" (verificações automatizadas)
 - Padrões de arquivo de `key-files.created` em arquivos SUMMARY.md correspondentes que correspondam a `*.test.*` ou `*.spec.*`
 
 Coletar todos os caminhos únicos de arquivos de teste em `REGRESSION_FILES`.
@@ -535,9 +535,9 @@ Coletar todos os caminhos únicos de arquivos de teste em `REGRESSION_FILES`.
 **Passo 3: Executar testes de regressão (se algum encontrado)**
 
 ```bash
-# Detectar runner de teste e executar testes de fases anteriores
+# Detectar executor de testes e rodar testes de fases anteriores
 if [ -f "package.json" ]; then
-  # Node.js — usar runner de teste do projeto
+  # Node.js — usar o executor de testes do projeto
   npx jest ${REGRESSION_FILES} --passWithNoTests --no-coverage -q 2>&1 || npx vitest run ${REGRESSION_FILES} 2>&1
 elif [ -f "Cargo.toml" ]; then
   cargo test 2>&1
@@ -552,7 +552,7 @@ Se todos os testes passarem:
 ```
 ✓ Portal de regressão: {N} arquivos de teste de fases anteriores aprovados — nenhuma regressão detectada
 ```
-→ Prosseguir para verify_phase_goal
+→ Prosseguir para o passo `verify_phase_goal`
 
 Se algum teste falhar:
 ```
@@ -694,7 +694,7 @@ Ciclo de fechamento de lacunas: `/gsd-planejar-fase {X} --gaps ${GSD_WS}` lê VE
 COMPLETION=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" phase complete "${PHASE_NUMBER}")
 ```
 
-O CLI trata:
+A interface de linha de comando (CLI) trata:
 - Marcar checkbox da fase `[x]` com data de conclusão
 - Atualizar tabela de Progresso (Status → Completo, data)
 - Atualizar contagem de planos para final
@@ -793,7 +793,7 @@ Ler e seguir `D:/projetos/Estudo/devsquad/.cursor/get-shit-done/workflows/transi
 
 **PARAR. Não auto-avançar. Não executar transição. Não planejar próxima fase. Apresentar opções ao usuário e aguardar.**
 
-**IMPORTANTE: Não existe comando `/gsd-transition`. Nunca sugeri-lo. O workflow de transição é somente interno.**
+**IMPORTANTE: Não existe comando `/gsd-transicao`. Nunca sugeri-lo. O workflow de transição é somente interno.**
 
 ```
 ## ✓ Fase {X}: {Nome} concluída

@@ -7,10 +7,10 @@ Não existe comando `/gsd-transition`. Este workflow é invocado automaticamente
 Usuários nunca devem ser instruídos a executar `/gsd-transition`.
 
 **Comandos válidos do usuário para progressão de fase:**
-- `/gsd-discuss-phase {N}` — discutir uma fase antes de planejar
-- `/gsd-plan-phase {N}` — planejar uma fase
-- `/gsd-execute-phase {N}` — executar uma fase
-- `/gsd-progress` — ver progresso do roadmap
+- `/gsd-discutir-fase {N}` — discutir uma fase antes de planejar
+- `/gsd-planejar-fase {N}` — planejar uma fase
+- `/gsd-executar-fase {N}` — executar uma fase
+- `/gsd-progresso` — ver progresso do roadmap
 
 </internal_workflow>
 
@@ -93,7 +93,7 @@ Adicionar à mensagem de confirmação de conclusão (independentemente do modo)
 Itens de verificação pendentes nesta fase:
 {listar nomes de arquivos}
 
-Estes serão carregados como débito. Revisar: `/gsd-audit-uat`
+Estes serão carregados como débito. Revisar: `/gsd-auditar-tau`
 ```
 
 Isto NÃO bloqueia transição — garante que o usuário veja o débito antes de confirmar.
@@ -446,7 +446,7 @@ Próxima: Fase [X+1] — [Nome]
 ⚡ Auto-continuando: Planejar Fase [X+1] em detalhe
 ```
 
-Sair da skill e invocar SlashCommand("/gsd-plan-phase [X+1] --auto ${GSD_WS}")
+Sair da skill e invocar SlashCommand("/gsd-planejar-fase [X+1] --auto ${GSD_WS}")
 
 **Se CONTEXT.md NÃO existir:**
 
@@ -458,7 +458,7 @@ Próxima: Fase [X+1] — [Nome]
 ⚡ Auto-continuando: Discutir Fase [X+1] primeiro
 ```
 
-Sair da skill e invocar SlashCommand("/gsd-discuss-phase [X+1] --auto ${GSD_WS}")
+Sair da skill e invocar SlashCommand("/gsd-discutir-fase [X+1] --auto ${GSD_WS}")
 
 </if>
 
@@ -475,15 +475,15 @@ Sair da skill e invocar SlashCommand("/gsd-discuss-phase [X+1] --auto ${GSD_WS}"
 
 **Fase [X+1]: [Nome]** — [Objetivo do ROADMAP.md]
 
-`/gsd-discuss-phase [X+1] ${GSD_WS}` — coletar contexto e esclarecer abordagem
+`/gsd-discutir-fase [X+1] ${GSD_WS}` — coletar contexto e esclarecer abordagem
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-plan-phase [X+1] ${GSD_WS}` — pular discussão, planejar diretamente
-- `/gsd-research-phase [X+1] ${GSD_WS}` — investigar incógnitas
+- `/gsd-planejar-fase [X+1] ${GSD_WS}` — pular discussão, planejar diretamente
+- `/gsd-pesquisar-fase [X+1] ${GSD_WS}` — investigar incógnitas
 
 ---
 ```
@@ -500,15 +500,15 @@ Sair da skill e invocar SlashCommand("/gsd-discuss-phase [X+1] --auto ${GSD_WS}"
 **Fase [X+1]: [Nome]** — [Objetivo do ROADMAP.md]
 <sub>✓ Contexto coletado, pronto para planejar</sub>
 
-`/gsd-plan-phase [X+1] ${GSD_WS}`
+`/gsd-planejar-fase [X+1] ${GSD_WS}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-discuss-phase [X+1] ${GSD_WS}` — revisitar contexto
-- `/gsd-research-phase [X+1] ${GSD_WS}` — investigar incógnitas
+- `/gsd-discutir-fase [X+1] ${GSD_WS}` — revisitar contexto
+- `/gsd-pesquisar-fase [X+1] ${GSD_WS}` — investigar incógnitas
 
 ---
 ```
@@ -554,18 +554,18 @@ As fases desta workstream estão completas. Outras workstreams ainda estão ativ
 
 Arquivar esta workstream:
 
-`/gsd-workstreams complete {nome_ws_atual} ${GSD_WS}`
+`/gsd-fluxos-trabalho complete {nome_ws_atual} ${GSD_WS}`
 
 Ver progresso geral do milestone:
 
-`/gsd-workstreams progress ${GSD_WS}`
+`/gsd-fluxos-trabalho progress ${GSD_WS}`
 
 <sub>Conclusão do milestone estará disponível quando todas as workstreams terminarem.</sub>
 
 ---
 ```
 
-NÃO sugira `/gsd-complete-milestone` ou `/gsd-new-milestone`.
+NÃO sugira `/gsd-completar-marco` ou `/gsd-novo-marco`.
 NÃO auto-invoque nenhum outro slash command.
 
 **Pare aqui.** O usuário deve decidir explicitamente o que fazer a seguir.
@@ -593,7 +593,7 @@ Fase {X} marcada como completa.
 ⚡ Auto-continuando: Completar milestone e arquivar
 ```
 
-Sair da skill e invocar SlashCommand("/gsd-complete-milestone {versão} ${GSD_WS}")
+Sair da skill e invocar SlashCommand("/gsd-completar-marco {versão} ${GSD_WS}")
 
 </if>
 
@@ -610,7 +610,7 @@ Sair da skill e invocar SlashCommand("/gsd-complete-milestone {versão} ${GSD_WS
 
 **Completar Milestone {versão}** — arquivar e preparar para o próximo
 
-`/gsd-complete-milestone {versão} ${GSD_WS}`
+`/gsd-completar-marco {versão} ${GSD_WS}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 

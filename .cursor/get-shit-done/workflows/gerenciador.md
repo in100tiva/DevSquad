@@ -104,8 +104,8 @@ Se `all_complete` for true:
 ╚══════════════════════════════════════════════════════════════╝
 
 Todas as {phase_count} fases concluídas. Prontas para etapas finais:
-  → /gsd-verify-work — executar testes de aceite
-  → /gsd-complete-milestone — arquivar e finalizar
+  → /gsd-verificar-trabalho — executar testes de aceite
+  → /gsd-completar-marco — arquivar e finalizar
 ```
 
 Perguntar ao usuário via conversational prompting:
@@ -113,8 +113,8 @@ Perguntar ao usuário via conversational prompting:
 - **options:** "Verificar trabalho" / "Concluir marco" / "Sair do gerenciador"
 
 Tratar respostas:
-- "Verificar trabalho": `Skill(skill="gsd-verify-work")` depois voltar ao painel.
-- "Concluir marco": `Skill(skill="gsd-complete-milestone")` depois sair.
+- "Verificar trabalho": `Skill(skill="gsd-verificar-trabalho")` depois voltar ao painel.
+- "Concluir marco": `Skill(skill="gsd-completar-marco")` depois sair.
 - "Sair do gerenciador": Ir para etapa de saída.
 
 **Se NÃO all_complete**, construir opções compostas de `recommended_actions`:
@@ -191,7 +191,7 @@ Quando o usuário seleciona uma opção composta:
 2. **Depois executar a discussão inline:**
 
 ```
-Skill(skill="gsd-discuss-phase", args="{PHASE_NUM}")
+Skill(skill="gsd-discutir-fase", args="{PHASE_NUM}")
 ```
 
 Após discussão concluir, voltar para etapa do painel (agentes de background continuam rodando).
@@ -201,7 +201,7 @@ Após discussão concluir, voltar para etapa do painel (agentes de background co
 Discussão é interativa — precisa de entrada do usuário. Executar inline:
 
 ```
-Skill(skill="gsd-discuss-phase", args="{PHASE_NUM}")
+Skill(skill="gsd-discutir-fase", args="{PHASE_NUM}")
 ```
 
 Após discussão concluir, voltar para etapa do painel.
@@ -332,11 +332,11 @@ Exibir status final com barra de progresso:
  {milestone_version} — {milestone_name}
  {PROGRESS_BAR} {progress_pct}%  ({completed_count}/{phase_count} fases)
 
- Retome a qualquer momento: /gsd-manager
+ Retome a qualquer momento: /gsd-gerenciador
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Nota:** Qualquer agente de background ainda rodando continuará até concluir. Seus resultados serão visíveis na próxima invocação de `/gsd-manager` ou `/gsd-progress`.
+**Nota:** Qualquer agente de background ainda rodando continuará até concluir. Seus resultados serão visíveis na próxima invocação de `/gsd-gerenciador` ou `/gsd-progresso`.
 
 </step>
 

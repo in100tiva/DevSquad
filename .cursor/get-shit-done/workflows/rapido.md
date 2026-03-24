@@ -5,7 +5,7 @@ sem pesquisa, sem verificação de plano. Apenas: entender → fazer → commita
 Para tarefas como: corrigir um typo, atualizar um valor de configuração, adicionar um import faltando, renomear uma
 variável, commitar trabalho não commitado, adicionar uma entrada no .gitignore, incrementar número de versão.
 
-Use /gsd-quick para qualquer coisa que precise de planejamento multi-etapa ou pesquisa.
+Use /gsd-rapido-garantido para qualquer coisa que precise de planejamento multi-etapa ou pesquisa.
 </purpose>
 
 <process>
@@ -34,8 +34,8 @@ Se a tarefa parecer não-trivial (refatoração multi-arquivo, nova funcionalida
 dizer:
 
 ```
-Isso parece precisar de planejamento. Use /gsd-quick no lugar:
-  /gsd-quick "{descrição da tarefa}"
+Isso parece precisar de planejamento. Use /gsd-rapido-garantido no lugar:
+  /gsd-rapido-garantido "{descrição da tarefa}"
 ```
 
 E parar.
@@ -93,8 +93,8 @@ Sem sugestões de próximos passos. Sem roteamento de workflow. Apenas feito.
 - NUNCA disparar um Task/subagente — isso roda inline
 - NUNCA criar arquivos PLAN.md ou SUMMARY.md
 - NUNCA executar pesquisa ou verificação de plano
-- Se a tarefa levar mais de 3 edições de arquivo, PARAR e redirecionar para /gsd-quick
-- Se estiver inseguro sobre como implementar, PARAR e redirecionar para /gsd-quick
+- Se a tarefa levar mais de 3 edições de arquivo, PARAR e redirecionar para /gsd-rapido-garantido
+- Se estiver inseguro sobre como implementar, PARAR e redirecionar para /gsd-rapido-garantido
 </guardrails>
 
 <success_criteria>

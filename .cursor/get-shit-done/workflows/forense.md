@@ -207,11 +207,11 @@ Com base nas evidências acima, a explicação mais provável é:
 
 1. {Passo de remediação específico e acionável}
 2. {Outro passo se aplicável}
-3. {Comando de recuperação se aplicável — ex.: `/gsd-resume-work`, `/gsd-execute-phase N`}
+3. {Comando de recuperação se aplicável — ex.: `/gsd-retomar-trabalho`, `/gsd-executar-fase N`}
 
 ---
 
-*Relatório gerado por `/gsd-forensics`. Todos os caminhos redatados para portabilidade.*
+*Relatório gerado por `/gsd-forense`. Todos os caminhos redatados para portabilidade.*
 ```
 
 **Regras de redação:**

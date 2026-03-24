@@ -202,7 +202,7 @@ Agentes apenas diagnosticam — plan-phase --gaps trata correções (sem aplica�
 
 **Agente expira:**
 - Verificar DEBUG-{slug}.md para progresso parcial
-- Pode retomar com /gsd-debug
+- Pode retomar com /gsd-depurar
 
 **Todos os agentes falham:**
 - Algo sistêmico (permissões, git, etc.)

@@ -82,7 +82,7 @@ Requisitos: {N}/{M} requisitos v1 marcados
 
 DEVE apresentar 3 opções:
 1. **Prosseguir mesmo assim** — marcar marco como completo com lacunas conhecidas
-2. **Executar auditoria primeiro** — `/gsd-audit-milestone` para avaliar severidade das lacunas
+2. **Executar auditoria primeiro** — `/gsd-auditar-marco` para avaliar severidade das lacunas
 3. **Abortar** — retornar ao desenvolvimento
 
 Se o usuário selecionar "Prosseguir mesmo assim": anotar requisitos incompletos no MILESTONES.md em `### Lacunas Conhecidas` com REQ-IDs e descrições.
@@ -396,7 +396,7 @@ mv .planning/phases/{phase-dir} .planning/milestones/v[X.Y]-phases/
 ```
 Verificar: `✅ Diretórios de fase arquivados em .planning/milestones/v[X.Y]-phases/`
 
-Se "Pular": Diretórios de fase permanecem em `.planning/phases/` como histórico bruto de execução. Usar `/gsd-cleanup` depois para arquivar retroativamente.
+Se "Pular": Diretórios de fase permanecem em `.planning/phases/` como histórico bruto de execução. Usar `/gsd-limpeza` depois para arquivar retroativamente.
 
 Após o arquivamento, a IA ainda cuida de:
 - Reorganizar ROADMAP.md com agrupamento de marcos (requer julgamento)
@@ -708,7 +708,7 @@ Tag: v[X.Y]
 
 **Iniciar Próximo Marco** — questionamento → pesquisa → requisitos → roteiro
 
-`/gsd-new-milestone`
+`/gsd-novo-marco`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
@@ -760,6 +760,6 @@ Conclusão do marco é bem-sucedida quando:
 - [ ] Lacunas conhecidas registradas no MILESTONES.md se usuário prosseguiu com requisitos incompletos
 - [ ] RETROSPECTIVE.md atualizado com seção do marco
 - [ ] Tendências entre marcos atualizadas
-- [ ] Usuário sabe o próximo passo (/gsd-new-milestone)
+- [ ] Usuário sabe o próximo passo (/gsd-novo-marco)
 
 </success_criteria>

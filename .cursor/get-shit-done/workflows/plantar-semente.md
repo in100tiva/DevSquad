@@ -1,6 +1,6 @@
 <purpose>
 Capturar uma ideia voltada para o futuro como um arquivo de semente estruturado com condições de ativação.
-Sementes aparecem automaticamente durante /gsd-new-milestone quando as condições de ativação correspondem ao escopo do novo milestone.
+Sementes aparecem automaticamente durante /gsd-novo-marco quando as condições de ativação correspondem ao escopo do novo milestone.
 
 Sementes são melhores que itens adiados porque:
 - Preservam POR QUE a ideia importa (não apenas O QUE)
@@ -116,7 +116,7 @@ scope: {$SCOPE}
 
 **Gatilho:** {$TRIGGER}
 
-Esta semente deve ser apresentada durante `/gsd-new-milestone` quando o escopo
+Esta semente deve ser apresentada durante `/gsd-novo-marco` quando o escopo
 do milestone corresponder a qualquer uma destas condições:
 - {condição de gatilho 1}
 - {condição de gatilho 2}
@@ -152,7 +152,7 @@ Gatilho: {$TRIGGER}
 Escopo: {$SCOPE}
 Arquivo: .planning/seeds/SEED-{PADDED}-{slug}.md
 
-Esta semente aparecerá automaticamente quando você executar /gsd-new-milestone
+Esta semente aparecerá automaticamente quando você executar /gsd-novo-marco
 e o escopo do milestone corresponder à condição de gatilho.
 ```
 </step>

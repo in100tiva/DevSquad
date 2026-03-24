@@ -1,5 +1,5 @@
 <purpose>
-Gerar um contrato de design UI (UI-SPEC.md) para fases de frontend. Orquestra gsd-ui-researcher e gsd-ui-checker com um loop de revisão. Insere-se entre discuss-phase e plan-phase no ciclo de vida.
+Gerar um contrato de design UI (UI-SPEC.md) para fases de frontend. Orquestra gsd-pesquisador-ui e gsd-verificador-ui com um loop de revisão. Insere-se entre discuss-phase e plan-phase no ciclo de vida.
 
 UI-SPEC.md fixa espaçamento, tipografia, cor, copywriting e decisões de design system antes que o planejador crie tarefas. Isso previne débito de design causado por decisões de estilo ad-hoc durante a execução.
 </purpose>
@@ -24,8 +24,8 @@ Analisar JSON para: `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `pa
 Resolver modelos dos agentes UI:
 
 ```bash
-UI_RESEARCHER_MODEL=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" resolve-model gsd-ui-researcher --raw)
-UI_CHECKER_MODEL=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" resolve-model gsd-ui-checker --raw)
+UI_RESEARCHER_MODEL=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" resolve-model gsd-pesquisador-ui --raw)
+UI_CHECKER_MODEL=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" resolve-model gsd-verificador-ui --raw)
 ```
 
 Verificar config:
@@ -36,11 +36,11 @@ UI_ENABLED=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-too
 
 **Se `UI_ENABLED` for `false`:**
 ```
-Fase UI está desabilitada na config. Habilite via /gsd-settings.
+Fase UI está desabilitada na config. Habilite via /gsd-configuracoes.
 ```
 Sair do workflow.
 
-**Se `planning_exists` for false:** Erro — execute `/gsd-new-project` primeiro.
+**Se `planning_exists` for false:** Erro — execute `/gsd-novo-projeto` primeiro.
 
 ## 2. Analisar e Validar Fase
 
@@ -57,7 +57,7 @@ PHASE_INFO=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-too
 **Se `has_context` for false:**
 ```
 Nenhum CONTEXT.md encontrado para Fase {N}.
-Recomendado: execute /gsd-discuss-phase {N} primeiro para capturar preferências de design.
+Recomendado: execute /gsd-discutir-fase {N} primeiro para capturar preferências de design.
 Continuando sem decisões do usuário — pesquisador de UI fará todas as perguntas.
 ```
 Continuar (não bloqueante).
@@ -87,7 +87,7 @@ Se "Visualizar": exibir conteúdo do arquivo, sair.
 Se "Pular": prosseguir para passo 7 (checker).
 Se "Atualizar": continuar para passo 5.
 
-## 5. Criar gsd-ui-researcher
+## 5. Criar gsd-pesquisador-ui
 
 Exibir:
 ```
@@ -101,7 +101,7 @@ Exibir:
 Construir prompt:
 
 ```markdown
-Read D:/projetos/Estudo/devsquad/.cursor/agents/gsd-ui-researcher.md for instructions.
+Read D:/projetos/Estudo/devsquad/.cursor/agents/gsd-pesquisador-ui.md for instructions.
 
 <objective>
 Criar contrato de design UI para Fase {phase_number}: {phase_name}
@@ -112,7 +112,7 @@ Responder: "Quais contratos visuais e de interação esta fase precisa?"
 - {state_path} (Estado do Projeto)
 - {roadmap_path} (Roadmap)
 - {requirements_path} (Requisitos)
-- {context_path} (DECISÕES DO USUÁRIO de /gsd-discuss-phase)
+- {context_path} (DECISÕES DO USUÁRIO de /gsd-discutir-fase)
 - {research_path} (Pesquisa Técnica — decisões de stack)
 </files_to_read>
 
@@ -133,7 +133,7 @@ Omitir caminhos de arquivo nulos de `<files_to_read>`.
 ```
 Task(
   prompt=ui_research_prompt,
-  subagent_type="gsd-ui-researcher",
+  subagent_type="gsd-pesquisador-ui",
   model="{UI_RESEARCHER_MODEL}",
   description="Contrato de Design UI Fase {N}"
 )
@@ -147,7 +147,7 @@ Exibir confirmação. Continuar para passo 7.
 **Se `## UI-SPEC BLOCKED`:**
 Exibir detalhes do bloqueio e opções. Sair do workflow.
 
-## 7. Criar gsd-ui-checker
+## 7. Criar gsd-verificador-ui
 
 Exibir:
 ```
@@ -161,7 +161,7 @@ Exibir:
 Construir prompt:
 
 ```markdown
-Read D:/projetos/Estudo/devsquad/.cursor/agents/gsd-ui-checker.md for instructions.
+Read D:/projetos/Estudo/devsquad/.cursor/agents/gsd-verificador-ui.md for instructions.
 
 <objective>
 Validar contrato de design UI para Fase {phase_number}: {phase_name}
@@ -182,7 +182,7 @@ ui_safety_gate: {valor config ui_safety_gate}
 ```
 Task(
   prompt=ui_checker_prompt,
-  subagent_type="gsd-ui-checker",
+  subagent_type="gsd-verificador-ui",
   model="{UI_CHECKER_MODEL}",
   description="Verificar UI-SPEC Fase {N}"
 )
@@ -202,7 +202,7 @@ Rastrear `revision_count` (começa em 0).
 
 **Se `revision_count` < 2:**
 - Incrementar `revision_count`
-- Re-criar gsd-ui-researcher com contexto de revisão:
+- Re-criar gsd-pesquisador-ui com contexto de revisão:
 
 ```markdown
 <revision>
@@ -226,7 +226,7 @@ Máximo de iterações de revisão atingido. Problemas restantes:
 
 Opções:
 1. Forçar aprovação — prosseguir com UI-SPEC atual (FLAGs se tornam aceitos)
-2. Editar manualmente — abrir UI-SPEC.md no editor, re-executar /gsd-ui-phase
+2. Editar manualmente — abrir UI-SPEC.md no editor, re-executar /gsd-fase-ui
 3. Abandonar — sair sem aprovar
 ```
 
@@ -251,7 +251,7 @@ Dimensões: 6/6 aprovadas
 
 **Planejar Fase {N}** — planejador usará UI-SPEC.md como contexto de design
 
-`/gsd-plan-phase {N}`
+`/gsd-planejar-fase {N}`
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 
@@ -279,9 +279,9 @@ node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" state
 - [ ] Fase validada contra roadmap
 - [ ] Pré-requisitos verificados (CONTEXT.md, RESEARCH.md — avisos não bloqueantes)
 - [ ] UI-SPEC existente tratada (atualizar/visualizar/pular)
-- [ ] gsd-ui-researcher criado com contexto e caminhos de arquivo corretos
+- [ ] gsd-pesquisador-ui criado com contexto e caminhos de arquivo corretos
 - [ ] UI-SPEC.md criada na localização correta
-- [ ] gsd-ui-checker criado com UI-SPEC.md
+- [ ] gsd-verificador-ui criado com UI-SPEC.md
 - [ ] Todas as 6 dimensões avaliadas
 - [ ] Loop de revisão se BLOCKED (máx 2 iterações)
 - [ ] Status final exibido com próximos passos

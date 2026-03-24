@@ -28,7 +28,7 @@ Analisar JSON para: `state_exists`, `roadmap_exists`, `project_exists`, `plannin
 
 **Se `state_exists` for true:** Prossiga para load_state
 **Se `state_exists` for false mas `roadmap_exists` ou `project_exists` for true:** Ofereça reconstruir STATE.md
-**Se `planning_exists` for false:** Este é um novo projeto - direcione para /gsd-new-project
+**Se `planning_exists` for false:** Este é um novo projeto - direcione para /gsd-novo-projeto
 </step>
 
 <step name="load_state">
@@ -83,7 +83,7 @@ fi
 
 **Se HANDOFF.json existir:**
 
-- Esta é a fonte primária de retomada — dados estruturados de `/gsd-pause-work`
+- Esta é a fonte primária de retomada — dados estruturados de `/gsd-pausar-trabalho`
 - Analisar `status`, `phase`, `plan`, `task`, `total_tasks`, `next_action`
 - Verificar `blockers` e `human_actions_pending` — mostrar imediatamente
 - Verificar `completed_tasks` para itens `in_progress` — estes precisam de atenção primeiro
@@ -139,7 +139,7 @@ Apresentar status completo do projeto ao usuário:
     Retomar com: ferramenta Task (parâmetro resume com ID do agente)
 
 [Se todos pendentes existirem:]
-📋 [N] todos pendentes — /gsd-check-todos para revisar
+📋 [N] todos pendentes — /gsd-verificar-todos para revisar
 
 [Se bloqueios existirem:]
 ⚠️  Preocupações herdadas:
@@ -199,11 +199,11 @@ O que você gostaria de fazer?
 [Ação primária baseada no estado - ex.:]
 1. Retomar agente interrompido [se agente interrompido encontrado]
    OU
-1. Executar fase (/gsd-execute-phase {fase} ${GSD_WS})
+1. Executar fase (/gsd-executar-fase {fase} ${GSD_WS})
    OU
-1. Discutir contexto da Fase 3 (/gsd-discuss-phase 3 ${GSD_WS}) [se CONTEXT.md ausente]
+1. Discutir contexto da Fase 3 (/gsd-discutir-fase 3 ${GSD_WS}) [se CONTEXT.md ausente]
    OU
-1. Planejar Fase 3 (/gsd-plan-phase 3 ${GSD_WS}) [se CONTEXT.md existe ou opção de discussão recusada]
+1. Planejar Fase 3 (/gsd-planejar-fase 3 ${GSD_WS}) [se CONTEXT.md existe ou opção de discussão recusada]
 
 [Opções secundárias:]
 2. Revisar status da fase atual
@@ -234,7 +234,7 @@ Com base na seleção do usuário, direcione para o workflow apropriado:
 
   **{fase}-{plano}: [Nome do Plano]** — [objetivo do PLAN.md]
 
-  `/gsd-execute-phase {fase} ${GSD_WS}`
+  `/gsd-executar-fase {fase} ${GSD_WS}`
 
   <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
@@ -248,15 +248,15 @@ Com base na seleção do usuário, direcione para o workflow apropriado:
 
   **Fase [N]: [Nome]** — [Objetivo do ROADMAP.md]
 
-  `/gsd-plan-phase [numero-fase] ${GSD_WS}`
+  `/gsd-planejar-fase [numero-fase] ${GSD_WS}`
 
   <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
   ---
 
   **Também disponível:**
-  - `/gsd-discuss-phase [N] ${GSD_WS}` — coletar contexto primeiro
-  - `/gsd-research-phase [N] ${GSD_WS}` — investigar incógnitas
+  - `/gsd-discutir-fase [N] ${GSD_WS}` — coletar contexto primeiro
+  - `/gsd-pesquisar-fase [N] ${GSD_WS}` — investigar incógnitas
 
   ---
   ```

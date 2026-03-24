@@ -110,7 +110,7 @@ Escrever `.planning/reports/SESSION_REPORT.md` (ou `.planning/reports/YYYYMMDD-s
 
 ---
 
-*Gerado por `/gsd-session-report`*
+*Gerado por `/gsd-relatorio-sessao`*
 ```
 </step>
 
@@ -131,7 +131,7 @@ Mostrar ao usuário:
 
 Se este for o primeiro relatório, mencionar:
 ```
-💡 Execute `/gsd-session-report` ao final de cada sessão para construir um histórico de atividade do projeto.
+💡 Execute `/gsd-relatorio-sessao` ao final de cada sessão para construir um histórico de atividade do projeto.
 ```
 </step>
 

@@ -76,9 +76,9 @@ Apresentar o relatório de auditoria:
 
 ## Ações Recomendadas
 
-1. **Encerrar itens desatualizados:** `/gsd-verify-work {fase}` — marcar testes desatualizados como resolvidos
+1. **Encerrar itens desatualizados:** `/gsd-verificar-trabalho {fase}` — marcar testes desatualizados como resolvidos
 2. **Executar testes ativos:** Plano de testes humano TAU abaixo
-3. **Quando pré-requisitos atendidos:** Retestar itens bloqueados com `/gsd-verify-work {fase}`
+3. **Quando pré-requisitos atendidos:** Retestar itens bloqueados com `/gsd-verificar-trabalho {fase}`
 ```
 </step>
 

@@ -62,10 +62,10 @@ Erros: N | Avisos: N | Info: N
 ## Erros
 
 - [E001] config.json: Erro de parsing JSON na linha 5
-  Correção: Execute /gsd-health --repair para redefinir com padrões
+  Correção: Execute /gsd-saude --repair para redefinir com padrões
 
 - [E002] PROJECT.md não encontrado
-  Correção: Execute /gsd-new-project para criar
+  Correção: Execute /gsd-novo-projeto para criar
 ```
 
 **Se avisos existirem:**
@@ -90,7 +90,7 @@ Erros: N | Avisos: N | Info: N
 **Rodapé (se problemas reparáveis existirem e --repair NÃO foi usado):**
 ```
 ---
-N problemas podem ser auto-reparados. Execute: /gsd-health --repair
+N problemas podem ser auto-reparados. Execute: /gsd-saude --repair
 ```
 </step>
 
@@ -100,7 +100,7 @@ N problemas podem ser auto-reparados. Execute: /gsd-health --repair
 Perguntar ao usuário se deseja executar reparos:
 
 ```
-Gostaria de executar /gsd-health --repair para corrigir N problemas automaticamente?
+Gostaria de executar /gsd-saude --repair para corrigir N problemas automaticamente?
 ```
 
 Se sim, re-executar com flag --repair e exibir resultados.

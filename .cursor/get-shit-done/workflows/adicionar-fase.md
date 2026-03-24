@@ -11,15 +11,15 @@ Leia todos os arquivos referenciados pelo execution_context do prompt invocador 
 <step name="parse_arguments">
 Analise os argumentos do comando:
 - Todos os argumentos se tornam a descrição da fase
-- Exemplo: `/gsd-add-phase Adicionar autenticação` → descrição = "Adicionar autenticação"
-- Exemplo: `/gsd-add-phase Corrigir problemas críticos de performance` → descrição = "Corrigir problemas críticos de performance"
+- Exemplo: `/gsd-adicionar-fase Adicionar autenticação` → descrição = "Adicionar autenticação"
+- Exemplo: `/gsd-adicionar-fase Corrigir problemas críticos de performance` → descrição = "Corrigir problemas críticos de performance"
 
 Se nenhum argumento fornecido:
 
 ```
 ERRO: Descrição da fase obrigatória
-Uso: /gsd-add-phase <descrição>
-Exemplo: /gsd-add-phase Adicionar sistema de autenticação
+Uso: /gsd-adicionar-fase <descrição>
+Exemplo: /gsd-adicionar-fase Adicionar sistema de autenticação
 ```
 
 Encerrar.
@@ -36,7 +36,7 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 Verificar `roadmap_exists` do JSON de init. Se falso:
 ```
 ERRO: Nenhum roteiro encontrado (.planning/ROADMAP.md)
-Execute /gsd-new-project para inicializar.
+Execute /gsd-novo-projeto para inicializar.
 ```
 Encerrar.
 </step>
@@ -87,14 +87,14 @@ Roteiro atualizado: .planning/ROADMAP.md
 
 **Fase {N}: {descrição}**
 
-`/gsd-plan-phase {N}`
+`/gsd-planejar-fase {N}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-add-phase <descrição>` — adicionar outra fase
+- `/gsd-adicionar-fase <descrição>` — adicionar outra fase
 - Revisar roteiro
 
 ---

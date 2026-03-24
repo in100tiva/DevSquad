@@ -11,15 +11,15 @@ Leia todos os arquivos referenciados pelo execution_context do prompt invocador 
 <step name="parse_arguments">
 Analisar os argumentos do comando:
 - Argumento é o número da fase a remover (inteiro ou decimal)
-- Exemplo: `/gsd-remove-phase 17` → fase = 17
-- Exemplo: `/gsd-remove-phase 16.1` → fase = 16.1
+- Exemplo: `/gsd-remover-fase 17` → fase = 17
+- Exemplo: `/gsd-remover-fase 16.1` → fase = 16.1
 
 Se nenhum argumento fornecido:
 
 ```
 ERRO: Número da fase obrigatório
-Uso: /gsd-remove-phase <número-da-fase>
-Exemplo: /gsd-remove-phase 17
+Uso: /gsd-remover-fase <número-da-fase>
+Exemplo: /gsd-remover-fase 17
 ```
 
 Encerrar.
@@ -53,7 +53,7 @@ Apenas fases futuras podem ser removidas:
 - Fase atual: {atual}
 - Fase {target} é atual ou concluída
 
-Para abandonar trabalho atual, use /gsd-pause-work em vez disso.
+Para abandonar trabalho atual, use /gsd-pausar-trabalho em vez disso.
 ```
 
 Encerrar.
@@ -126,7 +126,7 @@ Mudanças:
 ## Qual o Próximo Passo
 
 Deseja:
-- `/gsd-progress` — ver status atualizado do roteiro
+- `/gsd-progresso` — ver status atualizado do roteiro
 - Continuar com a fase atual
 - Revisar roteiro
 

@@ -31,7 +31,7 @@ Analisar valores atuais (padrão `true` se não presente):
 - `workflow.verifier` — disparar verificador durante execute-phase
 - `workflow.nyquist_validation` — pesquisa de arquitetura de validação durante plan-phase (padrão: true se ausente)
 - `workflow.ui_phase` — gerar contratos de design UI-SPEC.md para fases de frontend (padrão: true se ausente)
-- `workflow.ui_safety_gate` — solicitar execução de /gsd-ui-phase antes de planejar fases de frontend (padrão: true se ausente)
+- `workflow.ui_safety_gate` — solicitar execução de /gsd-fase-ui antes de planejar fases de frontend (padrão: true se ausente)
 - `model_profile` — qual modelo cada agente usa (padrão: `balanced`)
 - `git.branching_strategy` — abordagem de branching (padrão: `"none"`)
 </step>
@@ -109,11 +109,11 @@ conversational prompting([
     ]
   },
   {
-    question: "Habilitar Portão de Segurança UI? (solicita executar /gsd-ui-phase antes de planejar fases de frontend)",
+    question: "Habilitar Portão de Segurança UI? (solicita executar /gsd-fase-ui antes de planejar fases de frontend)",
     header: "Portão UI",
     multiSelect: false,
     options: [
-      { label: "Sim (Recomendado)", description: "plan-phase pede para executar /gsd-ui-phase primeiro quando indicadores de frontend são detectados." },
+      { label: "Sim (Recomendado)", description: "plan-phase pede para executar /gsd-fase-ui primeiro quando indicadores de frontend são detectados." },
       { label: "Não", description: "Sem solicitação — plan-phase prossegue sem verificação de UI-SPEC." }
     ]
   },
@@ -151,7 +151,7 @@ conversational prompting([
     multiSelect: false,
     options: [
       { label: "Não (Recomendado)", description: "Executar discussão inteligente antes de cada fase — levanta áreas cinzentas e captura decisões." },
-      { label: "Sim", description: "Pular discuss no /gsd-autonomous — encadear direto para planejar. Melhor para trabalho backend/pipeline onde descrições de fase são a spec." }
+      { label: "Sim", description: "Pular discuss no /gsd-autonomo — encadear direto para planejar. Melhor para trabalho backend/pipeline onde descrições de fase são a spec." }
     ]
   }
 ])
@@ -262,13 +262,13 @@ Exibir:
 | Avisos de Contexto     | {Ligado/Desligado} |
 | Salvo como Padrões     | {Sim/Não} |
 
-Estas configurações se aplicam a futuras execuções de /gsd-plan-phase e /gsd-execute-phase.
+Estas configurações se aplicam a futuras execuções de /gsd-planejar-fase e /gsd-executar-fase.
 
 Comandos rápidos:
-- /gsd-set-profile <perfil> — trocar perfil de modelo
-- /gsd-plan-phase --research — forçar pesquisa
-- /gsd-plan-phase --skip-research — pular pesquisa
-- /gsd-plan-phase --skip-verify — pular verificação de plano
+- /gsd-definir-perfil <perfil> — trocar perfil de modelo
+- /gsd-planejar-fase --research — forçar pesquisa
+- /gsd-planejar-fase --skip-research — pular pesquisa
+- /gsd-planejar-fase --skip-verify — pular verificação de plano
 ```
 </step>
 

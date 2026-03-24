@@ -13,7 +13,7 @@ Analisar os argumentos do comando:
 - Primeiro argumento: número inteiro da fase para inserir depois
 - Argumentos restantes: descrição da fase
 
-Exemplo: `/gsd-insert-phase 72 Corrigir bug crítico de auth`
+Exemplo: `/gsd-inserir-fase 72 Corrigir bug crítico de auth`
 -> after = 72
 -> descrição = "Corrigir bug crítico de auth"
 
@@ -21,8 +21,8 @@ Se argumentos faltando:
 
 ```
 ERRO: Número da fase e descrição são obrigatórios
-Uso: /gsd-insert-phase <depois> <descrição>
-Exemplo: /gsd-insert-phase 72 Corrigir bug crítico de auth
+Uso: /gsd-inserir-fase <depois> <descrição>
+Exemplo: /gsd-inserir-fase 72 Corrigir bug crítico de auth
 ```
 
 Encerrar.
@@ -93,7 +93,7 @@ Estado do projeto atualizado: .planning/STATE.md
 
 **Fase {decimal_phase}: {descrição}** -- inserção urgente
 
-`/gsd-plan-phase {decimal_phase}`
+`/gsd-planejar-fase {decimal_phase}`
 
 <sub>`/clear` primeiro -> janela de contexto limpa</sub>
 
@@ -111,11 +111,11 @@ Estado do projeto atualizado: .planning/STATE.md
 
 <anti_patterns>
 
-- Não usar isto para trabalho planejado no final do marco (use /gsd-add-phase)
+- Não usar isto para trabalho planejado no final do marco (use /gsd-adicionar-fase)
 - Não inserir antes da Fase 1 (decimal 0.1 não faz sentido)
 - Não renumerar fases existentes
 - Não modificar o conteúdo da fase alvo
-- Não criar planos ainda (isso é /gsd-plan-phase)
+- Não criar planos ainda (isso é /gsd-planejar-fase)
 - Não commitar mudanças (usuário decide quando commitar)
 </anti_patterns>
 

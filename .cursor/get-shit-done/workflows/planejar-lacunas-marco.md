@@ -1,5 +1,5 @@
 <purpose>
-Criar todas as fases necessárias para fechar lacunas identificadas pelo `/gsd-audit-milestone`. Lê o MILESTONE-AUDIT.md, agrupa lacunas em fases lógicas, cria entradas de fase no ROADMAP.md e oferece planejar cada fase. Um comando cria todas as fases de correção — sem `/gsd-add-phase` manual por lacuna.
+Criar todas as fases necessárias para fechar lacunas identificadas pelo `/gsd-auditar-marco`. Lê o MILESTONE-AUDIT.md, agrupa lacunas em fases lógicas, cria entradas de fase no ROADMAP.md e oferece planejar cada fase. Um comando cria todas as fases de correção — sem `/gsd-adicionar-fase` manual por lacuna.
 </purpose>
 
 <required_reading>
@@ -22,7 +22,7 @@ Analisar frontmatter YAML para extrair lacunas estruturadas:
 
 Se nenhum arquivo de auditoria existir ou não tiver lacunas, erro:
 ```
-Nenhuma lacuna de auditoria encontrada. Execute `/gsd-audit-milestone` primeiro.
+Nenhuma lacuna de auditoria encontrada. Execute `/gsd-auditar-marco` primeiro.
 ```
 
 ## 2. Priorizar Lacunas
@@ -163,22 +163,22 @@ node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commi
 
 **Planejar primeira fase de fechamento de lacunas**
 
-`/gsd-plan-phase {N}`
+`/gsd-planejar-fase {N}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-execute-phase {N}` — se planos já existirem
+- `/gsd-executar-fase {N}` — se planos já existirem
 - `cat .planning/ROADMAP.md` — ver roteiro atualizado
 
 ---
 
 **Após todas as fases de lacuna completas:**
 
-`/gsd-audit-milestone` — re-auditar para verificar se lacunas foram fechadas
-`/gsd-complete-milestone {versão}` — arquivar quando auditoria aprovar
+`/gsd-auditar-marco` — re-auditar para verificar se lacunas foram fechadas
+`/gsd-completar-marco {versão}` — arquivar quando auditoria aprovar
 ```
 
 </process>
@@ -269,5 +269,5 @@ becomes:
 - [ ] Contagem de cobertura atualizada no REQUIREMENTS.md
 - [ ] Diretórios de fase criados
 - [ ] Mudanças commitadas (inclui REQUIREMENTS.md)
-- [ ] Usuário sabe executar `/gsd-plan-phase` em seguida
+- [ ] Usuário sabe executar `/gsd-planejar-fase` em seguida
 </success_criteria>

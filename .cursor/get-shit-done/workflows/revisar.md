@@ -34,7 +34,7 @@ Nenhum CLI externo de IA encontrado. Instale pelo menos um:
 - codex: https://github.com/openai/codex
 - claude: https://github.com/anthropics/claude-code
 
-Então execute /gsd-review novamente.
+Então execute /gsd-revisar novamente.
 ```
 Sair.
 
@@ -110,7 +110,7 @@ Foque em:
 Forneça sua revisão em formato markdown.
 ```
 
-Escrever em arquivo temporário: `/tmp/gsd-review-prompt-{fase}.md`
+Escrever em arquivo temporário: `/tmp/gsd-revisar-prompt-{fase}.md`
 </step>
 
 <step name="invoke_reviewers">
@@ -118,17 +118,17 @@ Para cada CLI selecionado, invocar em sequência (não em paralelo — evitar li
 
 **Gemini:**
 ```bash
-gemini -p "$(cat /tmp/gsd-review-prompt-{fase}.md)" 2>/dev/null > /tmp/gsd-review-gemini-{fase}.md
+gemini -p "$(cat /tmp/gsd-revisar-prompt-{fase}.md)" 2>/dev/null > /tmp/gsd-revisar-gemini-{fase}.md
 ```
 
 **Claude (sessão separada):**
 ```bash
-claude -p "$(cat /tmp/gsd-review-prompt-{fase}.md)" --no-input 2>/dev/null > /tmp/gsd-review-claude-{fase}.md
+claude -p "$(cat /tmp/gsd-revisar-prompt-{fase}.md)" --no-input 2>/dev/null > /tmp/gsd-revisar-claude-{fase}.md
 ```
 
 **Codex:**
 ```bash
-codex -p "$(cat /tmp/gsd-review-prompt-{fase}.md)" 2>/dev/null > /tmp/gsd-review-codex-{fase}.md
+codex -p "$(cat /tmp/gsd-revisar-prompt-{fase}.md)" 2>/dev/null > /tmp/gsd-revisar-codex-{fase}.md
 ```
 
 Se um CLI falhar, registrar o erro e continuar com os CLIs restantes.
@@ -211,7 +211,7 @@ Preocupações em consenso:
 Revisão completa: {padded_phase}-REVIEWS.md
 
 Para incorporar feedback no planejamento:
-  /gsd-plan-phase {N} --reviews
+  /gsd-planejar-fase {N} --reviews
 ```
 
 Limpar arquivos temporários.
@@ -224,5 +224,5 @@ Limpar arquivos temporários.
 - [ ] REVIEWS.md escrito com feedback estruturado
 - [ ] Resumo de consenso sintetizado de múltiplos revisores
 - [ ] Arquivos temporários limpos
-- [ ] Usuário sabe como usar o feedback (/gsd-plan-phase --reviews)
+- [ ] Usuário sabe como usar o feedback (/gsd-planejar-fase --reviews)
 </success_criteria>

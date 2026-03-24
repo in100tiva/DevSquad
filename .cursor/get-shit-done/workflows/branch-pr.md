@@ -114,7 +114,7 @@ Próximos passos:
   git push origin {PR_BRANCH}
   gh pr create --base {TARGET} --head {PR_BRANCH}
 
-Ou use /gsd-ship para criar o PR automaticamente.
+Ou use /gsd-enviar para criar o PR automaticamente.
 ```
 </step>
 

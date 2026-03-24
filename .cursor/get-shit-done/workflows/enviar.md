@@ -202,8 +202,8 @@ Requisitos: {N} REQ-IDs atendidos
 Próximos passos:
 - Revisar/aprovar PR
 - Merge quando CI passar
-- /gsd-complete-milestone (se última fase do marco)
-- /gsd-progress (para ver o que vem a seguir)
+- /gsd-completar-marco (se última fase do marco)
+- /gsd-progresso (para ver o que vem a seguir)
 
 ───────────────────────────────────────────────────────────────
 ```
@@ -214,9 +214,9 @@ Próximos passos:
 <offer_next>
 Após envio:
 
-- /gsd-complete-milestone — se todas as fases do marco estão concluídas
-- /gsd-progress — ver estado geral do projeto
-- /gsd-execute-phase {próxima} — continuar para próxima fase
+- /gsd-completar-marco — se todas as fases do marco estão concluídas
+- /gsd-progresso — ver estado geral do projeto
+- /gsd-executar-fase {próxima} — continuar para próxima fase
 </offer_next>
 
 <success_criteria>

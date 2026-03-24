@@ -21,7 +21,7 @@ Analisar JSON para: `workspace_name`, `workspace_path`, `has_manifest`, `strateg
 
 **Se nenhum nome de workspace fornecido:**
 
-Primeiro execute `/gsd-list-workspaces` para mostrar workspaces disponíveis, depois pergunte:
+Primeiro execute `/gsd-listar-workspaces` para mostrar workspaces disponíveis, depois pergunte:
 
 Use conversational prompting:
 - header: "Remover Workspace"

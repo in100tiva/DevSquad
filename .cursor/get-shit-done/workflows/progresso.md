@@ -27,18 +27,18 @@ Se `project_exists` for false (sem diretório `.planning/`):
 ```
 Nenhuma estrutura de planejamento encontrada.
 
-Execute /gsd-new-project para iniciar um novo projeto.
+Execute /gsd-novo-projeto para iniciar um novo projeto.
 ```
 
 Sair.
 
-Se STATE.md ausente: sugerir `/gsd-new-project`.
+Se STATE.md ausente: sugerir `/gsd-novo-projeto`.
 
 **Se ROADMAP.md ausente mas PROJECT.md existir:**
 
 Isso significa que um marco foi concluído e arquivado. Ir para **Rota F** (entre marcos).
 
-Se ambos ROADMAP.md e PROJECT.md ausentes: sugerir `/gsd-new-project`.
+Se ambos ROADMAP.md e PROJECT.md ausentes: sugerir `/gsd-novo-projeto`.
 </step>
 
 <step name="load">
@@ -123,10 +123,10 @@ CONTEXTO: [✓ se has_context | - se não]
 - [ex: jq -r '.blockers[].text' do state-snapshot]
 
 ## Todos Pendentes
-- [contagem] pendentes — /gsd-check-todos para revisar
+- [contagem] pendentes — /gsd-verificar-todos para revisar
 
 ## Sessões de Depuração Ativas
-- [contagem] ativas — /gsd-debug para continuar
+- [contagem] ativas — /gsd-depurar para continuar
 (Mostrar esta seção apenas se contagem > 0)
 
 ## O Que Vem a Seguir
@@ -185,8 +185,8 @@ Rastrear: `outstanding_debt` — `summary.total_items` da auditoria.
 | {fase} | {filename} | {pending_count} pendentes, {skipped_count} pulados, {blocked_count} bloqueados |
 | {fase} | {filename} | human_needed — {count} itens |
 
-Revisar: `/gsd-audit-uat ${GSD_WS}` — auditoria completa entre fases
-Retomar testes: `/gsd-verify-work {fase} ${GSD_WS}` — retestar fase específica
+Revisar: `/gsd-auditar-tau ${GSD_WS}` — auditoria completa entre fases
+Retomar testes: `/gsd-verificar-trabalho {fase} ${GSD_WS}` — retestar fase específica
 ```
 
 Isso é um AVISO, não um bloqueio — roteamento prossegue normalmente. O débito é visível para que o usuário possa fazer uma escolha informada.
@@ -215,7 +215,7 @@ Ler sua seção `<objective>`.
 
 **{fase}-{plano}: [Nome do Plano]** — [resumo do objetivo do PLAN.md]
 
-`/gsd-execute-phase {fase} ${GSD_WS}`
+`/gsd-executar-fase {fase} ${GSD_WS}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
@@ -245,7 +245,7 @@ PHASE_HAS_UI=$(echo "$PHASE_SECTION" | grep -qi "UI hint.*yes" && echo "true" ||
 **Fase {N}: {Nome}** — {Objetivo do ROADMAP.md}
 <sub>✓ Contexto coletado, pronto para planejar</sub>
 
-`/gsd-plan-phase {número-fase} ${GSD_WS}`
+`/gsd-planejar-fase {número-fase} ${GSD_WS}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
@@ -261,16 +261,16 @@ PHASE_HAS_UI=$(echo "$PHASE_SECTION" | grep -qi "UI hint.*yes" && echo "true" ||
 
 **Fase {N}: {Nome}** — {Objetivo do ROADMAP.md}
 
-`/gsd-discuss-phase {fase}` — coletar contexto e esclarecer abordagem
+`/gsd-discutir-fase {fase}` — coletar contexto e esclarecer abordagem
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-ui-phase {fase}` — gerar contrato de design UI (recomendado para fases de frontend)
-- `/gsd-plan-phase {fase}` — pular discussão, planejar diretamente
-- `/gsd-list-phase-assumptions {fase}` — ver premissas do Claude
+- `/gsd-fase-ui {fase}` — gerar contrato de design UI (recomendado para fases de frontend)
+- `/gsd-planejar-fase {fase}` — pular discussão, planejar diretamente
+- `/gsd-listar-premissas-fase {fase}` — ver premissas do Claude
 
 ---
 ```
@@ -284,15 +284,15 @@ PHASE_HAS_UI=$(echo "$PHASE_SECTION" | grep -qi "UI hint.*yes" && echo "true" ||
 
 **Fase {N}: {Nome}** — {Objetivo do ROADMAP.md}
 
-`/gsd-discuss-phase {fase} ${GSD_WS}` — coletar contexto e esclarecer abordagem
+`/gsd-discutir-fase {fase} ${GSD_WS}` — coletar contexto e esclarecer abordagem
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-plan-phase {fase} ${GSD_WS}` — pular discussão, planejar diretamente
-- `/gsd-list-phase-assumptions {fase} ${GSD_WS}` — ver premissas do Claude
+- `/gsd-planejar-fase {fase} ${GSD_WS}` — pular discussão, planejar diretamente
+- `/gsd-listar-premissas-fase {fase} ${GSD_WS}` — ver premissas do Claude
 
 ---
 ```
@@ -310,15 +310,15 @@ UAT.md existe com lacunas (problemas diagnosticados). Usuário precisa planejar 
 
 **{phase_num}-UAT.md** tem {N} lacunas que requerem correções.
 
-`/gsd-plan-phase {fase} --gaps ${GSD_WS}`
+`/gsd-planejar-fase {fase} --gaps ${GSD_WS}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-execute-phase {fase} ${GSD_WS}` — executar planos da fase
-- `/gsd-verify-work {fase} ${GSD_WS}` — executar mais testes UAT
+- `/gsd-executar-fase {fase} ${GSD_WS}` — executar planos da fase
+- `/gsd-verificar-trabalho {fase} ${GSD_WS}` — executar mais testes UAT
 
 ---
 ```
@@ -336,15 +336,15 @@ UAT.md existe com `status: partial` — sessão de testes terminou antes de todo
 
 **{phase_num}-UAT.md** tem {N} testes não resolvidos (pendentes, bloqueados ou pulados).
 
-`/gsd-verify-work {fase} ${GSD_WS}` — retomar testes de onde parou
+`/gsd-verificar-trabalho {fase} ${GSD_WS}` — retomar testes de onde parou
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-audit-uat ${GSD_WS}` — auditoria completa de UAT entre fases
-- `/gsd-execute-phase {fase} ${GSD_WS}` — executar planos da fase
+- `/gsd-auditar-tau ${GSD_WS}` — auditoria completa de UAT entre fases
+- `/gsd-executar-fase {fase} ${GSD_WS}` — executar planos da fase
 
 ---
 ```
@@ -392,16 +392,16 @@ NEXT_HAS_UI=$(echo "$NEXT_PHASE_SECTION" | grep -qi "UI hint.*yes" && echo "true
 
 **Fase {Z+1}: {Nome}** — {Objetivo do ROADMAP.md}
 
-`/gsd-discuss-phase {Z+1}` — coletar contexto e esclarecer abordagem
+`/gsd-discutir-fase {Z+1}` — coletar contexto e esclarecer abordagem
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-ui-phase {Z+1}` — gerar contrato de design UI (recomendado para fases de frontend)
-- `/gsd-plan-phase {Z+1}` — pular discussão, planejar diretamente
-- `/gsd-verify-work {Z}` — teste de aceite antes de continuar
+- `/gsd-fase-ui {Z+1}` — gerar contrato de design UI (recomendado para fases de frontend)
+- `/gsd-planejar-fase {Z+1}` — pular discussão, planejar diretamente
+- `/gsd-verificar-trabalho {Z}` — teste de aceite antes de continuar
 
 ---
 ```
@@ -417,15 +417,15 @@ NEXT_HAS_UI=$(echo "$NEXT_PHASE_SECTION" | grep -qi "UI hint.*yes" && echo "true
 
 **Fase {Z+1}: {Nome}** — {Objetivo do ROADMAP.md}
 
-`/gsd-discuss-phase {Z+1} ${GSD_WS}` — coletar contexto e esclarecer abordagem
+`/gsd-discutir-fase {Z+1} ${GSD_WS}` — coletar contexto e esclarecer abordagem
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-plan-phase {Z+1} ${GSD_WS}` — pular discussão, planejar diretamente
-- `/gsd-verify-work {Z} ${GSD_WS}` — teste de aceite antes de continuar
+- `/gsd-planejar-fase {Z+1} ${GSD_WS}` — pular discussão, planejar diretamente
+- `/gsd-verificar-trabalho {Z} ${GSD_WS}` — teste de aceite antes de continuar
 
 ---
 ```
@@ -445,14 +445,14 @@ Todas as {N} fases finalizadas!
 
 **Concluir Marco** — arquivar e preparar para o próximo
 
-`/gsd-complete-milestone ${GSD_WS}`
+`/gsd-completar-marco ${GSD_WS}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
 ---
 
 **Também disponível:**
-- `/gsd-verify-work ${GSD_WS}` — teste de aceite antes de concluir marco
+- `/gsd-verificar-trabalho ${GSD_WS}` — teste de aceite antes de concluir marco
 
 ---
 ```
@@ -476,7 +476,7 @@ Pronto para planejar o próximo marco.
 
 **Iniciar Próximo Marco** — questionamento → pesquisa → requisitos → roteiro
 
-`/gsd-new-milestone ${GSD_WS}`
+`/gsd-novo-marco ${GSD_WS}`
 
 <sub>`/clear` primeiro → janela de contexto limpa</sub>
 
@@ -488,10 +488,10 @@ Pronto para planejar o próximo marco.
 <step name="edge_cases">
 **Tratar casos extremos:**
 
-- Fase concluída mas próxima fase não planejada → oferecer `/gsd-plan-phase [próxima] ${GSD_WS}`
+- Fase concluída mas próxima fase não planejada → oferecer `/gsd-planejar-fase [próxima] ${GSD_WS}`
 - Todo trabalho concluído → oferecer conclusão de marco
 - Bloqueios presentes → destacar antes de oferecer continuação
-- Arquivo de handoff existe → mencionar, oferecer `/gsd-resume-work ${GSD_WS}`
+- Arquivo de handoff existe → mencionar, oferecer `/gsd-retomar-trabalho ${GSD_WS}`
   </step>
 
 </process>
@@ -501,7 +501,7 @@ Pronto para planejar o próximo marco.
 - [ ] Contexto rico fornecido (trabalho recente, decisões, problemas)
 - [ ] Posição atual clara com progresso visual
 - [ ] O que vem a seguir claramente explicado
-- [ ] Roteamento inteligente: /gsd-execute-phase se planos existem, /gsd-plan-phase se não
+- [ ] Roteamento inteligente: /gsd-executar-fase se planos existem, /gsd-planejar-fase se não
 - [ ] Usuário confirma antes de qualquer ação
 - [ ] Handoff transparente para comando gsd apropriado
       </success_criteria>

@@ -105,14 +105,14 @@ Somente Padrão B (checkpoints de verificação apenas). Pular para A/C.
 3. Após TODOS os segmentos: agregar arquivos/desvios/decisões → criar SUMMARY.md → commitar → auto-verificação:
    - Verificar que key-files.created existem no disco com `[ -f ]`
    - Verificar que `git log --oneline --all --grep="{phase}-{plan}"` retorna ≥1 commit
-   - Anexar `## Self-Check: PASSED` ou `## Self-Check: FAILED` ao SUMMARY
+   - Anexar `## Auto-verificação: PASSOU` ou `## Auto-verificação: FALHOU` ao SUMMARY
 </step>
 
 <step name="load_prompt">
 ```bash
 cat .planning/phases/XX-name/{phase}-{plan}-PLAN.md
 ```
-Este É as instruções de execução. Seguir exatamente. Se o plano referencia CONTEXT.md: honrar a visão do usuário durante todo o processo.
+Estas são as instruções de execução. Seguir exatamente. Se o plano referencia CONTEXT.md: honrar a visão do usuário durante todo o processo.
 
 **Se o plano contém bloco `<interfaces>`:** Estas são definições de tipo e contratos pré-extraídos. Usá-los diretamente — NÃO reler os arquivos fonte para descobrir tipos. O planejador já extraiu o que você precisa.
 </step>
@@ -167,7 +167,7 @@ Erros de auth durante execução NÃO são falhas — são pontos de interação
 
 ## Regras de Desvio
 
-Você IRÃO descobrir trabalho não planejado. Aplicar automaticamente, rastrear todos para o Summary.
+Você descobrirá trabalho não planejado. Aplicar automaticamente, rastrear todos para o Summary.
 
 | Regra | Gatilho | Ação | Permissão |
 |-------|---------|------|-----------|
@@ -214,9 +214,9 @@ Terminar com: **Total de desvios:** N auto-corrigidos (detalhamento). **Impacto:
 Para planos `type: tdd` — RED-GREEN-REFACTOR:
 
 1. **Infraestrutura** (somente primeiro plano TDD): detectar projeto, instalar framework, config, verificar suíte vazia
-2. **RED:** Ler `<behavior>` → teste(s) que falham → executar (DEVE falhar) → commit: `test({phase}-{plan}): add failing test for [feature]`
-3. **GREEN:** Ler `<implementation>` → código mínimo → executar (DEVE passar) → commit: `feat({phase}-{plan}): implement [feature]`
-4. **REFACTOR:** Limpar → testes DEVEM passar → commit: `refactor({phase}-{plan}): clean up [feature]`
+2. **RED:** Ler `<behavior>` → teste(s) que falham → executar (DEVE falhar) → commit: `test({phase}-{plan}): adicionar teste que falha para [funcionalidade]`
+3. **GREEN:** Ler `<implementation>` → código mínimo → executar (DEVE passar) → commit: `feat({phase}-{plan}): implementar [funcionalidade]`
+4. **REFACTOR:** Limpar → testes DEVEM passar → commit: `refactor({phase}-{plan}): limpar [funcionalidade]`
 
 Erros: RED não falha → investigar teste/feature existente. GREEN não passa → debugar, iterar. REFACTOR quebra → desfazer.
 
@@ -259,14 +259,14 @@ git add src/types/user.ts
 
 | Tipo | Quando | Exemplo |
 |------|--------|---------|
-| `feat` | Nova funcionalidade | feat(08-02): create user registration endpoint |
-| `fix` | Correção de bug | fix(08-02): correct email validation regex |
-| `test` | Somente teste (TDD RED) | test(08-02): add failing test for password hashing |
-| `refactor` | Sem mudança de comportamento (TDD REFACTOR) | refactor(08-02): extract validation to helper |
-| `perf` | Performance | perf(08-02): add database index |
-| `docs` | Documentação | docs(08-02): add API docs |
-| `style` | Formatação | style(08-02): format auth module |
-| `chore` | Config/deps | chore(08-02): add bcrypt dependency |
+| `feat` | Nova funcionalidade | feat(08-02): criar endpoint de registro de usuário |
+| `fix` | Correção de bug | fix(08-02): corrigir regex de validação de e-mail |
+| `test` | Somente teste (TDD RED) | test(08-02): adicionar teste que falha para hashing de senha |
+| `refactor` | Sem mudança de comportamento (TDD REFACTOR) | refactor(08-02): extrair validação para helper |
+| `perf` | Performance | perf(08-02): adicionar índice no banco |
+| `docs` | Documentação | docs(08-02): adicionar documentação da API |
+| `style` | Formatação | style(08-02): formatar módulo de auth |
+| `chore` | Config/deps | chore(08-02): adicionar dependência bcrypt |
 
 **4. Formato:** `{type}({phase}-{plan}): {description}` com bullet points para mudanças chave.
 
@@ -341,7 +341,7 @@ Se `NODE_REPAIR` for `true`: invocar `@./.cursor/get-shit-done/workflows/reparar
 
 Reparo de nó tentará RETRY, DECOMPOSE ou PRUNE autonomamente. Só atinge este portal novamente se o orçamento de reparo for esgotado (ESCALATE).
 
-Se `NODE_REPAIR` for `false` OU reparo retornar ESCALATE: PARAR. Apresentar: "Verificação falhou para Tarefa [X]: [nome]. Esperado: [critério]. Real: [resultado]. Reparo tentado: [resumo do que foi tentado]." Opções: Tentar novamente | Pular (marcar incompleto) | Parar (investigar). Se pulado → SUMMARY "Problemas Encontrados".
+Se `NODE_REPAIR` for `false` OU reparo retornar ESCALATE: PARAR. Apresentar: "Verificação falhou para Tarefa [X]: [nome]. Esperado: [critério]. Real: [resultado]. Reparo tentado: [resumo do que foi tentado]." Opções: Tentar novamente | Pular (marcar incompleto) | Parar (investigar). Se pulado → SUMMARY "Issues Encountered".
 </step>
 
 <step name="record_completion_time">
@@ -428,7 +428,7 @@ Manter STATE.md abaixo de 150 linhas.
 </step>
 
 <step name="issues_review_gate">
-Se SUMMARY "Problemas Encontrados" ≠ "Nenhum": yolo → registrar e continuar. Interativo → apresentar problemas, aguardar reconhecimento.
+Se SUMMARY "Issues Encountered" ≠ "None": yolo → registrar e continuar. Interativo → apresentar problemas, aguardar reconhecimento.
 </step>
 
 <step name="update_roadmap">
@@ -452,7 +452,7 @@ Extrair IDs de requisitos do frontmatter do plano (ex: `requirements: [AUTH-01, 
 Código das tarefas já commitado por tarefa. Commitar metadados do plano:
 
 ```bash
-node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs({phase}-{plan}): complete [plan-name] plan" --files .planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .planning/STATE.md .planning/ROADMAP.md .planning/REQUIREMENTS.md
+node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commit "docs({phase}-{plan}): concluir plano [nome-do-plano]" --files .planning/phases/XX-name/{phase}-{plan}-SUMMARY.md .planning/STATE.md .planning/ROADMAP.md .planning/REQUIREMENTS.md
 ```
 </step>
 
@@ -481,9 +481,9 @@ ls -1 .planning/phases/[current-phase-dir]/*-SUMMARY.md 2>/dev/null | wc -l
 
 | Condição | Rota | Ação |
 |----------|------|------|
-| summaries < plans | **A: Mais planos** | Encontrar próximo PLAN sem SUMMARY. Yolo: auto-continuar. Interativo: mostrar próximo plano, sugerir `/gsd-execute-phase {phase}` + `/gsd-verify-work`. PARAR aqui. |
-| summaries = plans, atual < fase mais alta | **B: Fase concluída** | Mostrar conclusão, sugerir `/gsd-plan-phase {Z+1}` + `/gsd-verify-work {Z}` + `/gsd-discuss-phase {Z+1}` |
-| summaries = plans, atual = fase mais alta | **C: Marco concluído** | Mostrar banner, sugerir `/gsd-complete-milestone` + `/gsd-verify-work` + `/gsd-add-phase` |
+| summaries < plans | **A: Mais planos** | Encontrar próximo PLAN sem SUMMARY. Yolo: auto-continuar. Interativo: mostrar próximo plano, sugerir `/gsd-executar-fase {phase}` + `/gsd-verificar-trabalho`. PARAR aqui. |
+| summaries = plans, atual < fase mais alta | **B: Fase concluída** | Mostrar conclusão, sugerir `/gsd-planejar-fase {Z+1}` + `/gsd-verificar-trabalho {Z}` + `/gsd-discutir-fase {Z+1}` |
+| summaries = plans, atual = fase mais alta | **C: Marco concluído** | Mostrar banner, sugerir `/gsd-completar-marco` + `/gsd-verificar-trabalho` + `/gsd-adicionar-fase` |
 
 Todas as rotas: `/clear` primeiro para contexto limpo.
 </step>
@@ -501,4 +501,3 @@ Todas as rotas: `/clear` primeiro para contexto limpo.
 - Se mapa de codebase existir: mapa atualizado com mudanças de execução (ou pulado se sem mudanças significativas)
 - Se USER-SETUP.md criado: apresentado proeminentemente na saída de conclusão
 </success_criteria>
-</output>

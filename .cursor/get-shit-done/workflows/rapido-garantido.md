@@ -113,7 +113,7 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 
 Extrair do JSON: `planner_model`, `executor_model`, `checker_model`, `verifier_model`, `commit_docs`, `branch_name`, `quick_id`, `slug`, `date`, `timestamp`, `quick_dir`, `task_dir`, `roadmap_exists`, `planning_exists`.
 
-**Se `roadmap_exists` for false:** Erro — Modo rápido requer um projeto ativo com ROADMAP.md. Execute `/gsd-new-project` primeiro.
+**Se `roadmap_exists` for false:** Erro — Modo rápido requer um projeto ativo com ROADMAP.md. Execute `/gsd-novo-projeto` primeiro.
 
 Tarefas rápidas podem rodar no meio de uma fase - validação apenas verifica se ROADMAP.md existe, não status da fase.
 
@@ -691,7 +691,7 @@ Commit: ${commit_hash}
 
 ---
 
-Pronto para próxima tarefa: /gsd-quick ${GSD_WS}
+Pronto para próxima tarefa: /gsd-rapido-garantido ${GSD_WS}
 ```
 
 **Se NÃO `$FULL_MODE`:**
@@ -708,7 +708,7 @@ Commit: ${commit_hash}
 
 ---
 
-Pronto para próxima tarefa: /gsd-quick ${GSD_WS}
+Pronto para próxima tarefa: /gsd-rapido-garantido ${GSD_WS}
 ```
 
 </process>

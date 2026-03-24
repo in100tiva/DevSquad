@@ -17,7 +17,7 @@ Primeiro, derivar `PREFERRED_RUNTIME` do caminho `execution_context` do prompt i
 - Caminho contém `/.config/opencode/` ou `/.opencode/` -> `opencode`
 - Caso contrário -> `claude`
 
-Usar `PREFERRED_RUNTIME` como o primeiro runtime verificado para que `/gsd-update` direcione o runtime que o invocou.
+Usar `PREFERRED_RUNTIME` como o primeiro runtime verificado para que `/gsd-atualizar` direcione o runtime que o invocou.
 
 ```bash
 # Candidatos de runtime: "<runtime>:<config-dir>" armazenados como array.
@@ -230,7 +230,7 @@ Seus arquivos personalizados em outros locais são preservados:
 - Hooks personalizados ✓
 - Seus arquivos .cursor/rules/ ✓
 
-Se você modificou algum arquivo GSD diretamente, eles serão automaticamente copiados para `gsd-local-patches/` e podem ser reaplicados com `/gsd-reapply-patches` após a atualização.
+Se você modificou algum arquivo GSD diretamente, eles serão automaticamente copiados para `gsd-local-patches/` e podem ser reaplicados com `/gsd-reaplicar-patches` após a atualização.
 ```
 
 Usar conversational prompting:
@@ -272,8 +272,8 @@ Limpar cache de atualização para que indicador da statusline desapareça:
 ```bash
 # Limpar cache de atualização em todos os diretórios de runtime
 for dir in .claude .config/opencode .opencode .gemini .codex; do
-  rm -f "./$dir/cache/gsd-update-check.json"
-  rm -f "$HOME/$dir/cache/gsd-update-check.json"
+  rm -f "./$dir/cache/gsd-atualizar-check.json"
+  rm -f "$HOME/$dir/cache/gsd-atualizar-check.json"
 done
 ```
 
@@ -304,7 +304,7 @@ Verificar gsd-local-patches/backup-meta.json no diretório de configuração.
 
 ```
 Patches locais foram copiados antes da atualização.
-Execute /gsd-reapply-patches para mesclar suas modificações na nova versão.
+Execute /gsd-reaplicar-patches para mesclar suas modificações na nova versão.
 ```
 
 **Se sem patches:** Continuar normalmente.

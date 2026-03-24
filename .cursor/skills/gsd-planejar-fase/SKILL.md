@@ -59,4 +59,3 @@ Normalize a entrada de fase no passo 2 antes de qualquer busca de diretório.
 Execute o workflow planejar-fase de @D:/projetos/Estudo/devsquad/.cursor/get-shit-done/workflows/planejar-fase.md de ponta a ponta.
 Preserve todas as portas do workflow (validação, pesquisa, planejamento, ciclo de verificação, roteamento).
 </process>
-</output>

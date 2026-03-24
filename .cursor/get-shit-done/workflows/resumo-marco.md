@@ -15,7 +15,7 @@ Se `{{GSD_ARGS}}` estiver vazio:
 1. Verificar `.planning/STATE.md` para versão do marco atual
 2. Verificar `.planning/milestones/` para a última versão arquivada
 3. Se nenhum encontrado, verificar se `.planning/ROADMAP.md` existe (projeto pode estar no meio do marco)
-4. Se nada encontrado: erro "Nenhum marco encontrado. Execute /gsd-new-project ou /gsd-new-milestone primeiro."
+4. Se nada encontrado: erro "Nenhum marco encontrado. Execute /gsd-novo-projeto ou /gsd-novo-marco primeiro."
 
 Definir `VERSION` para a versão resolvida (ex., "1.0").
 
@@ -212,7 +212,7 @@ Se o usuário fizer perguntas:
 - Manter-se fundamentado no que foi realmente construído (não especulação)
 
 Se o usuário terminar:
-- Sugerir próximos passos: `/gsd-new-milestone`, `/gsd-progress`, ou compartilhar o resumo com a equipe
+- Sugerir próximos passos: `/gsd-novo-marco`, `/gsd-progresso`, ou compartilhar o resumo com a equipe
 
 ## Passo 9: Atualizar STATE.md
 

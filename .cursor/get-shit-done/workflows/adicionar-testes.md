@@ -1,7 +1,7 @@
 <purpose>
 Gerar testes unitários e E2E para uma fase concluída baseando-se no SUMMARY.md, CONTEXT.md e implementação. Classifica cada arquivo alterado nas categorias TDD (unitário), E2E (navegador) ou Pular, apresenta um plano de testes para aprovação do usuário, e então gera testes seguindo convenções RED-GREEN.
 
-Atualmente os usuários criam prompts manuais de `/gsd-quick` para geração de testes após cada fase. Este workflow padroniza o processo com classificação adequada, gates de qualidade e relatório de lacunas.
+Atualmente os usuários criam prompts manuais de `/gsd-rapido-garantido` para geração de testes após cada fase. Este workflow padroniza o processo com classificação adequada, gates de qualidade e relatório de lacunas.
 </purpose>
 
 <required_reading>
@@ -15,15 +15,15 @@ Analisar `{{GSD_ARGS}}` para:
 - Número da fase (inteiro, decimal ou sufixo de letra) → armazenar como `$PHASE_ARG`
 - Texto restante após o número da fase → armazenar como `$EXTRA_INSTRUCTIONS` (opcional)
 
-Exemplo: `/gsd-add-tests 12 focar em casos extremos` → `$PHASE_ARG=12`, `$EXTRA_INSTRUCTIONS="focar em casos extremos"`
+Exemplo: `/gsd-adicionar-testes 12 focar em casos extremos` → `$PHASE_ARG=12`, `$EXTRA_INSTRUCTIONS="focar em casos extremos"`
 
 Se nenhum argumento de fase fornecido:
 
 ```
 ERRO: Número da fase obrigatório
-Uso: /gsd-add-tests <fase> [instruções adicionais]
-Exemplo: /gsd-add-tests 12
-Exemplo: /gsd-add-tests 12 focar em casos extremos no módulo de preços
+Uso: /gsd-adicionar-testes <fase> [instruções adicionais]
+Exemplo: /gsd-adicionar-testes 12
+Exemplo: /gsd-adicionar-testes 12 focar em casos extremos no módulo de preços
 ```
 
 Encerrar.
@@ -54,7 +54,7 @@ Ler os artefatos da fase (em ordem de prioridade):
 Se nenhum SUMMARY.md existir:
 ```
 ERRO: Nenhum SUMMARY.md encontrado para fase ${PHASE_ARG}
-Este comando funciona em fases concluídas. Execute /gsd-execute-phase primeiro.
+Este comando funciona em fases concluídas. Execute /gsd-executar-fase primeiro.
 ```
 Encerrar.
 
@@ -315,7 +315,7 @@ Apresentar próximos passos:
 ## ▶ Próximo Passo
 
 {se bugs descobertos:}
-**Corrigir bugs descobertos:** `/gsd-quick corrigir as {N} falhas de teste descobertas na fase ${phase_number}`
+**Corrigir bugs descobertos:** `/gsd-rapido-garantido corrigir as {N} falhas de teste descobertas na fase ${phase_number}`
 
 {se testes bloqueados:}
 **Resolver bloqueadores de teste:** {descrição do que é necessário}
@@ -326,8 +326,8 @@ Apresentar próximos passos:
 ---
 
 **Também disponível:**
-- `/gsd-add-tests {próxima_fase}` — testar outra fase
-- `/gsd-verify-work {phase_number}` — executar verificação TAU
+- `/gsd-adicionar-testes {próxima_fase}` — testar outra fase
+- `/gsd-verificar-trabalho {phase_number}` — executar verificação TAU
 
 ---
 ```

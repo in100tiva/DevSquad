@@ -18,7 +18,7 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 Analisar: `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `commit_docs`.
 
 ```bash
-UI_AUDITOR_MODEL=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" resolve-model gsd-ui-auditor --raw)
+UI_AUDITOR_MODEL=$(node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" resolve-model gsd-auditor-ui --raw)
 ```
 
 Exibir banner:
@@ -36,7 +36,7 @@ UI_SPEC_FILE=$(ls "${PHASE_DIR}"/*-UI-SPEC.md 2>/dev/null | head -1)
 UI_REVIEW_FILE=$(ls "${PHASE_DIR}"/*-UI-REVIEW.md 2>/dev/null | head -1)
 ```
 
-**Se `SUMMARY_FILES` vazio:** Sair — "Fase {N} não executada. Execute /gsd-execute-phase {N} primeiro."
+**Se `SUMMARY_FILES` vazio:** Sair — "Fase {N} não executada. Execute /gsd-executar-fase {N} primeiro."
 
 **Se `UI_REVIEW_FILE` não vazio:** Use conversational prompting:
 - header: "Revisão UI Existente"
@@ -56,7 +56,7 @@ Construir lista de arquivos para o auditor:
 - UI-SPEC.md (se existir — base da auditoria)
 - CONTEXT.md (se existir — decisões fixadas)
 
-## 3. Criar gsd-ui-auditor
+## 3. Criar gsd-auditor-ui
 
 ```
 ◆ Criando auditor UI...
@@ -65,7 +65,7 @@ Construir lista de arquivos para o auditor:
 Construir prompt:
 
 ```markdown
-Read D:/projetos/Estudo/devsquad/.cursor/agents/gsd-ui-auditor.md for instructions.
+Read D:/projetos/Estudo/devsquad/.cursor/agents/gsd-auditor-ui.md for instructions.
 
 <objective>
 Conduzir auditoria visual de 6 pilares da Fase {phase_number}: {phase_name}
@@ -91,7 +91,7 @@ Omitir caminhos de arquivo nulos.
 ```
 Task(
   prompt=ui_audit_prompt,
-  subagent_type="gsd-ui-auditor",
+  subagent_type="gsd-auditor-ui",
   model="{UI_AUDITOR_MODEL}",
   description="Auditoria UI Fase {N}"
 )
@@ -130,8 +130,8 @@ Revisão completa: {caminho para UI-REVIEW.md}
 
 ## ▶ Próximo
 
-- `/gsd-verify-work {N}` — testes UAT
-- `/gsd-plan-phase {N+1}` — planejar próxima fase
+- `/gsd-verificar-trabalho {N}` — testes UAT
+- `/gsd-planejar-fase {N+1}` — planejar próxima fase
 
 <sub>/clear primeiro → janela de contexto limpa</sub>
 
@@ -150,7 +150,7 @@ node "D:/projetos/Estudo/devsquad/.cursor/get-shit-done/bin/gsd-tools.cjs" commi
 - [ ] Fase validada
 - [ ] Arquivos SUMMARY.md encontrados (execução concluída)
 - [ ] Revisão existente tratada (re-auditar/visualizar)
-- [ ] gsd-ui-auditor criado com contexto correto
+- [ ] gsd-auditor-ui criado com contexto correto
 - [ ] UI-REVIEW.md criada no diretório da fase
 - [ ] Resumo de pontuação exibido ao usuário
 - [ ] Próximos passos apresentados

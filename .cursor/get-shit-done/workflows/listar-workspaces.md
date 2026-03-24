@@ -25,7 +25,7 @@ Analisar JSON para: `workspace_base`, `workspaces`, `workspace_count`.
 Nenhum workspace encontrado em ~/gsd-workspaces/
 
 Crie um com:
-  /gsd-new-workspace --name meu-workspace --repos repo1,repo2
+  /gsd-novo-workspace --name meu-workspace --repos repo1,repo2
 ```
 
 Concluído.
@@ -44,7 +44,7 @@ Workspaces GSD (~/gsd-workspaces/)
 
 Gerenciar:
   cd ~/gsd-workspaces/<nome>     # Entrar em um workspace
-  /gsd-remove-workspace <nome>   # Remover um workspace
+  /gsd-remover-workspace <nome>   # Remover um workspace
 ```
 
 Para cada workspace, mostrar:

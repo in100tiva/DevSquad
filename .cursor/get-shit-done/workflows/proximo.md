@@ -29,7 +29,7 @@ Extrair:
 
 Se nenhum diretório `.planning/` existir:
 ```
-Nenhum projeto GSD detectado. Execute `/gsd-new-project` para começar.
+Nenhum projeto GSD detectado. Execute `/gsd-novo-projeto` para começar.
 ```
 Sair.
 </step>
@@ -39,35 +39,35 @@ Aplicar regras de roteamento baseadas no estado:
 
 **Rota 1: Nenhuma fase existe ainda → discutir**
 Se ROADMAP tem fases mas nenhum diretório de fase existe no disco:
-→ Próxima ação: `/gsd-discuss-phase <primeira-fase>`
+→ Próxima ação: `/gsd-discutir-fase <primeira-fase>`
 
 **Rota 2: Fase existe mas não tem CONTEXT.md ou RESEARCH.md → discutir**
 Se o diretório da fase atual existe mas não tem nem CONTEXT.md nem RESEARCH.md:
-→ Próxima ação: `/gsd-discuss-phase <fase-atual>`
+→ Próxima ação: `/gsd-discutir-fase <fase-atual>`
 
 **Rota 3: Fase tem contexto mas sem planos → planejar**
 Se a fase atual tem CONTEXT.md (ou RESEARCH.md) mas nenhum arquivo PLAN.md:
-→ Próxima ação: `/gsd-plan-phase <fase-atual>`
+→ Próxima ação: `/gsd-planejar-fase <fase-atual>`
 
 **Rota 4: Fase tem planos mas resumos incompletos → executar**
 Se planos existem mas nem todos têm resumos correspondentes:
-→ Próxima ação: `/gsd-execute-phase <fase-atual>`
+→ Próxima ação: `/gsd-executar-fase <fase-atual>`
 
 **Rota 5: Todos os planos têm resumos → verificar e concluir**
 Se todos os planos na fase atual têm resumos:
-→ Próxima ação: `/gsd-verify-work` depois `/gsd-complete-phase`
+→ Próxima ação: `/gsd-verificar-trabalho` depois `/gsd-completar-marco`
 
 **Rota 6: Fase concluída, próxima fase existe → avançar**
 Se a fase atual está concluída e a próxima fase existe no ROADMAP:
-→ Próxima ação: `/gsd-discuss-phase <próxima-fase>`
+→ Próxima ação: `/gsd-discutir-fase <próxima-fase>`
 
 **Rota 7: Todas as fases concluídas → concluir marco**
 Se todas as fases estão concluídas:
-→ Próxima ação: `/gsd-complete-milestone`
+→ Próxima ação: `/gsd-completar-marco`
 
 **Rota 8: Pausado → retomar**
 Se STATE.md mostra paused_at:
-→ Próxima ação: `/gsd-resume-work`
+→ Próxima ação: `/gsd-retomar-trabalho`
 </step>
 
 <step name="show_and_execute">
@@ -84,7 +84,7 @@ Exibir a determinação:
 ```
 
 Então imediatamente invocar o comando determinado via SlashCommand.
-Não pedir confirmação — o objetivo inteiro de `/gsd-next` é avanço sem fricção.
+Não pedir confirmação — o objetivo inteiro de `/gsd-proximo` é avanço sem fricção.
 </step>
 
 </process>

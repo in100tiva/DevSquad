@@ -14,8 +14,8 @@ Número da fase: {{GSD_ARGS}} (obrigatório)
 ```
 Erro: Número da fase obrigatório.
 
-Uso: /gsd-list-phase-assumptions [número-da-fase]
-Exemplo: /gsd-list-phase-assumptions 3
+Uso: /gsd-listar-premissas-fase [número-da-fase]
+Exemplo: /gsd-listar-premissas-fase 3
 ```
 
 Encerrar workflow.
@@ -153,8 +153,8 @@ Apresentar próximos passos:
 
 ```
 Qual o próximo passo?
-1. Discutir contexto (/gsd-discuss-phase ${PHASE}) - Deixe-me fazer perguntas para construir contexto abrangente
-2. Planejar esta fase (/gsd-plan-phase ${PHASE}) - Criar planos detalhados de execução
+1. Discutir contexto (/gsd-discutir-fase ${PHASE}) - Deixe-me fazer perguntas para construir contexto abrangente
+2. Planejar esta fase (/gsd-planejar-fase ${PHASE}) - Criar planos detalhados de execução
 3. Re-examinar suposições - Vou analisar novamente com suas correções
 4. Pronto por agora
 ```

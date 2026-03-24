@@ -619,7 +619,7 @@ Exiba o banner:
 Contexto capturado (modo premissas). Iniciando fase de planejamento (plan-phase)...
 ```
 
-Dispare: `Skill(skill="gsd-plan-phase", args="${PHASE} --auto")`
+Dispare: `Skill(skill="gsd-planejar-fase", args="${PHASE} --auto")`
 
 Trate o retorno: FASE CONCLUÍDA / PLANEJAMENTO CONCLUÍDO / INCONCLUSIVO / LACUNAS ENCONTRADAS
 (tratamento idêntico ao passo auto_advance de discutir-fase.md)

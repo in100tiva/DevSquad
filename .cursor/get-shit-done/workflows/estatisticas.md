@@ -48,7 +48,7 @@ X/Y planos concluídos (Z%)
 - **Idade do projeto:** N dias
 ```
 
-Se nenhum diretório `.planning/` existir, informar ao usuário para executar `/gsd-new-project` primeiro.
+Se nenhum diretório `.planning/` existir, informar ao usuário para executar `/gsd-novo-projeto` primeiro.
 </step>
 
 </process>

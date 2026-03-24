@@ -221,7 +221,7 @@ Verificar `has_context`. Se false → ir para handle_blocker: "Discussão inteli
 **3b. Planejar**
 
 ```
-Skill(skill="gsd-plan-phase", args="${PHASE_NUM}")
+Skill(skill="gsd-planejar-fase", args="${PHASE_NUM}")
 ```
 
 Verificar que o plano produziu saída — re-executar `init phase-op` e verificar `has_plans`. Se false → ir para handle_blocker: "Planejamento da fase ${PHASE_NUM} não produziu nenhum plano."
@@ -229,7 +229,7 @@ Verificar que o plano produziu saída — re-executar `init phase-op` e verifica
 **3c. Executar**
 
 ```
-Skill(skill="gsd-execute-phase", args="${PHASE_NUM} --no-transition")
+Skill(skill="gsd-executar-fase", args="${PHASE_NUM} --no-transition")
 ```
 
 **3d. Roteamento Pós-Execução**
@@ -294,14 +294,14 @@ Perguntar ao usuário via prompt conversacional:
 Em **"Executar fechamento de lacunas"**: Executar ciclo de fechamento de lacunas (limite: 1 tentativa):
 
 ```
-Skill(skill="gsd-plan-phase", args="${PHASE_NUM} --gaps")
+Skill(skill="gsd-planejar-fase", args="${PHASE_NUM} --gaps")
 ```
 
 Verificar que planos de lacuna foram criados — re-executar `init phase-op ${PHASE_NUM}` e verificar `has_plans`. Se nenhum plano de lacuna → ir para handle_blocker: "Planejamento de fechamento de lacunas para fase ${PHASE_NUM} não produziu planos."
 
 Re-executar:
 ```
-Skill(skill="gsd-execute-phase", args="${PHASE_NUM} --no-transition")
+Skill(skill="gsd-executar-fase", args="${PHASE_NUM} --no-transition")
 ```
 
 Re-ler status de verificação:
@@ -469,7 +469,7 @@ Gerar **3-4 áreas cinzentas** com **~4 perguntas cada**. Para cada pergunta:
 
 ---
 
-### Sub-passo 4: Apresentar Propostas Por Área
+### Sub-passo 4: Apresentar propostas por área
 
 Apresentar áreas cinzentas **uma por vez**. Para cada área (M de N):
 
@@ -659,7 +659,7 @@ Exibir banner de transição de ciclo de vida:
 **5a. Auditoria**
 
 ```
-Skill(skill="gsd-audit-milestone")
+Skill(skill="gsd-auditar-marco")
 ```
 
 Após a auditoria completar, detectar o resultado:
@@ -715,7 +715,7 @@ Em **"Parar"**: Ir para handle_blocker com "Usuário parou — dívida técnica 
 **5b. Completar Marco**
 
 ```
-Skill(skill="gsd-complete-milestone", args="${milestone_version}")
+Skill(skill="gsd-completar-marco", args="${milestone_version}")
 ```
 
 Após completar-marco retornar, verificar que produziu saída:
@@ -729,7 +729,7 @@ Se o arquivo de arquivamento não existir, ir para handle_blocker: "Completar ma
 **5c. Limpeza**
 
 ```
-Skill(skill="gsd-cleanup")
+Skill(skill="gsd-limpeza")
 ```
 
 Limpeza mostra sua própria simulação (dry-run) e pede aprovação do usuário internamente — esta é uma pausa aceitável por CTRL-01, pois é uma decisão explícita sobre exclusão de arquivos.
@@ -804,7 +804,7 @@ Quando qualquer operação de fase falha ou um bloqueador é detectado, apresent
 - [ ] Conclusão final ou resumo de parada exibido
 - [ ] Após todas as fases completarem, passo de ciclo de vida é invocado (não sugestão manual)
 - [ ] Banner de transição de ciclo de vida exibido antes da auditoria
-- [ ] Auditoria invocada via Skill(skill="gsd-audit-milestone")
+- [ ] Auditoria invocada via Skill(skill="gsd-auditar-marco")
 - [ ] Roteamento de resultado da auditoria: passed → auto-continuar, gaps_found → usuário decide, tech_debt → usuário decide
 - [ ] Falha técnica na auditoria (sem arquivo/sem status) roteia para handle_blocker
 - [ ] Complete-milestone invocado via Skill() com argumento ${milestone_version}

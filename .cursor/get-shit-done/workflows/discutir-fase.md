@@ -991,7 +991,7 @@ Contexto capturado. Iniciando planejamento da fase...
 
 Iniciar o planejamento da fase usando a ferramenta Skill para evitar sessões Task aninhadas (que causam congelamentos de runtime devido a aninhamento profundo de agentes — veja #686):
 ```
-Skill(skill="gsd-plan-phase", args="${PHASE} --auto ${GSD_WS}")
+Skill(skill="gsd-planejar-fase", args="${PHASE} --auto ${GSD_WS}")
 ```
 
 Isso mantém a cadeia de auto-avanço plana — discutir, planejar e executar rodam todos no mesmo nível de aninhamento, em vez de gerar agentes Task cada vez mais profundos.
